@@ -1,0 +1,72 @@
+name: Sync portfolio PDF
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "index.html"
+      - ".github/workflows/sync-portfolio-pdf.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install renderer
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+
+      - name: Render current portfolio
+        run: |
+          cat > /tmp/render_portfolio.py <<'PY'
+          from pathlib import Path
+          from playwright.sync_api import sync_playwright
+
+          root = Path.cwd()
+          output = root / "崔丽娅_AI产品运营作品集_最终投递版.pdf"
+          with sync_playwright() as p:
+              browser = p.chromium.launch()
+              page = browser.new_page()
+              page.goto((root / "index.html").as_uri(), wait_until="load")
+              page.emulate_media(media="print")
+              page.pdf(
+                  path=str(output),
+                  format="A4",
+                  print_background=True,
+                  prefer_css_page_size=True,
+                  margin={"top": "0", "right": "0", "bottom": "0", "left": "0"},
+              )
+              browser.close()
+          PY
+          python /tmp/render_portfolio.py
+
+      - name: Verify generated PDF
+        run: |
+          pdfinfo "崔丽娅_AI产品运营作品集_最终投递版.pdf" | grep "Pages:"
+          test "$(pdfinfo "崔丽娅_AI产品运营作品集_最终投递版.pdf" | awk '/Pages:/ {print $2}')" = "12"
+          pdftotext "崔丽娅_AI产品运营作品集_最终投递版.pdf" - | grep -q "96.25"
+          pdftotext "崔丽娅_AI产品运营作品集_最终投递版.pdf" - | grep -q "80.6"
+
+      - name: Commit refreshed PDF
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "崔丽娅_AI产品运营作品集_最终投递版.pdf"
+          if git diff --cached --quiet; then
+            echo "PDF is already current."
+          else
+            git commit -m "Sync portfolio PDF with NoteGuard V5 case"
+            git push
+          fi
