@@ -1,6 +1,6 @@
 const boot=document.querySelector('#boot'),portal=document.querySelector('#portal'),space=document.querySelector('#workspace'),surface=document.querySelector('#surface'),lines=document.querySelector('#lines'),enter=document.querySelector('#enter');
 const mobile=()=>matchMedia('(max-width:700px),(pointer:coarse)').matches,reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;let visited=false;try{visited=!!localStorage.getItem('cuiliya_workspace_visited_v1')}catch{}let launched=false,z=10,timers=[];
-const intro=[['dim','正在打开 · 崔丽娅的 AI 产品工作空间'],['','崔丽娅 / 2027 届'],['dim','AI 产品运营 / 产品运营 / AI 应用产品'],['headline','把 AI 能力，做进真实工作里。'],['dim','已载入：盘古智绘 · 小红书内容运营 · NoteGuard AI'],['','请选择一个项目，开始探索。']];intro.forEach(([cls,text],i)=>{let p=document.createElement('p');p.className=cls;p.textContent=text;lines.append(p);if(visited||reduced)p.classList.add('visible');else timers.push(setTimeout(()=>p.classList.add('visible'),150+i*320))});
+const intro=[['dim','AI 产品运营 / 产品运营 / AI 应用产品'],['headline','把 AI 能力，做进真实工作里。'],['dim','三个项目已加载']];intro.forEach(([cls,text],i)=>{let p=document.createElement('p');p.className=cls;p.textContent=text;lines.append(p);if(visited||reduced)p.classList.add('visible');else timers.push(setTimeout(()=>p.classList.add('visible'),150+i*320))});
 function reveal(){timers.forEach(clearTimeout);lines.querySelectorAll('p').forEach(p=>p.classList.add('visible'))}document.querySelector('#skip').onclick=reveal;
 function launch(){
  if(launched)return;launched=true;reveal();try{localStorage.setItem('cuiliya_workspace_visited_v1','1')}catch{}
@@ -39,3 +39,15 @@ function bindContent(w,id){
  const content=w.querySelector('.window-content');let last=0;content.addEventListener('scroll',()=>{if(!mobile())return;const now=content.scrollTop;if(now>last&&now>70)space.classList.add('dock-hidden');last=now},{passive:true});
 }
 const toggle=document.createElement('button');toggle.className='dock-toggle';toggle.textContent='项目导航 ↑';toggle.onclick=()=>space.classList.remove('dock-hidden');space.append(toggle);
+
+// One viewer: switching previews does not open or stack project windows.
+const projectIds=['pangu','xhs','ng'];let selectedProject='pangu';
+const projectPreviews={
+ pangu:{title:'盘古智绘',judgment:'把 Prompt 变成商户会选的字段。',visual:'<img src="assets/pangu-frozen-product.webp" alt="盘古智绘冻结产品原型">'},
+ xhs:{title:'小红书内容运营',judgment:'让 AI 卖点变成家长能感知的场景。',visual:'<div class="post-pending"><small>主案例 · 原图待接入</small><p>我们班已经有人<br>开始用 AI 一对一了</p><span>保留真实帖子素材位</span></div>'},
+ ng:{title:'NoteGuard AI',judgment:'识别风险之后，让人敢用 AI 的建议。',visual:'<div class="ng-viewer"><small>NoteGuard AI / V5</small><p>AI 建议，<br>由人确认采用。</p><span>风险识别 · 人工确认 · 采用后复检</span></div>'}
+};
+const projectTabs=[...document.querySelectorAll('[data-project]')],viewer=document.querySelector('.project-viewer');
+function selectProject(id){if(id===selectedProject)return;selectedProject=id;const p=projectPreviews[id];projectTabs.forEach(b=>{const active=b.dataset.project===id;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1});document.querySelector('#project-panel').setAttribute('aria-labelledby','tab-'+id);document.querySelector('#viewer-title').textContent=p.title;document.querySelector('#viewer-judgment').textContent=p.judgment;document.querySelector('#viewer-visual').innerHTML=p.visual;document.querySelector('#open-project').dataset.open=id;viewer.dataset.project=id;}
+projectTabs.forEach(b=>{b.onclick=()=>selectProject(b.dataset.project);b.addEventListener('pointerenter',()=>{if(matchMedia('(hover:hover) and (pointer:fine)').matches)selectProject(b.dataset.project)});b.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const current=projectIds.indexOf(b.dataset.project);const index=e.key==='Home'?0:e.key==='End'?2:(current+(e.key==='ArrowRight'?1:2))%3;selectProject(projectIds[index]);projectTabs[index].focus()})});
+let touchStart=null;const visual=document.querySelector('#viewer-visual');visual.addEventListener('touchstart',e=>{touchStart={x:e.changedTouches[0].clientX,y:e.changedTouches[0].clientY}},{passive:true});visual.addEventListener('touchend',e=>{if(!touchStart)return;const dx=e.changedTouches[0].clientX-touchStart.x,dy=e.changedTouches[0].clientY-touchStart.y;touchStart=null;if(Math.abs(dx)<55||Math.abs(dx)<Math.abs(dy)*1.3)return;const index=(projectIds.indexOf(selectedProject)+(dx<0?1:2))%3;selectProject(projectIds[index])},{passive:true});
