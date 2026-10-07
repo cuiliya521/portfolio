@@ -12,4 +12,5 @@ body[data-view=boot] .world{transform:translate(62vw,29vh) scale(.35) rotate(-7d
 @media(max-height:740px) and (max-width:700px){.hero-copy{top:13%}.hero-copy h1{font-size:32px;margin:17px 0 13px}.hero-copy p{margin-bottom:18px}.desk-heading{top:78px}.desk-heading h2{font-size:30px;margin:10px 0}.pangu-object{top:33%;width:78%;left:11%}.decision-note{bottom:82px;padding:9px 13px;width:180px}.decision-note p{font-size:12px}.object-caption h3{font-size:14px}.product-viewport{bottom:275px}}
 .desk-mark{display:none}
 @media(max-width:700px){body[data-view=boot] .world{transform:translate(53vw,56vh) scale(.34) rotate(-6deg)}}
+@media(max-height:740px) and (max-width:700px){.decision-note{display:none}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}.camera{will-change:auto}}
