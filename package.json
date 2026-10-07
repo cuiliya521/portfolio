@@ -1,0 +1,1 @@
+{"name":"cuiliya-workspace","private":true,"type":"module","scripts":{"dev":"node scripts/serve.mjs","check":"node --check src/app.js && node --check src/pangu.js && node --check src/motion.js"}}
