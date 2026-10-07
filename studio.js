@@ -1,0 +1,24 @@
+const $=s=>document.querySelector(s);
+const workspace=$('#workspace'),pangu=$('#pangu'),frame=$('#frozen-ui'),viewport=$('#ui-viewport'),canvas=$('#ui-canvas');
+const reduced=matchMedia('(prefers-reduced-motion: reduce)'),mobile=matchMedia('(max-width: 700px)');
+const steps={
+input:{title:'把模糊需求，变成可选择的输入。',copy:'行业、场景、客群、风格与平台规格共同组成生成需求，降低商户的描述门槛。',file:'config',box:[262,220,690,613],focus:[281,274],next:'preview',label:'下一步：实时预览 →'},
+preview:{title:'先看到结果，再判断是否可用。',copy:'预览与需求在同一工作台，结合投放平台和输出规格，判断素材是否满足实际营销场景。',file:'config',box:[976,220,578,613],focus:[1000,284],next:'assets',label:'下一步：沉淀与复用 →'},
+assets:{title:'把可用结果，沉淀为可复用的资产。',copy:'素材、标签、平台规格与配置关联；下一次从可用结果出发，减少重复描述与试错。',file:'manage',box:[262,362,1290,532],focus:[281,411],next:'input',label:'重新看：结构化输入 ↺'}};
+let scene='entry',step='input',timer,transitionId=0;
+function setScene(value){scene=value;document.body.dataset.scene=value;}
+function settleWorkspace(focus=true){clearTimeout(timer);setScene('workspace');workspace.inert=false;pangu.hidden=true;$('.home-control').hidden=true;window.scrollTo(0,0);if(focus)$('#workspace-title').focus({preventScroll:true});$('.scene-status').textContent='已进入工作现场。当前开放盘古智绘完整案例。';}
+function enter(){if(scene!=='entry'){settleWorkspace();return;}setScene('entering');workspace.inert=true;pangu.hidden=true;const id=++transitionId;timer=setTimeout(()=>{if(id===transitionId)settleWorkspace();},reduced.matches?0:mobile.matches?780:1280);}
+function openPangu(){clearTimeout(timer);++transitionId;workspace.inert=true;pangu.hidden=false;setScene('pangu');$('.home-control').hidden=false;window.scrollTo(0,0);$('#pangu-title').focus({preventScroll:true});requestAnimationFrame(()=>selectStep(step));$('.scene-status').textContent='盘古智绘。结构化输入、实时预览、素材沉淀与复用。';}
+function entry(){clearTimeout(timer);++transitionId;setScene('entry');workspace.inert=true;pangu.hidden=true;$('.home-control').hidden=true;window.scrollTo(0,0);$('#enter').focus({preventScroll:true});}
+function route(initial=false){if(location.hash==='#pangu')openPangu();else if(location.hash==='#workspace'){if(initial)settleWorkspace(false);else enter();}else if(!initial)entry();}
+addEventListener('hashchange',()=>route());
+document.addEventListener('click',event=>{const link=event.target.closest('a[href^="#"]');if(!link)return;const href=link.getAttribute('href');if(!['#entry','#workspace','#pangu'].includes(href))return;event.preventDefault();if(location.hash===href)route();else location.hash=href;});
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&scene==='pangu')location.hash='#workspace';else if(event.key==='Escape'&&scene==='entering'){++transitionId;settleWorkspace();}});
+function layoutUI(){if(scene!=='pangu')return;const data=steps[step];if(mobile.matches){canvas.style.transform='scale(.9)';viewport.style.height='400px';viewport.scrollTo({left:data.focus[0]*.9,top:data.focus[1]*.9,behavior:'instant'});$('#ui-hint').textContent='聚焦原界面 · 左右 / 上下滑动查看';}else{const scale=viewport.clientWidth/1600;canvas.style.transform=`scale(${scale})`;viewport.style.height=`${1000*scale}px`;viewport.scrollTo(0,0);$('#ui-hint').textContent='冻结产品 UI · 只读流程展示';}const [left,top,width,height]=data.box;Object.assign($('#ui-highlight').style,{left:left+'px',top:top+'px',width:width+'px',height:height+'px'});}
+function selectStep(value,focus=false){step=value;const data=steps[value];document.querySelectorAll('[role="tab"]').forEach(tab=>{const active=tab.dataset.step===value;tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1;if(active&&focus)tab.focus();});$('#product-panel').setAttribute('aria-labelledby',`tab-${value}`);$('#step-title').textContent=data.title;$('#step-copy').textContent=data.copy;$('#next-step').textContent=data.label;$('.original-link').href=`prototypes/${data.file}.html`;const src=`prototypes/${data.file}.html`;if(frame.getAttribute('src')!==src){$('#ui-loading').hidden=false;frame.src=src;}layoutUI();}
+document.querySelectorAll('[role="tab"]').forEach((tab,index,tabs)=>{tab.addEventListener('click',()=>selectStep(tab.dataset.step));tab.addEventListener('keydown',event=>{let next=index;if(event.key==='ArrowRight')next=(index+1)%tabs.length;else if(event.key==='ArrowLeft')next=(index+tabs.length-1)%tabs.length;else if(event.key==='Home')next=0;else if(event.key==='End')next=tabs.length-1;else return;event.preventDefault();selectStep(tabs[next].dataset.step,true);});});
+$('#next-step').addEventListener('click',()=>selectStep(steps[step].next));
+frame.addEventListener('load',()=>{$('#ui-loading').hidden=true;frame.inert=true;layoutUI();});
+const observer=new ResizeObserver(()=>layoutUI());observer.observe(viewport);mobile.addEventListener('change',()=>layoutUI());reduced.addEventListener('change',()=>{if(scene==='entering')settleWorkspace();});route(true);
+if(frame.contentDocument?.readyState==='complete')$('#ui-loading').hidden=true;
