@@ -3,453 +3,112 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>CUI｜AI Product Workspace</title>
-<meta name="description" content="把 AI 能力，做进真实工作里。">
+<title>CUI｜Hero V3</title>
 <style>
 :root{
-  --paper:#f6f2e9;
-  --paper2:#eee9df;
-  --paper3:#e2e7dc;
-  --ink:#17382f;
-  --ink2:#385248;
-  --muted:#78827c;
-  --sage:#aab7a4;
-  --sage2:#ced8ca;
-  --sage3:#dde4da;
-  --night:#173029;
-  --gold:#bd9558;
-  --gold2:#dfc58f;
-  --line:rgba(23,56,47,.12);
-  --shadow:0 30px 90px rgba(37,56,47,.13);
+  --paper:#f6f2e9;--ink:#17382f;--muted:#65756d;--sage:#b7c3b1;--sage2:#dbe3d8;
+  --gold:#bc9558;--gold2:#e2c995;--night:#173029;--line:rgba(23,56,47,.12)
 }
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:var(--paper);color:var(--ink)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--paper);color:var(--ink)}
 body{font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
-button{font:inherit}
-.hero{
-  min-height:100svh;
-  position:relative;
-  overflow:hidden;
-  isolation:isolate;
-  background:
-    radial-gradient(circle at 78% 34%,rgba(255,255,255,.95),transparent 22%),
-    radial-gradient(circle at 91% 11%,rgba(205,218,202,.72),transparent 27%),
-    linear-gradient(116deg,#f8f5ee 0%,#f3efe7 47%,#e9ece3 100%);
-}
-.hero::before{
-  content:"";
-  position:absolute;inset:0;z-index:-3;
-  background-image:radial-gradient(rgba(23,56,47,.12) .75px,transparent .75px);
-  background-size:28px 28px;
-  mask-image:linear-gradient(90deg,transparent 0 48%,#000 72% 100%);
-  opacity:.24;
-}
-.hero::after{
-  content:"";
-  position:absolute;
-  width:36vw;height:36vw;min-width:430px;min-height:430px;
-  right:-15vw;bottom:-18vw;border-radius:50%;
-  background:rgba(185,202,181,.42);
-  filter:blur(90px);
-  z-index:-3;
-}
-.topbar{
-  height:78px;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 4.6vw;
-  border-bottom:1px solid rgba(23,56,47,.07);
-  position:relative;z-index:30;
-}
-.brand{
-  display:flex;align-items:center;gap:11px;
-  font-size:17px;font-weight:700;letter-spacing:.18em
-}
-.brand-dot{
-  width:6px;height:6px;border-radius:50%;
-  background:var(--gold);
-  box-shadow:0 0 0 5px rgba(189,149,88,.08)
-}
-.nav{display:flex;align-items:center;gap:30px}
-.nav a{
-  font-size:11px;letter-spacing:.16em;
-  color:rgba(23,56,47,.63)
-}
-.nav a:hover{color:var(--ink)}
-.hero-main{
-  width:min(1500px,100%);
-  min-height:calc(100svh - 78px);
-  margin:auto;
-  padding:6.8vh 5vw 5vh;
-  display:grid;
-  grid-template-columns:minmax(430px,.9fr) minmax(650px,1.1fr);
-  align-items:center;
-  gap:1.5vw;
-  position:relative;
-}
-.copy{position:relative;z-index:10;max-width:640px}
-.kicker{
-  display:flex;align-items:center;gap:12px;
-  font-size:12px;letter-spacing:.13em;
-  color:#546a60;margin-bottom:22px
-}
-.kicker::before{
-  content:"";width:36px;height:1px;background:var(--gold)
-}
-h1{
-  margin:0;
-  font-family:"Songti SC","STSong","Noto Serif SC",serif;
-  font-size:clamp(60px,5.45vw,86px);
-  line-height:1.015;
-  letter-spacing:-.045em;
-  font-weight:600;
-}
-h1 .line2{display:inline-block;position:relative;margin-top:4px}
-h1 .line2::after{
-  content:"";
-  position:absolute;left:0;right:6%;bottom:-10px;
-  height:4px;border-radius:99px;
-  background:linear-gradient(90deg,var(--gold2),rgba(189,149,88,0));
-  opacity:.72
-}
-.lede{
-  margin:32px 0 33px;
-  max-width:505px;
-  font-size:16px;line-height:1.9;
-  color:#52665d;
-}
-.cta-row{display:flex;align-items:center;gap:18px}
-.enter{
-  border:0;border-radius:999px;
-  background:var(--ink);color:#f7f4ed;
-  padding:17px 26px;
-  display:inline-flex;align-items:center;gap:32px;
-  cursor:pointer;
-  box-shadow:0 18px 42px rgba(23,56,47,.14)
-}
-.enter .arrow{font-size:20px;line-height:1}
-.entry-note{
-  font-size:10px;letter-spacing:.14em;
-  text-transform:uppercase;color:#8a908b
-}
-.flow-note{
-  position:absolute;left:5vw;bottom:3.4vh;
-  display:flex;align-items:center;gap:12px;
-  font-size:9px;letter-spacing:.15em;color:#868c87
-}
-.flow-note::before{content:"";width:24px;height:1px;background:rgba(23,56,47,.25)}
+.hero{min-height:100svh;position:relative;overflow:hidden;background:
+radial-gradient(circle at 78% 33%,rgba(255,255,255,.96),transparent 20%),
+radial-gradient(circle at 95% 15%,rgba(209,220,205,.72),transparent 26%),
+linear-gradient(116deg,#f8f5ee 0%,#f2efe7 48%,#e9ede5 100%)}
+.hero:before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(23,56,47,.11) .7px,transparent .7px);background-size:28px 28px;mask-image:linear-gradient(90deg,transparent 0 50%,#000 74% 100%);opacity:.22}
+.topbar{height:78px;display:flex;align-items:center;justify-content:space-between;padding:0 4.6vw;border-bottom:1px solid rgba(23,56,47,.07);position:relative;z-index:20}
+.brand{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;letter-spacing:.18em}.dot{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 5px rgba(188,149,88,.08)}
+.nav{display:flex;gap:30px;font-size:11px;letter-spacing:.16em;color:rgba(23,56,47,.62)}
+.main{width:min(1500px,100%);min-height:calc(100svh - 78px);margin:auto;padding:6.5vh 5vw 5vh;display:grid;grid-template-columns:minmax(430px,.9fr) minmax(650px,1.1fr);align-items:center;gap:1.5vw;position:relative}
+.copy{position:relative;z-index:10;max-width:630px}.kicker{display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.13em;color:#556a61;margin-bottom:22px}.kicker:before{content:"";width:36px;height:1px;background:var(--gold)}
+h1{margin:0;font-family:"Songti SC","STSong","Noto Serif SC",serif;font-size:clamp(60px,5.45vw,86px);line-height:1.015;letter-spacing:-.045em;font-weight:600}
+h1 .l2{display:inline-block;position:relative;margin-top:4px}h1 .l2:after{content:"";position:absolute;left:0;right:8%;bottom:-10px;height:4px;border-radius:99px;background:linear-gradient(90deg,var(--gold2),rgba(188,149,88,0));opacity:.72}
+.lede{margin:32px 0 33px;max-width:500px;font-size:16px;line-height:1.9;color:#52665d}
+.cta{display:inline-flex;align-items:center;gap:32px;border-radius:999px;background:var(--ink);color:#f8f5ee;padding:17px 26px;box-shadow:0 18px 42px rgba(23,56,47,.14)}
+.micro{margin-left:15px;font-size:10px;letter-spacing:.14em;color:#8a908b}
+.flow{position:absolute;left:5vw;bottom:3.2vh;font-size:9px;letter-spacing:.15em;color:#858b86}
 
-.stage{
-  position:relative;
-  height:min(670px,73vh);
-  min-height:570px;
-  perspective:1700px;
-  z-index:4;
-}
-.stage-glow{
-  position:absolute;
-  width:82%;height:82%;
-  right:0;top:8%;
-  border-radius:44%;
-  background:radial-gradient(circle,rgba(255,255,255,.95),rgba(255,255,255,.24) 50%,transparent 72%);
-  filter:blur(6px);
-  z-index:-1;
-}
-.portal-shell{
-  position:absolute;
-  inset:2% -2% 0 5%;
-  transform:rotateY(-7deg) rotateX(1deg);
-  border:1px solid rgba(23,56,47,.12);
-  border-radius:48px;
-  background:linear-gradient(142deg,rgba(255,255,255,.46),rgba(255,255,255,.07) 56%,rgba(166,183,162,.12));
-  box-shadow:inset 0 1px rgba(255,255,255,.88),0 44px 92px rgba(34,53,44,.08);
-  overflow:hidden;
-}
-.portal-shell::before{
-  content:"";
-  position:absolute;inset:11% 8% 9% 12%;
-  border-radius:36px;
-  border:1px solid rgba(23,56,47,.1);
-  box-shadow:inset 0 0 80px rgba(23,56,47,.035);
-}
-.portal-shell::after{
-  content:"";
-  position:absolute;
-  width:220px;height:220px;border-radius:50%;
-  right:5%;bottom:1%;
-  border:1px solid rgba(189,149,88,.18);
-  box-shadow:0 0 0 34px rgba(189,149,88,.026),0 0 0 68px rgba(189,149,88,.015)
-}
-.workspace-label{
-  position:absolute;right:4.7%;top:7%;
-  font-size:9px;letter-spacing:.24em;color:#748078
-}
-.workspace-copy{
-  position:absolute;right:7%;top:14%;
-  width:190px;
-  text-align:right;
-  font-size:12px;line-height:1.75;color:#7a837d
-}
-.workspace-copy b{display:block;color:var(--ink);font-size:13px;font-weight:600;margin-bottom:3px}
+/* The doorway, not a card stack */
+.stage{position:relative;height:min(670px,73vh);min-height:570px;perspective:1800px;z-index:4}
+.halo{position:absolute;inset:7% 0 0 6%;border-radius:48%;background:radial-gradient(circle at 57% 49%,rgba(255,255,255,.97) 0 24%,rgba(255,255,255,.38) 49%,transparent 70%);filter:blur(3px)}
+.doorway{position:absolute;inset:2% 3% 1% 8%;transform:rotateY(-6deg);transform-style:preserve-3d}
+.frame{position:absolute;border:1px solid rgba(23,56,47,.12);box-shadow:inset 0 1px rgba(255,255,255,.84)}
+.frame.outer{inset:0;border-radius:48px;background:linear-gradient(145deg,rgba(255,255,255,.42),rgba(255,255,255,.08) 60%,rgba(166,183,162,.12))}
+.frame.mid{inset:7% 7% 7% 8%;border-radius:38px;background:rgba(249,248,243,.33)}
+.frame.inner{inset:14% 15% 13% 16%;border-radius:29px;background:linear-gradient(145deg,#f7f6f1,#e8ece4)}
+.frame.inner:after{content:"";position:absolute;inset:8%;border-radius:22px;background:linear-gradient(145deg,#f7f7f2,#eef1eb);box-shadow:inset 0 0 70px rgba(23,56,47,.04)}
+.label{position:absolute;right:5%;top:5%;font-size:9px;letter-spacing:.23em;color:#758179}
+.threshold{position:absolute;left:20%;right:18%;bottom:9%;height:1px;background:linear-gradient(90deg,transparent,rgba(188,149,88,.55),transparent);box-shadow:0 0 14px rgba(188,149,88,.18)}
 
-.plane{
-  position:absolute;
-  border-radius:22px;
-  overflow:hidden;
-  border:1px solid rgba(23,56,47,.1);
-  box-shadow:var(--shadow);
-}
-.chrome{
-  height:40px;padding:0 15px;
-  display:flex;align-items:center;gap:6px;
-  background:rgba(246,246,241,.9);
-  border-bottom:1px solid rgba(23,56,47,.07)
-}
-.chrome i{width:7px;height:7px;border-radius:50%;background:#a9b6a8}
-.chrome i:nth-child(2){background:#91a392}.chrome i:nth-child(3){background:#627b6f}
-.chrome span{
-  margin-left:7px;font-size:9px;letter-spacing:.13em;color:#68786f
-}
+/* dominant object visible beyond the entrance */
+.product{position:absolute;left:28%;right:9%;top:24%;height:47%;z-index:8;border-radius:20px;background:#fbfaf6;border:1px solid rgba(23,56,47,.09);box-shadow:0 28px 70px rgba(37,56,47,.13);transform:translateZ(95px) rotateZ(-.6deg);overflow:hidden}
+.chrome{height:39px;display:flex;align-items:center;gap:6px;padding:0 14px;background:#f1f3ed;border-bottom:1px solid rgba(23,56,47,.07)}
+.chrome i{width:7px;height:7px;border-radius:50%;background:#9eaea0}.chrome span{margin-left:7px;font-size:9px;letter-spacing:.13em;color:#69786f}
+.productbody{height:calc(100% - 39px);display:grid;grid-template-columns:36% 64%}.left{padding:18px;border-right:1px solid var(--line)}.left h3{margin:0 0 14px;font-size:14px}
+.field{height:31px;margin:8px 0;border-radius:8px;border:1px solid rgba(23,56,47,.08);background:#f3f2ed;position:relative}.field:after{content:"";position:absolute;left:10px;top:50%;width:35%;height:5px;border-radius:9px;background:#c7d0c5;transform:translateY(-50%)}
+.right{padding:15px}.right small{font-size:10px;color:#748078}.preview{height:72%;margin-top:8px;border-radius:12px;background:radial-gradient(circle at 30% 22%,rgba(255,255,255,.9),transparent 18%),linear-gradient(145deg,#d8e1d4,#adbea8 47%,#819789);position:relative}.preview:before{content:"";position:absolute;left:34%;top:14%;width:34%;height:64%;border-radius:26% 26% 17% 17%;background:rgba(249,248,238,.72);transform:rotate(-7deg)}
 
-/* one dominant product plane */
-.product{
-  width:74%;height:56%;
-  right:3%;top:25%;
-  z-index:8;
-  background:#fbfaf6;
-  transform:translateZ(110px) rotateY(-4deg) rotateZ(-1deg)
-}
-.product-body{height:calc(100% - 40px);display:grid;grid-template-columns:36% 64%}
-.product-left{padding:20px;border-right:1px solid var(--line)}
-.product-left h3{font-size:14px;margin:0 0 15px}
-.field{height:34px;margin:9px 0;border:1px solid rgba(23,56,47,.08);border-radius:8px;background:#f3f2ed;position:relative}
-.field::after{content:"";position:absolute;left:11px;top:50%;transform:translateY(-50%);width:34%;height:5px;border-radius:9px;background:#c7d0c5}
-.product-right{padding:17px;position:relative}
-.product-right small{font-size:10px;color:#758077}
-.preview{
-  height:72%;margin-top:9px;border-radius:13px;
-  background:radial-gradient(circle at 32% 22%,rgba(255,255,255,.9),transparent 18%),linear-gradient(145deg,#d9e1d5,#aebda8 47%,#83998a);
-  position:relative;overflow:hidden
-}
-.preview::before{
-  content:"";position:absolute;left:32%;top:15%;width:36%;height:64%;
-  border-radius:26% 26% 17% 17%;
-  background:rgba(249,248,238,.72);
-  transform:rotate(-7deg)
-}
-.preview::after{
-  content:"";position:absolute;left:8%;right:8%;bottom:8%;height:6px;border-radius:99px;background:rgba(255,255,255,.52)
-}
+/* only peeking hints, not three blocks */
+.peek{position:absolute;z-index:5;border:1px solid rgba(23,56,47,.08);box-shadow:0 22px 58px rgba(37,56,47,.1);overflow:hidden}
+.peek.content{width:25%;height:23%;left:12%;bottom:14%;border-radius:16px;background:#ebe4d8;transform:translateZ(55px) rotateZ(2deg)}
+.peek.content .mini{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:10px;height:calc(100% - 34px)}.mini b{border-radius:7px;background:#ddcfc0}.mini b:nth-child(2){background:#e7d6d2}.mini b:nth-child(3){background:#c5d1c0}
+.peek.eval{width:24%;height:21%;right:5%;bottom:11%;border-radius:16px;background:var(--night);transform:translateZ(5px) rotateZ(-2deg);color:#fff}.peek.eval .chrome{height:34px;background:#203d34;border-bottom-color:rgba(255,255,255,.05)}.trace{height:55px;margin:15px 14px;border-bottom:1px solid rgba(255,255,255,.08);position:relative}.trace:before{content:"";position:absolute;left:0;right:0;top:47%;height:2px;background:linear-gradient(90deg,#6b887b,#b6d3a5 35%,#d5c17c 68%,#8bb39a);transform:skewY(-8deg)}
 
-/* only glimpses of other work, not project cards */
-.content-strip{
-  width:38%;height:32%;
-  left:9%;bottom:7%;
-  z-index:11;
-  background:#ebe4d8;
-  transform:translateZ(165px) rotateY(7deg) rotateZ(2.5deg)
-}
-.content-body{
-  height:calc(100% - 40px);padding:13px;
-  display:grid;grid-template-columns:repeat(3,1fr);gap:8px
-}
-.tile{border-radius:9px;background:linear-gradient(150deg,#eee4d8,#d5c9ba)}
-.tile:nth-child(2){background:linear-gradient(150deg,#dfccc6,#ecdcd7)}
-.tile:nth-child(3){background:linear-gradient(150deg,#d8dfcf,#b8c8b3)}
-
-.eval{
-  width:34%;height:27%;
-  right:-1%;bottom:4%;
-  z-index:5;
-  background:var(--night);color:#f1f4ef;
-  transform:translateZ(20px) rotateY(-8deg) rotateZ(-3deg)
-}
-.eval .chrome{background:#203d34;border-bottom-color:rgba(255,255,255,.06)}
-.eval .chrome span{color:#a8b7af}
-.eval-body{padding:20px}
-.eval-tag{font-size:9px;letter-spacing:.16em;color:#9db1a7}
-.eval-line{
-  margin-top:17px;height:42px;border-bottom:1px solid rgba(255,255,255,.08);position:relative
-}
-.eval-line::before{
-  content:"";position:absolute;left:0;right:0;top:48%;height:2px;
-  background:linear-gradient(90deg,#69877a,#b8d7a7 34%,#d7c57d 68%,#8bb69b);
-  transform:skewY(-8deg)
-}
-
-/* placeholder only — official character asset replaces this later */
-.agent-wrap{
-  position:absolute;left:4.5%;top:57%;
-  z-index:15;
-  display:flex;align-items:center;gap:12px
-}
-.agent{
-  width:106px;height:106px;border-radius:50%;
-  display:grid;place-items:center;
-  font-family:"Songti SC","STSong",serif;
-  font-size:28px;
-  color:#29483e;
-  background:radial-gradient(circle at 38% 28%,#fff 0 12%,transparent 13%),radial-gradient(circle,#f9f6ef 0 35%,#dde5d9 66%,#c9d5c6 100%);
-  border:1px solid rgba(23,56,47,.12);
-  box-shadow:0 20px 50px rgba(31,55,44,.17),0 0 0 9px rgba(255,255,255,.22);
-  position:relative
-}
-.agent::before{
-  content:"";
-  position:absolute;width:52px;height:52px;border-radius:50%;
-  border:2px solid rgba(189,149,88,.78);
-  border-left-color:transparent;border-bottom-color:transparent;
-  right:-8px;top:-9px;transform:rotate(18deg)
-}
-.agent::after{
-  content:"✦";position:absolute;right:-12px;bottom:4px;
-  color:var(--gold);font-size:14px;
-  text-shadow:-18px -18px rgba(189,149,88,.55),-34px 8px rgba(189,149,88,.25)
-}
-.bubble{
-  margin-top:-26px;
-  padding:11px 13px;
-  border-radius:14px 14px 14px 4px;
-  background:rgba(250,248,241,.92);
-  border:1px solid rgba(23,56,47,.09);
-  box-shadow:0 14px 35px rgba(32,52,43,.08);
-  font-size:11px;color:#53665e;
-  backdrop-filter:blur(10px)
-}
-.enter-cue{
-  position:absolute;right:4%;bottom:1.8%;
-  display:flex;align-items:center;gap:10px;
-  font-size:9px;letter-spacing:.15em;color:#818983
-}
-.enter-cue::after{content:"↓";font-size:15px;color:var(--gold)}
+.agentwrap{position:absolute;left:9%;top:53%;z-index:15;display:flex;align-items:center;gap:12px}
+.agent{width:98px;height:98px;border-radius:50%;display:grid;place-items:center;font-family:"Songti SC","STSong",serif;font-size:27px;background:radial-gradient(circle,#f9f6ef 0 35%,#dde5d9 66%,#c9d5c6 100%);border:1px solid rgba(23,56,47,.12);box-shadow:0 18px 48px rgba(31,55,44,.16),0 0 0 8px rgba(255,255,255,.22);position:relative}
+.agent:before{content:"";position:absolute;width:48px;height:48px;border-radius:50%;border:2px solid rgba(188,149,88,.78);border-left-color:transparent;border-bottom-color:transparent;right:-7px;top:-8px;transform:rotate(18deg)}
+.agent:after{content:"✦";position:absolute;right:-11px;bottom:3px;color:var(--gold);font-size:13px;text-shadow:-16px -16px rgba(188,149,88,.55)}
+.bubble{padding:10px 12px;border-radius:13px 13px 13px 4px;background:rgba(250,248,241,.93);border:1px solid rgba(23,56,47,.09);box-shadow:0 14px 35px rgba(32,52,43,.08);font-size:11px;color:#53665e}
+.cue{position:absolute;right:5%;bottom:4%;font-size:8px;letter-spacing:.16em;color:#828984}.cue:after{content:"  ↓";color:var(--gold);font-size:13px}
 
 @media(max-width:980px){
-  .topbar{height:68px;padding:0 20px}
-  .nav{gap:18px}.nav a{font-size:10px}.nav a:nth-child(2),.nav a:nth-child(3){display:none}
-  .hero-main{
-    min-height:calc(100svh - 68px);
-    display:block;
-    padding:31px 20px 22px
-  }
-  .copy{max-width:none}
-  .kicker{font-size:10px;margin-bottom:14px}
-  h1{font-size:46px;line-height:1.03;max-width:350px}
-  .lede{font-size:14px;line-height:1.8;margin:23px 0 22px;max-width:345px}
-  .cta-row{align-items:flex-start;flex-direction:column;gap:9px}
-  .enter{padding:14px 20px;font-size:14px}
-  .entry-note{display:none}
-  .stage{
-    height:390px;min-height:0;
-    margin-top:24px;
-    perspective:1100px
-  }
-  .stage-glow{width:105%;height:90%;right:-16%;top:3%}
-  .portal-shell{
-    inset:0 -18% -5% 5%;
-    border-radius:30px;
-    transform:rotateY(-6deg)
-  }
-  .portal-shell::before{inset:11% 10% 10% 12%;border-radius:24px}
-  .portal-shell::after{width:125px;height:125px}
-  .workspace-label{right:5%;top:5%;font-size:7px}
-  .workspace-copy{display:none}
-  .product{
-    width:94%;height:53%;
-    right:-16%;top:19%;
-    transform:translateZ(75px) rotateY(-5deg) rotateZ(-1deg)
-  }
-  .product-left{display:none}
-  .product-body{display:block}
-  .product-right{height:100%;padding:12px}
-  .preview{height:72%}
-  .content-strip{
-    width:60%;height:29%;left:-4%;bottom:3%;
-    transform:translateZ(120px) rotateY(8deg) rotateZ(2.5deg)
-  }
-  .eval{
-    width:58%;height:25%;right:-14%;bottom:-1%;
-    transform:translateZ(15px) rotateY(-8deg) rotateZ(-3deg)
-  }
-  .eval-body{padding:14px}.eval-line{height:30px;margin-top:8px}
-  .agent-wrap{left:7%;top:43%;gap:8px}
-  .agent{width:70px;height:70px;font-size:20px}
-  .agent::before{width:35px;height:35px;right:-6px;top:-7px}
-  .bubble{font-size:10px;padding:9px 10px;margin-top:-18px}
-  .flow-note{display:none}
-  .enter-cue{right:18px;bottom:9px;font-size:7px}
+.topbar{height:68px;padding:0 20px}.nav{gap:18px}.nav a:nth-child(2),.nav a:nth-child(3){display:none}
+.main{min-height:calc(100svh - 68px);display:block;padding:29px 20px 22px}
+.kicker{font-size:10px;margin-bottom:14px}h1{font-size:46px;max-width:350px}.lede{font-size:14px;line-height:1.8;margin:23px 0 22px;max-width:345px}.cta{padding:14px 20px;font-size:14px}.micro{display:none}.flow{display:none}
+.stage{height:390px;min-height:0;margin-top:22px;perspective:1100px}.halo{inset:5% -15% 0 1%}
+.doorway{inset:0 -14% -5% 5%;transform:rotateY(-5deg)}.frame.outer{border-radius:30px}.frame.mid{inset:7% 7% 7% 8%;border-radius:24px}.frame.inner{inset:14% 14% 13% 15%;border-radius:20px}.frame.inner:after{border-radius:15px}.label{font-size:7px;right:4%}
+.product{left:25%;right:-12%;top:22%;height:49%;transform:translateZ(70px) rotateZ(-.5deg)}.left{display:none}.productbody{display:block}.right{height:100%;padding:12px}.preview{height:73%}
+.peek.content{width:44%;height:24%;left:-2%;bottom:7%}.peek.eval{width:43%;height:21%;right:-10%;bottom:5%}
+.agentwrap{left:5%;top:40%;gap:8px}.agent{width:68px;height:68px;font-size:19px}.agent:before{width:34px;height:34px}.bubble{font-size:10px;padding:9px 10px}.cue{right:16px;bottom:8px;font-size:7px}
 }
-@media(max-width:560px){
-  .brand{font-size:15px}.brand-dot{width:5px;height:5px}
-  .nav a{display:none}.nav a:last-child{display:block}
-  h1{font-size:44px;max-width:330px}
-  .hero-main{padding-top:28px}
-  .stage{height:370px;margin-top:21px}
-  .agent-wrap{top:39%}
-}
+@media(max-width:560px){.brand{font-size:15px}.nav a{display:none}.nav a:last-child{display:block}h1{font-size:44px;max-width:330px}.stage{height:370px}.agentwrap{top:38%}}
 </style>
 </head>
 <body>
 <section class="hero">
-  <header class="topbar">
-    <a class="brand" href="#"><span>CUI</span><i class="brand-dot"></i></a>
-    <nav class="nav">
-      <a href="#work">WORK</a>
-      <a href="#about">ABOUT</a>
-      <a href="https://github.com/cuiliya521" target="_blank">GITHUB</a>
-      <a href="#">PDF</a>
-    </nav>
-  </header>
+<header class="topbar"><a class="brand" href="#"><span>CUI</span><i class="dot"></i></a><nav class="nav"><a>WORK</a><a>ABOUT</a><a href="https://github.com/cuiliya521" target="_blank">GITHUB</a><a>PDF</a></nav></header>
+<main class="main">
+  <section class="copy">
+    <div class="kicker">AI 产品运营 · 产品运营 · AI 应用产品</div>
+    <h1>把 AI 能力，<br><span class="l2">做进真实工作里。</span></h1>
+    <p class="lede">从真实问题出发，把 AI 变成可使用、可验证的产品与工作流。</p>
+    <div><span class="cta">进入工作现场 <b>→</b></span><span class="micro">ENTER THE WORKSPACE</span></div>
+  </section>
 
-  <main class="hero-main">
-    <section class="copy">
-      <div class="kicker">AI 产品运营 · 产品运营 · AI 应用产品</div>
-      <h1>把 AI 能力，<br><span class="line2">做进真实工作里。</span></h1>
-      <p class="lede">从真实问题出发，把 AI 变成可使用、可验证的产品与工作流。</p>
-      <div class="cta-row">
-        <button class="enter"><span>进入工作现场</span><span class="arrow">→</span></button>
-        <span class="entry-note">ENTER THE WORKSPACE</span>
+  <section class="stage">
+    <div class="halo"></div>
+    <div class="doorway">
+      <div class="frame outer"></div><div class="frame mid"></div><div class="frame inner"></div>
+      <div class="label">WORKSPACE / ENTRY</div><div class="threshold"></div>
+    </div>
+
+    <article class="product">
+      <div class="chrome"><i></i><i></i><i></i><span>PRODUCT WORKFLOW</span></div>
+      <div class="productbody">
+        <div class="left"><h3>结构化输入</h3><div class="field"></div><div class="field"></div><div class="field"></div><div class="field"></div></div>
+        <div class="right"><small>实时预览 / PLACEHOLDER</small><div class="preview"></div></div>
       </div>
-    </section>
+    </article>
 
-    <section class="stage" aria-label="Workspace entrance preview">
-      <div class="stage-glow"></div>
-      <div class="portal-shell"></div>
-      <div class="workspace-label">WORKSPACE / ENTRY</div>
-      <div class="workspace-copy"><b>先看工作，不先看简历。</b>往里走，项目才真正展开。</div>
+    <aside class="peek content"><div class="chrome"><i></i><i></i><i></i><span>CONTENT</span></div><div class="mini"><b></b><b></b><b></b></div></aside>
+    <aside class="peek eval"><div class="chrome"><i></i><i></i><i></i><span>AI EVALUATION</span></div><div class="trace"></div></aside>
 
-      <article class="plane product">
-        <div class="chrome"><i></i><i></i><i></i><span>PRODUCT WORKFLOW</span></div>
-        <div class="product-body">
-          <div class="product-left">
-            <h3>结构化输入</h3>
-            <div class="field"></div><div class="field"></div><div class="field"></div><div class="field"></div>
-          </div>
-          <div class="product-right">
-            <small>实时预览 / PLACEHOLDER</small>
-            <div class="preview"></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="plane content-strip">
-        <div class="chrome"><i></i><i></i><i></i><span>CONTENT STUDIO</span></div>
-        <div class="content-body"><div class="tile"></div><div class="tile"></div><div class="tile"></div></div>
-      </article>
-
-      <article class="plane eval">
-        <div class="chrome"><i></i><i></i><i></i><span>AI EVALUATION</span></div>
-        <div class="eval-body"><div class="eval-tag">VALIDATION LAYER</div><div class="eval-line"></div></div>
-      </article>
-
-      <div class="agent-wrap">
-        <div class="agent" aria-label="CUI Agent placeholder">CUI</div>
-        <div class="bubble">Hi，要进去看看吗？</div>
-      </div>
-      <div class="enter-cue">SCROLL TO ENTER</div>
-    </section>
-
-    <div class="flow-note">PROBLEM → PRODUCT → VALIDATION</div>
-  </main>
+    <div class="agentwrap"><div class="agent">CUI</div><div class="bubble">Hi，要进去看看吗？</div></div>
+    <div class="cue">SCROLL TO ENTER</div>
+  </section>
+  <div class="flow">PROBLEM → PRODUCT → VALIDATION</div>
+</main>
 </section>
 </body>
 </html>
