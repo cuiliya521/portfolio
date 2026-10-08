@@ -3,112 +3,701 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>CUI｜Hero V3</title>
+<meta name="description" content="崔丽娅｜AI 产品运营 · 产品运营 · AI 应用产品">
+<title>CUI｜AI Product Workspace</title>
 <style>
 :root{
-  --paper:#f6f2e9;--ink:#17382f;--muted:#65756d;--sage:#b7c3b1;--sage2:#dbe3d8;
-  --gold:#bc9558;--gold2:#e2c995;--night:#173029;--line:rgba(23,56,47,.12)
+  --paper:#f6f2e9;
+  --ink:#17382f;
+  --ink2:#40584f;
+  --muted:#6f7d76;
+  --sage:#dfe7dc;
+  --sage2:#cbd6c8;
+  --gold:#bd9558;
+  --gold2:#e4c994;
+  --line:rgba(23,56,47,.11);
+  --shadow:0 26px 76px rgba(31,52,43,.13);
 }
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--paper);color:var(--ink)}
-body{font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;overflow-x:hidden}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--paper);color:var(--ink)}
+body{
+  font-family:Inter,"SF Pro Display","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  overflow-x:hidden;
+}
+button,a{font:inherit}
 a{color:inherit;text-decoration:none}
-.hero{min-height:100svh;position:relative;overflow:hidden;background:
-radial-gradient(circle at 78% 33%,rgba(255,255,255,.96),transparent 20%),
-radial-gradient(circle at 95% 15%,rgba(209,220,205,.72),transparent 26%),
-linear-gradient(116deg,#f8f5ee 0%,#f2efe7 48%,#e9ede5 100%)}
-.hero:before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(23,56,47,.11) .7px,transparent .7px);background-size:28px 28px;mask-image:linear-gradient(90deg,transparent 0 50%,#000 74% 100%);opacity:.22}
-.topbar{height:78px;display:flex;align-items:center;justify-content:space-between;padding:0 4.6vw;border-bottom:1px solid rgba(23,56,47,.07);position:relative;z-index:20}
-.brand{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;letter-spacing:.18em}.dot{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 5px rgba(188,149,88,.08)}
-.nav{display:flex;gap:30px;font-size:11px;letter-spacing:.16em;color:rgba(23,56,47,.62)}
-.main{width:min(1500px,100%);min-height:calc(100svh - 78px);margin:auto;padding:6.5vh 5vw 5vh;display:grid;grid-template-columns:minmax(430px,.9fr) minmax(650px,1.1fr);align-items:center;gap:1.5vw;position:relative}
-.copy{position:relative;z-index:10;max-width:630px}.kicker{display:flex;align-items:center;gap:12px;font-size:16px;letter-spacing:.09em;color:#355046;margin-bottom:24px;font-weight:600}.kicker:before{content:"";width:36px;height:1px;background:var(--gold)}
-h1{margin:0;font-family:"Songti SC","STSong","Noto Serif SC",serif;font-size:clamp(60px,5.45vw,86px);line-height:1.015;letter-spacing:-.045em;font-weight:600}
-h1 .l2{display:inline-block;position:relative;margin-top:4px}h1 .l2:after{content:"";position:absolute;left:0;right:8%;bottom:-10px;height:4px;border-radius:99px;background:linear-gradient(90deg,var(--gold2),rgba(188,149,88,0));opacity:.72}
-.lede{margin:32px 0 33px;max-width:500px;font-size:22px;line-height:1.72;color:#40584f;font-weight:500}
-.cta{display:inline-flex;align-items:center;gap:32px;border-radius:999px;background:var(--ink);color:#f8f5ee;padding:17px 26px;box-shadow:0 18px 42px rgba(23,56,47,.14);transition:transform .28s ease,box-shadow .28s ease}
-.micro{margin-left:15px;font-size:10px;letter-spacing:.14em;color:#8a908b}.cta:hover{transform:translateY(-2px);box-shadow:0 22px 48px rgba(23,56,47,.18)}
-.flow{position:absolute;left:5vw;bottom:3.2vh;font-size:9px;letter-spacing:.15em;color:#858b86}
-
-/* The doorway, not a card stack */
-.stage{position:relative;height:min(670px,73vh);min-height:570px;perspective:1800px;z-index:4}
-.halo{position:absolute;inset:7% 0 0 6%;border-radius:48%;background:radial-gradient(circle at 57% 49%,rgba(255,255,255,.97) 0 24%,rgba(255,255,255,.38) 49%,transparent 70%);filter:blur(3px)}
-.doorway{position:absolute;inset:2% 3% 1% 8%;transform:rotateY(-6deg);transform-style:preserve-3d}
-.frame{position:absolute;border:1px solid rgba(23,56,47,.12);box-shadow:inset 0 1px rgba(255,255,255,.84)}
-.frame.outer{inset:0;border-radius:48px;background:linear-gradient(145deg,rgba(255,255,255,.42),rgba(255,255,255,.08) 60%,rgba(166,183,162,.12))}
-.frame.mid{inset:7% 7% 7% 8%;border-radius:38px;background:rgba(249,248,243,.33)}
-.frame.inner{inset:14% 15% 13% 16%;border-radius:29px;background:linear-gradient(145deg,#f7f6f1,#e8ece4)}
-.frame.inner:after{content:"";position:absolute;inset:8%;border-radius:22px;background:linear-gradient(145deg,#f7f7f2,#eef1eb);box-shadow:inset 0 0 70px rgba(23,56,47,.04)}
-.label{position:absolute;right:5%;top:5%;font-size:9px;letter-spacing:.23em;color:#758179}
-.threshold{position:absolute;left:20%;right:18%;bottom:9%;height:1px;background:linear-gradient(90deg,transparent,rgba(188,149,88,.55),transparent);box-shadow:0 0 14px rgba(188,149,88,.18)}
-
-/* dominant object visible beyond the entrance */
-.product{position:absolute;left:28%;right:9%;top:24%;height:47%;z-index:8;border-radius:20px;background:#fbfaf6;border:1px solid rgba(23,56,47,.09);box-shadow:0 28px 70px rgba(37,56,47,.13);transform:translateZ(95px) rotateZ(-.6deg);overflow:hidden}
-.chrome{height:39px;display:flex;align-items:center;gap:6px;padding:0 14px;background:#f1f3ed;border-bottom:1px solid rgba(23,56,47,.07)}
-.chrome i{width:7px;height:7px;border-radius:50%;background:#9eaea0}.chrome span{margin-left:7px;font-size:9px;letter-spacing:.13em;color:#69786f}
-.productbody{height:calc(100% - 39px);display:grid;grid-template-columns:36% 64%}.left{padding:18px;border-right:1px solid var(--line)}.left h3{margin:0 0 14px;font-size:14px}
-.field{height:31px;margin:8px 0;border-radius:8px;border:1px solid rgba(23,56,47,.08);background:#f3f2ed;position:relative}.field:after{content:"";position:absolute;left:10px;top:50%;width:35%;height:5px;border-radius:9px;background:#c7d0c5;transform:translateY(-50%)}
-.right{padding:15px}.right small{font-size:10px;color:#748078}.preview{height:72%;margin-top:8px;border-radius:12px;background:radial-gradient(circle at 30% 22%,rgba(255,255,255,.9),transparent 18%),linear-gradient(145deg,#d8e1d4,#adbea8 47%,#819789);position:relative}.preview:before{content:"";position:absolute;left:34%;top:14%;width:34%;height:64%;border-radius:26% 26% 17% 17%;background:rgba(249,248,238,.72);transform:rotate(-7deg)}
-
-/* only peeking hints, not three blocks */
-.peek{position:absolute;z-index:5;border:1px solid rgba(23,56,47,.08);box-shadow:0 22px 58px rgba(37,56,47,.1);overflow:hidden}
-.peek.content{width:25%;height:23%;left:12%;bottom:14%;border-radius:16px;background:#ebe4d8;transform:translateZ(55px) rotateZ(2deg)}
-.peek.content .mini{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:10px;height:calc(100% - 34px)}.mini b{border-radius:7px;background:#ddcfc0}.mini b:nth-child(2){background:#e7d6d2}.mini b:nth-child(3){background:#c5d1c0}
-.peek.eval{width:24%;height:21%;right:5%;bottom:11%;border-radius:16px;background:var(--night);transform:translateZ(5px) rotateZ(-2deg);color:#fff}.peek.eval .chrome{height:34px;background:#203d34;border-bottom-color:rgba(255,255,255,.05)}.trace{height:55px;margin:15px 14px;border-bottom:1px solid rgba(255,255,255,.08);position:relative}.trace:before{content:"";position:absolute;left:0;right:0;top:47%;height:2px;background:linear-gradient(90deg,#6b887b,#b6d3a5 35%,#d5c17c 68%,#8bb39a);transform:skewY(-8deg)}
-
-.agentwrap{position:absolute;left:9%;top:53%;z-index:15;display:flex;align-items:center;gap:12px;animation:cuiFloat 3.8s ease-in-out infinite;will-change:transform}
-.agent{width:98px;height:98px;border-radius:50%;display:grid;place-items:center;font-family:"Songti SC","STSong",serif;font-size:27px;background:radial-gradient(circle,#f9f6ef 0 35%,#dde5d9 66%,#c9d5c6 100%);border:1px solid rgba(23,56,47,.12);box-shadow:0 18px 48px rgba(31,55,44,.16),0 0 0 8px rgba(255,255,255,.22);position:relative}
-.agent:before{content:"";position:absolute;width:48px;height:48px;border-radius:50%;border:2px solid rgba(188,149,88,.78);border-left-color:transparent;border-bottom-color:transparent;right:-7px;top:-8px;transform:rotate(18deg)}
-.agent:after{content:"✦";position:absolute;right:-11px;bottom:3px;color:var(--gold);font-size:13px;text-shadow:-16px -16px rgba(188,149,88,.55),-34px 7px rgba(188,149,88,.24);animation:cuiSpark 2.6s ease-in-out infinite}
-.bubble{padding:12px 15px;border-radius:14px 14px 14px 4px;background:rgba(255,253,247,.98);border:1px solid rgba(23,56,47,.12);box-shadow:0 14px 35px rgba(32,52,43,.10);font-size:14px;font-weight:600;line-height:1.4;color:#29483e;letter-spacing:.01em}
-.cue{position:absolute;right:5%;bottom:4%;font-size:8px;letter-spacing:.16em;color:#828984}.cue:after{content:"  ↓";color:var(--gold);font-size:13px}
-
-@keyframes cuiFloat{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-7px,0)}}@keyframes cuiSpark{0%,100%{opacity:.42;transform:scale(.88) rotate(0deg)}48%{opacity:1;transform:scale(1.08) rotate(7deg)}70%{opacity:.68;transform:scale(.96) rotate(-4deg)}}@media (prefers-reduced-motion:reduce){.agentwrap,.agent:after{animation:none!important}.cta{transition:none!important}}@media(max-width:980px){
-.topbar{height:68px;padding:0 20px}.nav{gap:18px}.nav a:nth-child(2),.nav a:nth-child(3){display:none}
-.main{min-height:calc(100svh - 68px);display:block;padding:29px 20px 22px}
-.kicker{font-size:12px;margin-bottom:16px;letter-spacing:.06em}h1{font-size:46px;max-width:350px}.lede{font-size:16px;line-height:1.7;margin:24px 0 24px;max-width:354px}.cta{padding:14px 20px;font-size:14px}.micro{display:none}.flow{display:none}
-.stage{height:390px;min-height:0;margin-top:22px;perspective:1100px}.halo{inset:5% -15% 0 1%}
-.doorway{inset:0 -14% -5% 5%;transform:rotateY(-5deg)}.frame.outer{border-radius:30px}.frame.mid{inset:7% 7% 7% 8%;border-radius:24px}.frame.inner{inset:14% 14% 13% 15%;border-radius:20px}.frame.inner:after{border-radius:15px}.label{font-size:7px;right:4%}
-.product{left:25%;right:-12%;top:22%;height:49%;transform:translateZ(70px) rotateZ(-.5deg)}.left{display:none}.productbody{display:block}.right{height:100%;padding:12px}.preview{height:73%}
-.peek.content{width:44%;height:24%;left:-2%;bottom:7%}.peek.eval{width:43%;height:21%;right:-10%;bottom:5%}
-.agentwrap{left:5%;top:40%;gap:8px}.agent{width:68px;height:68px;font-size:19px}.agent:before{width:34px;height:34px}.bubble{font-size:12px;padding:10px 12px;font-weight:600}.cue{right:16px;bottom:8px;font-size:7px}
+button{color:inherit}
+.hero{
+  min-height:100svh;
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  background:
+    radial-gradient(circle at 78% 32%,rgba(255,255,255,.96),transparent 20%),
+    radial-gradient(circle at 96% 13%,rgba(211,223,208,.72),transparent 27%),
+    linear-gradient(116deg,#f8f5ee 0%,#f2efe7 48%,#e9ede5 100%);
 }
-@media(max-width:560px){.brand{font-size:15px}.nav a{display:none}.nav a:last-child{display:block}h1{font-size:44px;max-width:330px}.stage{height:370px}.agentwrap{top:38%}}
+.hero::before{
+  content:"";
+  position:absolute;inset:0;z-index:-4;
+  background-image:radial-gradient(rgba(23,56,47,.11) .72px,transparent .72px);
+  background-size:28px 28px;
+  mask-image:linear-gradient(90deg,transparent 0 49%,#000 72% 100%);
+  opacity:.21;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  width:38vw;height:38vw;min-width:460px;min-height:460px;
+  right:-17vw;bottom:-18vw;border-radius:50%;
+  background:rgba(188,204,184,.38);
+  filter:blur(92px);
+  z-index:-3;
+}
+.topbar{
+  height:78px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 4.6vw;
+  border-bottom:1px solid rgba(23,56,47,.07);
+  position:relative;z-index:30;
+  transition:opacity .55s ease,transform .55s ease;
+}
+.brand{
+  display:flex;align-items:center;gap:10px;
+  font-size:17px;font-weight:700;letter-spacing:.18em
+}
+.brand-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--gold);
+  box-shadow:0 0 0 5px rgba(189,149,88,.08)
+}
+.nav{display:flex;gap:30px;align-items:center}
+.nav a{
+  font-size:11px;letter-spacing:.16em;
+  color:rgba(23,56,47,.62);
+  transition:color .2s ease
+}
+.nav a:hover{color:var(--ink)}
+.hero-main{
+  width:min(1500px,100%);
+  min-height:calc(100svh - 78px);
+  margin:auto;
+  padding:6.4vh 5vw 5vh;
+  display:grid;
+  grid-template-columns:minmax(430px,.9fr) minmax(650px,1.1fr);
+  align-items:center;
+  gap:1.5vw;
+  position:relative;
+}
+.copy{
+  position:relative;z-index:12;
+  max-width:650px;
+  transition:opacity .58s ease,transform .7s cubic-bezier(.2,.7,.2,1);
+}
+.kicker{
+  display:flex;align-items:center;gap:12px;
+  font-size:16px;font-weight:600;
+  letter-spacing:.09em;
+  color:#355046;
+  margin-bottom:24px
+}
+.kicker::before{content:"";width:36px;height:1px;background:var(--gold)}
+h1{
+  margin:0;
+  font-family:"Songti SC","STSong","Noto Serif SC",serif;
+  font-size:clamp(60px,5.45vw,86px);
+  line-height:1.015;
+  letter-spacing:-.045em;
+  font-weight:600;
+}
+h1 .line2{display:inline-block;position:relative;margin-top:4px}
+h1 .line2::after{
+  content:"";
+  position:absolute;left:0;right:8%;bottom:-10px;height:4px;
+  border-radius:99px;
+  background:linear-gradient(90deg,var(--gold2),rgba(189,149,88,0));
+  opacity:.72
+}
+.lede{
+  margin:32px 0 33px;
+  max-width:550px;
+  font-size:22px;
+  line-height:1.72;
+  color:var(--ink2);
+  font-weight:500
+}
+.action-row{display:flex;align-items:center;gap:16px}
+.enter{
+  border:0;
+  display:inline-flex;align-items:center;gap:32px;
+  border-radius:999px;
+  background:var(--ink);color:#f8f5ee;
+  padding:17px 26px;
+  box-shadow:0 18px 42px rgba(23,56,47,.14);
+  cursor:pointer;
+  transition:transform .28s ease,box-shadow .28s ease
+}
+.enter:hover{transform:translateY(-2px);box-shadow:0 22px 48px rgba(23,56,47,.18)}
+.enter .arrow{font-size:20px;line-height:1}
+.micro{font-size:10px;letter-spacing:.14em;color:#8a908b}
+.flow{
+  position:absolute;left:5vw;bottom:3.2vh;
+  font-size:9px;letter-spacing:.15em;color:#858b86;
+  transition:opacity .45s ease
+}
+
+/* workspace entrance */
+.stage{
+  position:relative;
+  height:min(675px,74vh);
+  min-height:575px;
+  perspective:1800px;
+  z-index:6;
+  transform-origin:52% 50%;
+  transition:transform .9s cubic-bezier(.2,.72,.16,1),opacity .65s ease;
+}
+.stage-glow{
+  position:absolute;inset:8% -2% 0 7%;
+  border-radius:46%;
+  background:radial-gradient(circle at 56% 50%,rgba(255,255,255,.98) 0 24%,rgba(255,255,255,.38) 50%,transparent 72%);
+  filter:blur(5px);
+  z-index:-2;
+}
+.portal{
+  position:absolute;
+  inset:1% 0 0 6%;
+  transform:rotateY(-5.5deg);
+  transform-style:preserve-3d;
+  z-index:1;
+}
+.portal-ring{
+  position:absolute;
+  border:1px solid rgba(23,56,47,.115);
+  box-shadow:inset 0 1px rgba(255,255,255,.88)
+}
+.portal-ring.outer{
+  inset:0;
+  border-radius:54px;
+  background:linear-gradient(145deg,rgba(255,255,255,.40),rgba(255,255,255,.08) 61%,rgba(166,183,162,.12))
+}
+.portal-ring.mid{
+  inset:7% 7% 7% 8%;
+  border-radius:43px;
+  background:rgba(249,248,243,.29)
+}
+.portal-ring.inner{
+  inset:14% 15% 13% 16%;
+  border-radius:32px;
+  background:linear-gradient(145deg,rgba(246,247,242,.82),rgba(232,238,230,.87))
+}
+.portal-label{
+  position:absolute;right:5%;top:5%;
+  font-size:9px;letter-spacing:.23em;color:#758179
+}
+.threshold{
+  position:absolute;left:20%;right:17%;bottom:8.5%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(189,149,88,.55),transparent);
+  box-shadow:0 0 14px rgba(189,149,88,.18)
+}
+
+.project-label{
+  position:absolute;
+  z-index:15;
+  left:11%;top:11%;
+  padding:9px 13px;
+  border-radius:999px;
+  background:rgba(252,250,244,.92);
+  border:1px solid rgba(23,56,47,.09);
+  backdrop-filter:blur(12px);
+  font-size:9px;letter-spacing:.14em;color:#53675e;
+  box-shadow:0 12px 30px rgba(37,56,47,.06)
+}
+
+.ui-card{
+  position:absolute;
+  overflow:hidden;
+  border:1px solid rgba(23,56,47,.095);
+  box-shadow:var(--shadow);
+  background:#fff;
+}
+.ui-card img{
+  display:block;
+  width:100%;height:100%;
+  object-fit:contain;
+  background:#fff;
+  image-rendering:auto;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+.ui-card.main-ui{
+  left:8%;right:-1%;top:18%;
+  height:58%;
+  border-radius:25px;
+  z-index:10;
+  transform:translateZ(115px) rotateZ(-.45deg);
+}
+.ui-card.secondary-ui{
+  width:46%;height:31%;
+  right:-2%;bottom:5%;
+  border-radius:19px;
+  z-index:6;
+  transform:translateZ(24px) rotateZ(.75deg);
+  opacity:.94;
+}
+.secondary-mask{
+  position:absolute;
+  z-index:8;
+  right:27%;bottom:5%;
+  width:31%;height:31%;
+  background:linear-gradient(90deg,rgba(239,242,235,.95),rgba(239,242,235,.32),transparent);
+  pointer-events:none;
+}
+
+.agent-wrap{
+  position:absolute;
+  z-index:18;
+  left:-2%;top:56%;
+  display:flex;align-items:center;gap:12px;
+  animation:cuiFloat 3.8s ease-in-out infinite;
+  will-change:transform;
+}
+.agent-placeholder{
+  width:116px;height:116px;border-radius:50%;
+  display:grid;place-items:center;
+  font-family:"Songti SC","STSong",serif;
+  font-size:29px;
+  background:radial-gradient(circle at 38% 28%,#fff 0 12%,transparent 13%),radial-gradient(circle,#f9f6ef 0 35%,#dde5d9 66%,#c9d5c6 100%);
+  border:1px solid rgba(23,56,47,.12);
+  box-shadow:0 18px 48px rgba(31,55,44,.16),0 0 0 8px rgba(255,255,255,.22);
+  position:relative
+}
+.agent-placeholder::before{
+  content:"";
+  position:absolute;
+  width:54px;height:54px;border-radius:50%;
+  border:2px solid rgba(189,149,88,.8);
+  border-left-color:transparent;border-bottom-color:transparent;
+  right:-8px;top:-9px;transform:rotate(18deg)
+}
+.agent-placeholder::after{
+  content:"✦";
+  position:absolute;right:-12px;bottom:4px;
+  color:var(--gold);font-size:14px;
+  text-shadow:-17px -18px rgba(189,149,88,.52),-36px 8px rgba(189,149,88,.24);
+  animation:cuiSpark 2.6s ease-in-out infinite
+}
+.bubble{
+  margin-top:-22px;
+  padding:12px 15px;
+  border-radius:14px 14px 14px 4px;
+  background:rgba(255,253,247,.98);
+  border:1px solid rgba(23,56,47,.12);
+  box-shadow:0 14px 35px rgba(32,52,43,.10);
+  font-size:14px;font-weight:600;line-height:1.4;
+  color:#29483e;
+  white-space:nowrap
+}
+.cue{
+  position:absolute;right:4%;bottom:1.8%;
+  z-index:15;
+  font-size:8px;letter-spacing:.16em;color:#828984
+}
+.cue::after{content:"  ↓";color:var(--gold);font-size:13px}
+
+/* enter transition */
+body.entering .copy{opacity:0;transform:translateX(-48px)}
+body.entering .topbar{opacity:.28;transform:translateY(-8px)}
+body.entering .flow{opacity:0}
+body.entering .stage{transform:translate3d(-13vw,0,0) scale(1.22)}
+body.entering .portal{opacity:.35}
+body.entering .secondary-ui{opacity:.35}
+body.entering .project-label,.cue{transition:opacity .35s ease}
+body.entering .project-label{opacity:0}
+body.entering .cue{opacity:0}
+body.entering .agent-wrap{
+  animation:none;
+  transition:transform .9s cubic-bezier(.2,.75,.2,1),opacity .8s ease;
+  transform:translate3d(33vw,-12vh,0) scale(.72);
+  opacity:.18
+}
+.spark{
+  position:fixed;
+  width:4px;height:4px;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:150;
+  background:var(--gold2);
+  box-shadow:0 0 12px rgba(189,149,88,.75);
+  animation:sparkFly .8s ease-out forwards
+}
+
+/* Pangu focus scene */
+.pangu-scene{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:
+    radial-gradient(circle at 64% 44%,rgba(255,255,255,.98),transparent 28%),
+    linear-gradient(120deg,#f6f2e9,#edf0e8 70%,#e1e8df);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .52s ease,visibility .52s ease;
+  overflow:hidden;
+}
+.pangu-scene.open{
+  opacity:1;visibility:visible;pointer-events:auto
+}
+.scene-top{
+  height:76px;
+  padding:0 4.6vw;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid rgba(23,56,47,.08)
+}
+.scene-index{
+  font-size:11px;letter-spacing:.19em;color:#66776f
+}
+.scene-back{
+  border:1px solid rgba(23,56,47,.12);
+  background:rgba(255,255,255,.55);
+  color:var(--ink);
+  padding:10px 15px;border-radius:999px;
+  cursor:pointer;
+  backdrop-filter:blur(10px)
+}
+.scene-body{
+  height:calc(100svh - 76px);
+  display:grid;
+  grid-template-columns:320px minmax(0,1fr);
+  gap:3vw;
+  align-items:center;
+  padding:5vh 4.8vw 6vh
+}
+.scene-copy{
+  position:relative;z-index:6;
+  align-self:end;
+  padding-bottom:7vh
+}
+.scene-copy .chapter{
+  font-size:10px;letter-spacing:.17em;color:#7c8780;
+  margin-bottom:12px
+}
+.scene-copy h2{
+  margin:0 0 16px;
+  font-family:"Songti SC","STSong","Noto Serif SC",serif;
+  font-size:38px;line-height:1.12;font-weight:600;
+  letter-spacing:-.03em
+}
+.scene-copy p{
+  margin:0;
+  color:#52665d;
+  font-size:15px;line-height:1.8
+}
+.scene-flow{
+  display:flex;flex-wrap:wrap;gap:8px;
+  margin-top:20px
+}
+.scene-flow span{
+  padding:7px 10px;
+  border-radius:999px;
+  background:rgba(255,255,255,.62);
+  border:1px solid rgba(23,56,47,.09);
+  font-size:10px;color:#5d7168
+}
+.scene-visual{
+  position:relative;
+  height:min(720px,76vh);
+  min-height:520px;
+  display:grid;place-items:center
+}
+.focus-frame{
+  position:absolute;
+  width:min(100%,1120px);
+  aspect-ratio:3 / 2;
+  border-radius:30px;
+  background:#fff;
+  border:1px solid rgba(23,56,47,.1);
+  box-shadow:0 38px 100px rgba(31,52,43,.16);
+  overflow:hidden;
+  transform:translateY(24px) scale(.92);
+  opacity:0;
+  transition:transform .82s cubic-bezier(.2,.75,.16,1),opacity .6s ease
+}
+.pangu-scene.open .focus-frame{transform:translateY(0) scale(1);opacity:1}
+.focus-frame img{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:contain;background:#fff;
+  transition:opacity .48s ease,transform .65s cubic-bezier(.2,.75,.16,1);
+  image-rendering:auto
+}
+.focus-frame img.is-hidden{
+  opacity:0;transform:translateX(26px) scale(.985)
+}
+.scene-next{
+  position:absolute;
+  right:1.5%;bottom:2.5%;
+  z-index:5;
+  border:0;
+  background:var(--ink);color:#f9f6ee;
+  padding:13px 18px;border-radius:999px;
+  cursor:pointer;
+  box-shadow:0 16px 34px rgba(23,56,47,.14)
+}
+.scene-proof{
+  position:absolute;
+  left:2%;top:3%;
+  z-index:5;
+  padding:8px 11px;border-radius:999px;
+  background:rgba(250,248,242,.88);
+  border:1px solid rgba(23,56,47,.08);
+  font-size:9px;letter-spacing:.12em;color:#5f7169;
+  backdrop-filter:blur(8px)
+}
+.scene-note{
+  position:absolute;
+  left:2%;bottom:2.5%;
+  z-index:5;
+  font-size:9px;letter-spacing:.08em;color:#7d867f
+}
+
+@keyframes cuiFloat{
+  0%,100%{transform:translate3d(0,0,0)}
+  50%{transform:translate3d(0,-7px,0)}
+}
+@keyframes cuiSpark{
+  0%,100%{opacity:.42;transform:scale(.88) rotate(0deg)}
+  48%{opacity:1;transform:scale(1.08) rotate(7deg)}
+  70%{opacity:.68;transform:scale(.96) rotate(-4deg)}
+}
+@keyframes sparkFly{
+  0%{opacity:0;transform:translate3d(0,0,0) scale(.7)}
+  22%{opacity:1}
+  100%{opacity:0;transform:translate3d(var(--dx),var(--dy),0) scale(.15)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important}
+  .agent-wrap,.agent-placeholder::after{animation:none!important}
+  .enter,.stage,.copy,.topbar,.focus-frame,.focus-frame img{transition:none!important}
+}
+
+/* Mobile is intentionally only a safe fallback for now; dedicated mobile art direction comes later. */
+@media(max-width:980px){
+  .topbar{height:68px;padding:0 20px}
+  .nav{gap:18px}
+  .nav a:nth-child(2),.nav a:nth-child(3){display:none}
+  .hero-main{
+    min-height:calc(100svh - 68px);
+    display:block;
+    padding:29px 20px 22px
+  }
+  .kicker{font-size:12px;margin-bottom:16px;letter-spacing:.06em}
+  h1{font-size:44px;max-width:350px}
+  .lede{font-size:16px;line-height:1.7;margin:24px 0;max-width:354px}
+  .micro,.flow{display:none}
+  .stage{height:390px;min-height:0;margin-top:22px;perspective:1100px}
+  .portal{inset:0 -14% -5% 5%;transform:rotateY(-5deg)}
+  .ui-card.main-ui{left:18%;right:-18%;top:20%;height:54%;border-radius:17px}
+  .ui-card.secondary-ui{width:55%;height:27%;right:-14%;bottom:2%;border-radius:14px}
+  .secondary-mask{display:none}
+  .agent-wrap{left:2%;top:45%;gap:8px}
+  .agent-placeholder{width:72px;height:72px;font-size:19px}
+  .agent-placeholder::before{width:34px;height:34px}
+  .bubble{font-size:12px;padding:10px 12px}
+  .project-label{left:8%;top:8%;font-size:7px;padding:7px 9px}
+  .cue{right:14px;bottom:8px;font-size:7px}
+  body.entering .stage{transform:scale(1.08)}
+  body.entering .agent-wrap{transform:translate3d(30vw,-5vh,0) scale(.75)}
+  .scene-body{grid-template-columns:1fr;padding:22px 16px}
+  .scene-copy{display:none}
+  .scene-visual{height:calc(100svh - 120px);min-height:0}
+  .focus-frame{width:100%;border-radius:18px}
+  .scene-next{right:4%;bottom:4%}
+}
 </style>
 </head>
 <body>
-<section class="hero">
-<header class="topbar"><a class="brand" href="#"><span>CUI</span><i class="dot"></i></a><nav class="nav"><a>WORK</a><a>ABOUT</a><a href="https://github.com/cuiliya521" target="_blank">GITHUB</a><a>PDF</a></nav></header>
-<main class="main">
-  <section class="copy">
-    <div class="kicker">AI 产品运营 · 产品运营 · AI 应用产品</div>
-    <h1>把真实问题，<br><span class="l2">做成真正能用的 AI 产品。</span></h1>
-    <p class="lede">从用户洞察、产品设计到 Vibe Coding 与验证迭代，我关注的是 AI 如何真正进入工作流。</p>
-    <div><span class="cta">进入工作现场 <b>→</b></span><span class="micro">ENTER THE WORKSPACE</span></div>
-  </section>
+<section class="hero" id="hero">
+  <header class="topbar">
+    <a class="brand" href="#hero"><span>CUI</span><i class="brand-dot"></i></a>
+    <nav class="nav">
+      <a href="#hero">WORK</a>
+      <a href="#about">ABOUT</a>
+      <a href="https://github.com/cuiliya521" target="_blank" rel="noreferrer">GITHUB</a>
+      <a href="#">PDF</a>
+    </nav>
+  </header>
 
-  <section class="stage">
-    <div class="halo"></div>
-    <div class="doorway">
-      <div class="frame outer"></div><div class="frame mid"></div><div class="frame inner"></div>
-      <div class="label">WORKSPACE / ENTRY</div><div class="threshold"></div>
-    </div>
-
-    <article class="product">
-      <div class="chrome"><i></i><i></i><i></i><span>PRODUCT WORKFLOW</span></div>
-      <div class="productbody">
-        <div class="left"><h3>结构化输入</h3><div class="field"></div><div class="field"></div><div class="field"></div><div class="field"></div></div>
-        <div class="right"><small>实时预览 / PLACEHOLDER</small><div class="preview"></div></div>
+  <main class="hero-main">
+    <section class="copy">
+      <div class="kicker">AI 产品运营 · 产品运营 · AI 应用产品</div>
+      <h1>把真实问题，<br><span class="line2">做成真正能用的 AI 产品。</span></h1>
+      <p class="lede">从用户洞察、产品设计到 Vibe Coding 与验证迭代，我关注的是 AI 如何真正进入工作流。</p>
+      <div class="action-row">
+        <button class="enter" id="enter-workspace" type="button">
+          <span>进入工作现场</span><span class="arrow">→</span>
+        </button>
+        <span class="micro">ENTER THE WORKSPACE</span>
       </div>
-    </article>
+    </section>
 
-    <aside class="peek content"><div class="chrome"><i></i><i></i><i></i><span>CONTENT</span></div><div class="mini"><b></b><b></b><b></b></div></aside>
-    <aside class="peek eval"><div class="chrome"><i></i><i></i><i></i><span>AI EVALUATION</span></div><div class="trace"></div></aside>
+    <section class="stage" id="stage" aria-label="盘古智绘工作空间入口">
+      <div class="stage-glow"></div>
+      <div class="portal" aria-hidden="true">
+        <div class="portal-ring outer"></div>
+        <div class="portal-ring mid"></div>
+        <div class="portal-ring inner"></div>
+        <div class="portal-label">WORKSPACE / ENTRY</div>
+        <div class="threshold"></div>
+      </div>
 
-    <div class="agentwrap"><div class="agent">CUI</div><div class="bubble">Hi，要进去看看吗？</div></div>
-    <div class="cue">SCROLL TO ENTER</div>
-  </section>
-  <div class="flow">PROBLEM → PRODUCT → VALIDATION</div>
-</main>
+      <div class="project-label">PANGU ZHIHUI · REAL PROJECT</div>
+
+      <figure class="ui-card secondary-ui" aria-label="盘古智绘 我的素材界面">
+        <img src="assets/pangu-manage.png" alt="盘古智绘我的素材界面">
+      </figure>
+      <div class="secondary-mask"></div>
+
+      <figure class="ui-card main-ui" aria-label="盘古智绘 素材生成界面">
+        <img src="assets/pangu-config.png" alt="盘古智绘素材生成界面">
+      </figure>
+
+      <div class="agent-wrap" id="agent-wrap">
+        <div class="agent-placeholder" aria-label="CUI Agent 角色资产待替换">CUI</div>
+        <div class="bubble">Hi，要进去看看吗？</div>
+      </div>
+      <div class="cue">SCROLL TO ENTER</div>
+    </section>
+
+    <div class="flow">PROBLEM → PRODUCT → VALIDATION</div>
+  </main>
 </section>
+
+<section class="pangu-scene" id="pangu-scene" aria-hidden="true">
+  <header class="scene-top">
+    <div class="scene-index">01 / 盘古智绘 · AIGC PRODUCT OPERATIONS</div>
+    <button class="scene-back" id="scene-back" type="button">← 返回入口</button>
+  </header>
+
+  <div class="scene-body">
+    <aside class="scene-copy">
+      <div class="chapter" id="scene-chapter">01 / 结构化输入 + 实时预览</div>
+      <h2 id="scene-title">把 Prompt，<br>变成商户会选的字段。</h2>
+      <p id="scene-desc">不是让商户学习提示词，而是把复杂生成能力藏进产品流程里，让“描述需求”变成“选择需求”。</p>
+      <div class="scene-flow">
+        <span>结构化输入</span><span>实时预览</span><span>结果沉淀</span><span>素材复用</span>
+      </div>
+    </aside>
+
+    <div class="scene-visual">
+      <div class="scene-proof">REAL PROJECT · 脱敏重构 UI</div>
+      <div class="focus-frame">
+        <img id="focus-generate" src="assets/pangu-config.png" alt="盘古智绘素材生成页">
+        <img id="focus-assets" class="is-hidden" src="assets/pangu-manage.png" alt="盘古智绘我的素材页">
+      </div>
+      <button class="scene-next" id="scene-next" type="button">看结果如何沉淀 →</button>
+      <div class="scene-note">基于真实项目经历重构的脱敏概念原型 · 产品 UI 保持原样</div>
+    </div>
+  </div>
+</section>
+
+<script>
+(() => {
+  const body = document.body;
+  const enter = document.getElementById('enter-workspace');
+  const stage = document.getElementById('stage');
+  const scene = document.getElementById('pangu-scene');
+  const back = document.getElementById('scene-back');
+  const next = document.getElementById('scene-next');
+  const imgGenerate = document.getElementById('focus-generate');
+  const imgAssets = document.getElementById('focus-assets');
+  const chapter = document.getElementById('scene-chapter');
+  const title = document.getElementById('scene-title');
+  const desc = document.getElementById('scene-desc');
+  let sceneStep = 0;
+  let locked = false;
+
+  function sparkTrail(){
+    const r = stage.getBoundingClientRect();
+    const originX = r.left + r.width * .18;
+    const originY = r.top + r.height * .62;
+    for(let i=0;i<14;i++){
+      const s = document.createElement('i');
+      s.className = 'spark';
+      s.style.left = (originX + Math.random()*18) + 'px';
+      s.style.top = (originY + Math.random()*18) + 'px';
+      s.style.setProperty('--dx', (150 + Math.random()*260) + 'px');
+      s.style.setProperty('--dy', (-120 + Math.random()*150) + 'px');
+      s.style.animationDelay = (Math.random()*.16) + 's';
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 1100);
+    }
+  }
+
+  function openScene(){
+    if(locked || scene.classList.contains('open')) return;
+    locked = true;
+    sparkTrail();
+    body.classList.add('entering');
+    setTimeout(() => {
+      scene.classList.add('open');
+      scene.setAttribute('aria-hidden','false');
+      locked = false;
+    }, 540);
+  }
+
+  function closeScene(){
+    if(locked) return;
+    locked = true;
+    scene.classList.remove('open');
+    scene.setAttribute('aria-hidden','true');
+    setTimeout(() => {
+      body.classList.remove('entering');
+      locked = false;
+      setStep(0);
+    }, 460);
+  }
+
+  function setStep(step){
+    sceneStep = Math.max(0, Math.min(1, step));
+    const second = sceneStep === 1;
+    imgGenerate.classList.toggle('is-hidden', second);
+    imgAssets.classList.toggle('is-hidden', !second);
+    if(second){
+      chapter.textContent = '02 / 结果沉淀与复用';
+      title.innerHTML = '生成不是终点，<br>结果要进入下一次工作。';
+      desc.textContent = '生成结果被保存、筛选、收藏和复用，素材从一次性输出变成可以持续调用的工作资产。';
+      next.textContent = '回到结构化输入 ←';
+    }else{
+      chapter.textContent = '01 / 结构化输入 + 实时预览';
+      title.innerHTML = '把 Prompt，<br>变成商户会选的字段。';
+      desc.textContent = '不是让商户学习提示词，而是把复杂生成能力藏进产品流程里，让“描述需求”变成“选择需求”。';
+      next.textContent = '看结果如何沉淀 →';
+    }
+  }
+
+  enter.addEventListener('click', openScene);
+  stage.addEventListener('dblclick', openScene);
+  back.addEventListener('click', closeScene);
+  next.addEventListener('click', () => setStep(sceneStep ? 0 : 1));
+
+  window.addEventListener('keydown', e => {
+    if(e.key === 'Enter' && !scene.classList.contains('open')) openScene();
+    if(e.key === 'Escape' && scene.classList.contains('open')) closeScene();
+    if(scene.classList.contains('open') && (e.key === 'ArrowRight' || e.key === 'ArrowDown')) setStep(1);
+    if(scene.classList.contains('open') && (e.key === 'ArrowLeft' || e.key === 'ArrowUp')) setStep(0);
+  });
+
+  let wheelLock = false;
+  scene.addEventListener('wheel', e => {
+    if(wheelLock) return;
+    if(Math.abs(e.deltaY) < 18) return;
+    wheelLock = true;
+    if(e.deltaY > 0) setStep(1);
+    else setStep(0);
+    setTimeout(() => wheelLock = false, 650);
+  }, {passive:true});
+})();
+</script>
 </body>
 </html>
