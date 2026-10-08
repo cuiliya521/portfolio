@@ -47,11 +47,15 @@ try{
     const correctAspect=Math.abs(renderedAspect-(1211/1479))<0.02;
     return {size:[c.width,c.height],cornerAlpha:[corner(0,0),corner(c.width-1,0),corner(0,c.height-1),corner(c.width-1,c.height-1)],centerAlpha:corner(Math.round(c.width/2),Math.round(c.height/2)),viewOk,noHeadingOverlap,correctAspect,renderedBounds:{x:rect.x,y:rect.y,width:rect.width,height:rect.height}};
   }) : null;
-  pass('CUI original PNG loaded, transparent and not clipped',Boolean(cuiLoaded && transparency && transparency.cornerAlpha.every(x=>x===0) && transparency.centerAlpha===255 && transparency.viewOk && transparency.noHeadingOverlap && transparency.correctAspect && !(await shown('.cui-test-asset-alert').catch(()=>false))));
+  pass('CUI original PNG loaded, transparent and not clipped',Boolean(cuiLoaded && transparency && transparency.cornerAlpha.every(x=>x===0) && transparency.centerAlpha===255 && transparency.viewOk && transparency.noHeadingOverlap && transparency.correctAspect && (await page.locator('.cui-test-asset-alert').count())===0));
   results.push('CUI PNG inspection: '+JSON.stringify(transparency));
   console.log('CUI PNG inspection: '+JSON.stringify(transparency));
-  const cuiBubble = page.locator('.agent-wrap');
-  await cuiBubble.screenshot({path:path.join(output,'04-cui-agent-local-browser-crop.png')});
+  // Screenshot by viewport clip: animated agents never become "stable" for element.screenshot.
+  const box = await page.locator('.agent-wrap').evaluate(el => {
+    const r=el.getBoundingClientRect(),pad=14;
+    return {x:Math.max(0,Math.floor(r.left-pad)),y:Math.max(0,Math.floor(r.top-pad)),width:Math.min(innerWidth-Math.max(0,Math.floor(r.left-pad)),Math.ceil(r.width+pad*2)),height:Math.min(innerHeight-Math.max(0,Math.floor(r.top-pad)),Math.ceil(r.height+pad*2))};
+  });
+  await page.screenshot({path:path.join(output,'04-cui-agent-local-browser-crop.png'),clip:box,animations:'disabled'});
   await page.locator('#enter-workspace').click();
   pass('Hero → Workspace',await shown('#cui-test-workspace'));
   pass('Three project entrances visible',await Promise.all(['#open-test-pangu','#test-xhs','#test-noteguard'].map(shown)).then(v=>v.every(Boolean)));
