@@ -7,6 +7,7 @@ const root = process.cwd();
 const mime = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'application/javascript; charset=utf-8','.webp':'image/webp','.png':'image/png','.jpg':'image/jpeg','.pdf':'application/pdf'};
 const server = http.createServer(async (req,res) => {
   const pathname = decodeURIComponent(new URL(req.url,'http://127.0.0.1').pathname);
+  if(pathname === '/favicon.ico'){res.writeHead(204).end();return}
   const filename = path.resolve(root,'.' + (pathname === '/' ? '/index.html' : pathname));
   if (!filename.startsWith(root + path.sep)){res.writeHead(403).end();return}
   try {
@@ -62,16 +63,21 @@ try{
   await page.locator('#scene-next').click();
   pass('Pangu steps are clickable',await page.locator('.scene-step.active').evaluate(el=>el.dataset.step==='1'));
   await page.locator('#scene-back').click();
+  await page.locator('#pangu-scene').waitFor({state:'hidden'});
+  await page.locator('#cui-test-workspace').waitFor({state:'visible'});
   pass('Close Pangu → Workspace',await shown('#cui-test-workspace') && !(await shown('#pangu-scene')));
   pass('Pangu UI returns to original Hero DOM',await page.locator('#main-ui-slot + #pangu-main-ui').count()===1);
   await page.keyboard.press('Escape');
+  await page.locator('#cui-test-workspace').waitFor({state:'hidden'});
   pass('Escape from Workspace → Hero',await shown('#enter-workspace') && !(await shown('#cui-test-workspace')));
   await page.locator('#enter-workspace').click();
   await page.locator('#test-workspace-home').click();
+  await page.locator('#cui-test-workspace').waitFor({state:'hidden'});
   pass('Workspace home button → Hero',!(await shown('#cui-test-workspace')));
   await page.locator('#enter-workspace').click();
   await page.locator('#open-test-pangu').click();
   await page.keyboard.press('Escape');
+  await page.locator('#pangu-scene').waitFor({state:'hidden'});
   pass('Escape from Pangu → Workspace',await shown('#cui-test-workspace') && !(await shown('#pangu-scene')));
   pass('No browser JavaScript errors',errors.length===0);
 } catch (e){
