@@ -1,0 +1,30 @@
+name: CUI desktop interaction screenshot test
+on:
+  push:
+    branches:
+      - experiment/cui-workspace-interaction-v1
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  desktop-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install headless Chromium test dependencies
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Test actual branch in Chromium at 1440x900
+        run: node .github/scripts/cui-desktop-smoke.mjs
+      - name: Save real browser screenshots and results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cui-desktop-browser-screenshots
+          path: cui-test-screenshots/
+          if-no-files-found: warn
