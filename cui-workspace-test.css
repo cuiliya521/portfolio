@@ -83,3 +83,8 @@ body.cui-test-active{overflow:hidden}
   width:148px;min-height:112px;padding:12px;text-align:center;white-space:pre-line;
   border:1px dashed rgba(112,89,58,.55);border-radius:14px;
   color:#826241;background:rgba(255,249,237,.96);font-size:12px;line-height:1.7}
+
+/* Scope correction: interaction test must not show the legacy "portal" decoration. */
+#stage .portal,#stage .stage-glow,#stage .cue{display:none!important}
+/* Show the complete evidence-bearing UI on first opening; later focus tabs retain their existing behavior. */
+.pangu-scene .ui-card.main-ui.in-scene img.zoom-input{transform:none!important}
