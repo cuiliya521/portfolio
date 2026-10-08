@@ -478,7 +478,7 @@ body.entering .agent-wrap{
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important}
-  .agent-wrap,.agent-placeholder::after{animation:none!important}
+  .agent-wrap,.agent-wrap::after{animation:none!important}
   .enter,.stage,.copy,.topbar,.focus-frame,.focus-frame img{transition:none!important}
 }
 
@@ -502,8 +502,7 @@ body.entering .agent-wrap{
   .ui-card.secondary-ui{width:55%;height:27%;right:-14%;bottom:2%;border-radius:14px}
   .secondary-mask{display:none}
   .agent-wrap{left:2%;top:45%;gap:8px}
-  .agent-placeholder{width:72px;height:72px;font-size:19px}
-  .agent-placeholder::before{width:34px;height:34px}
+  .agent-image{width:92px}
   .bubble{font-size:12px;padding:10px 12px}
   .project-label{left:8%;top:8%;font-size:7px;padding:7px 9px}
   .cue{right:14px;bottom:8px;font-size:7px}
@@ -564,7 +563,7 @@ body.entering .agent-wrap{
       </figure>
 
       <div class="agent-wrap" id="agent-wrap">
-        <div class="agent-placeholder" aria-label="CUI Agent 角色资产待替换">CUI</div>
+        <img class="agent-image" src="data:image/webp;base64,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" alt="CUI Agent 小精灵">
         <div class="bubble">Hi，要进去看看吗？</div>
       </div>
       <div class="cue">SCROLL TO ENTER</div>
@@ -678,7 +677,7 @@ body.entering .agent-wrap{
   }
 
   enter.addEventListener('click', openScene);
-  stage.addEventListener('dblclick', openScene);
+  stage.addEventListener('click', e => { if(!e.target.closest('button')) openScene(); });
   back.addEventListener('click', closeScene);
   next.addEventListener('click', () => setStep(sceneStep ? 0 : 1));
 
