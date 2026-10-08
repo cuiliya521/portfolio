@@ -1,0 +1,79 @@
+/* Interaction-only desktop test. Keep the existing visual language; no new illustrations. */
+.test-workspace[hidden]{display:none!important}
+.test-workspace{
+  position:fixed;inset:0;z-index:80;display:flex;flex-direction:column;
+  background:#eef0e9;color:var(--ink);overflow:auto;
+}
+body.cui-test-active{overflow:hidden}
+.test-workspace__top{
+  height:78px;flex:none;display:flex;align-items:center;justify-content:space-between;
+  padding:0 max(46px,calc((100vw - 1260px)/2));
+  background:#f7f5ef;border-bottom:1px solid var(--line);
+}
+.test-workspace__brand{font-size:14px;font-weight:700;letter-spacing:.13em}
+.test-workspace__back,.test-workspace__project{
+  font:inherit;color:inherit;cursor:pointer;
+}
+.test-workspace__back{
+  border:1px solid var(--line);background:#fff;border-radius:999px;
+  padding:10px 17px;
+}
+.test-workspace__main{
+  width:min(1180px,calc(100% - 100px));margin:auto;
+  padding:50px 0 65px;
+}
+.test-workspace__eyebrow{font-size:11px;letter-spacing:.18em;color:#63736a;margin:0 0 13px}
+.test-workspace h2{
+  font-family:"Songti SC","STSong","Noto Serif SC",serif;
+  font-size:clamp(40px,4vw,56px);line-height:1.13;font-weight:600;
+  margin:0 0 16px;
+}
+.test-workspace__intro{font-size:16px;line-height:1.75;color:#597067;margin:0 0 44px;max-width:700px}
+.test-workspace__projects{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;
+}
+.test-workspace__project{
+  min-height:296px;display:flex;flex-direction:column;text-align:left;gap:0;
+  padding:25px;border:1px solid rgba(23,56,47,.12);border-radius:20px;
+  background:#faf9f5;box-shadow:0 12px 32px rgba(23,56,47,.035);
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
+}
+.test-workspace__project:hover,.test-workspace__project:focus-visible{
+  transform:translateY(-3px);box-shadow:0 18px 36px rgba(23,56,47,.08);
+  border-color:rgba(23,56,47,.33);
+}
+.test-workspace__number{font-size:11px;letter-spacing:.15em;color:#76867b;margin-bottom:30px}
+.test-workspace__project strong{font-size:25px;line-height:1.4;font-weight:650}
+.test-workspace__en{display:block;font-size:11px;letter-spacing:.14em;color:#7b877c;margin-top:8px}
+.test-workspace__description{font-size:14px;line-height:1.65;color:#61736a;margin-top:24px}
+.test-workspace__action{
+  display:flex;align-items:center;justify-content:space-between;margin-top:auto;
+  padding-top:30px;font-size:13px;font-weight:650;color:var(--ink)
+}
+.test-workspace__action .test-workspace__pending{color:#77857c;font-weight:500}
+.test-workspace__status{min-height:30px;margin:24px 0 0;font-size:13px;color:#52675d}
+.test-workspace__footer{font-size:11px;color:#75847b;margin:16px 0 0}
+/* Reuse the existing Pangu scene / single original Pangu UI DOM as a dismissible project window. */
+.pangu-scene{
+  inset:5.5vh 4.5vw 5.5vh;z-index:110;
+  background:#f7f7f1;border:1px solid rgba(23,56,47,.17);
+  border-radius:22px;box-shadow:0 26px 86px rgba(20,40,30,.25);
+}
+.pangu-scene .scene-top{height:68px;padding:0 32px;background:#faf9f5}
+.pangu-scene .scene-body{
+  height:calc(100% - 68px);grid-template-columns:300px minmax(0,1fr);
+  gap:25px;padding:26px 34px 30px;
+}
+.pangu-scene .scene-copy{align-self:center;padding-bottom:30px}
+.pangu-scene .scene-visual{height:100%;min-height:0}
+.pangu-scene .focus-frame{width:min(100%,800px);border-radius:18px}
+.pangu-scene .scene-proof{top:1%;left:1%;font-size:10px}
+.pangu-scene .scene-steps{bottom:0}
+.pangu-scene .scene-next{bottom:0;right:0}
+.pangu-scene .scene-back{white-space:nowrap}
+@media(max-width:1100px){
+  .test-workspace__main{width:calc(100% - 50px)}
+  .test-workspace__projects{gap:12px}
+  .test-workspace__project{padding:18px}
+  .pangu-scene .scene-body{grid-template-columns:225px minmax(0,1fr);padding:22px;gap:10px}
+}
