@@ -550,6 +550,7 @@ body.entering .agent-wrap{
   .scene-next{right:4%;bottom:4%}
 }
 </style>
+<link rel="stylesheet" href="cui-workspace-test.css">
 </head>
 <body>
 <section class="hero" id="hero">
@@ -604,10 +605,45 @@ body.entering .agent-wrap{
   </main>
 </section>
 
-<section class="pangu-scene" id="pangu-scene" aria-hidden="true">
+<!-- Three-state interaction test only. No AI-rendered interface or new character illustration. -->
+<section class="test-workspace" id="cui-test-workspace" aria-label="CUI 数字工作空间" aria-hidden="true" hidden>
+  <header class="test-workspace__top">
+    <div class="test-workspace__brand">CUI <span style="font-weight:400;color:#718178">/ DIGITAL WORKSPACE</span></div>
+    <button class="test-workspace__back" id="test-workspace-home" type="button">← 返回首页</button>
+  </header>
+  <main class="test-workspace__main">
+    <p class="test-workspace__eyebrow">PERSONAL DIGITAL WORKSPACE / INTERACTION TEST</p>
+    <h2>我的数字工作空间</h2>
+    <p class="test-workspace__intro">从项目入口进入真实工作内容。这一版只验证进入、打开、关闭与返回，不做最终视觉设计。</p>
+    <div class="test-workspace__projects" aria-label="项目入口">
+      <button class="test-workspace__project" id="open-test-pangu" type="button" aria-label="打开盘古智绘项目窗口">
+        <span class="test-workspace__number">01 / AI PRODUCT</span>
+        <strong>盘古智绘</strong><span class="test-workspace__en">PANGU ZHIHUI</span>
+        <span class="test-workspace__description">AIGC 商户素材生成流程。打开已有脱敏重构产品界面。</span>
+        <span class="test-workspace__action">打开项目窗口 <span aria-hidden="true">↗</span></span>
+      </button>
+      <button class="test-workspace__project" id="test-xhs" type="button">
+        <span class="test-workspace__number">02 / CONTENT OPERATIONS</span>
+        <strong>小红书</strong><span class="test-workspace__en">XIAOHONGSHU</span>
+        <span class="test-workspace__description">教育内容运营与内容效果验证。</span>
+        <span class="test-workspace__action test-workspace__pending">项目入口预留 <span aria-hidden="true">↗</span></span>
+      </button>
+      <button class="test-workspace__project" id="test-noteguard" type="button">
+        <span class="test-workspace__number">03 / AI WORKFLOW</span>
+        <strong>NoteGuard AI</strong><span class="test-workspace__en">HUMAN-IN-THE-LOOP</span>
+        <span class="test-workspace__description">风险审核、人机确认与复检工作流。</span>
+        <span class="test-workspace__action test-workspace__pending">项目入口预留 <span aria-hidden="true">↗</span></span>
+      </button>
+    </div>
+    <p class="test-workspace__status" id="cui-test-status" role="status" aria-live="polite">提示：目前只有盘古项目窗口开放交互测试。</p>
+    <p class="test-workspace__footer">DESKTOP 1440 × 900 · TEST BUILD · NOT FINAL VISUAL DESIGN</p>
+  </main>
+</section>
+
+<section class="pangu-scene" id="pangu-scene" aria-hidden="true" role="dialog" aria-modal="true" aria-label="盘古智绘项目窗口">
   <header class="scene-top">
     <div class="scene-index">01 / 盘古智绘 · AIGC PRODUCT OPERATIONS</div>
-    <button class="scene-back" id="scene-back" type="button">← 返回入口</button>
+    <button class="scene-back" id="scene-back" type="button">← 关闭窗口 · 返回 Workspace</button>
   </header>
 
   <div class="scene-body">
@@ -632,7 +668,7 @@ body.entering .agent-wrap{
   </div>
 </section>
 
-<script>
+<script type="text/plain" id="cui-legacy-controller">
 (() => {
   const body = document.body;
   const hero = document.getElementById('hero');
@@ -845,5 +881,6 @@ body.entering .agent-wrap{
   setStep(0);
 })();
 </script>
+<script src="cui-workspace-test.js" defer></script>
 </body>
 </html>
