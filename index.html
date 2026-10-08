@@ -315,6 +315,17 @@ body.entering .agent-wrap{
   transform:translate3d(33vw,-12vh,0) scale(.72);
   opacity:.18
 }
+.entry-bridge{
+  position:fixed;
+  z-index:130;
+  object-fit:contain;
+  background:#fff;
+  border:1px solid rgba(23,56,47,.1);
+  border-radius:24px;
+  box-shadow:0 38px 100px rgba(31,52,43,.18);
+  pointer-events:none;
+  will-change:left,top,width,height,transform,opacity;
+}
 .spark{
   position:fixed;
   width:4px;height:4px;
@@ -640,6 +651,7 @@ body.entering .agent-wrap{
   const body = document.body;
   const enter = document.getElementById('enter-workspace');
   const stage = document.getElementById('stage');
+  const heroMainImage = stage.querySelector('.main-ui img');
   const scene = document.getElementById('pangu-scene');
   const back = document.getElementById('scene-back');
   const next = document.getElementById('scene-next');
@@ -669,16 +681,42 @@ body.entering .agent-wrap{
     }
   }
 
+  function bridgeToScene(){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const from = heroMainImage.getBoundingClientRect();
+    const clone = heroMainImage.cloneNode(true);
+    clone.className = 'entry-bridge';
+    Object.assign(clone.style,{
+      left: from.left + 'px',
+      top: from.top + 'px',
+      width: from.width + 'px',
+      height: from.height + 'px'
+    });
+    document.body.appendChild(clone);
+
+    const targetW = Math.min(window.innerWidth * .68, 1080);
+    const targetH = targetW / 1.5;
+    const targetLeft = Math.max(window.innerWidth * .27, window.innerWidth - targetW - window.innerWidth * .045);
+    const targetTop = Math.max(92, (window.innerHeight - targetH) * .5);
+
+    const anim = clone.animate([
+      {left:from.left+'px',top:from.top+'px',width:from.width+'px',height:from.height+'px',transform:'rotate(-.45deg)',opacity:1},
+      {left:targetLeft+'px',top:targetTop+'px',width:targetW+'px',height:targetH+'px',transform:'rotate(0deg)',opacity:1}
+    ],{duration:900,easing:'cubic-bezier(.2,.76,.16,1)',fill:'forwards'});
+    anim.finished.finally(() => clone.remove());
+  }
+
   function openScene(){
     if(locked || scene.classList.contains('open')) return;
     locked = true;
     sparkTrail();
+    bridgeToScene();
     body.classList.add('entering');
     setTimeout(() => {
       scene.classList.add('open');
       scene.setAttribute('aria-hidden','false');
-      locked = false;
-    }, 540);
+    }, 390);
+    setTimeout(() => { locked = false; }, 920);
   }
 
   function closeScene(){
