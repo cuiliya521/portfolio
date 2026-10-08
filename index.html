@@ -763,6 +763,14 @@ body.entering .agent-wrap{
     mainImg.classList.remove('zoom-input','zoom-preview');
     mainUI.classList.remove('scene-ui-hidden');
 
+    if(!reduceMotion.matches){
+      mainUI.classList.add('migrating');
+      document.body.appendChild(mainUI);
+      Object.assign(mainUI.style,{
+        left:from.left+'px',top:from.top+'px',width:from.width+'px',height:from.height+'px',opacity:'1'
+      });
+    }
+
     sparkTrail();
     scene.classList.add('preparing');
     scene.setAttribute('aria-hidden','false');
@@ -780,11 +788,6 @@ body.entering .agent-wrap{
       return;
     }
 
-    mainUI.classList.add('migrating');
-    document.body.appendChild(mainUI);
-    Object.assign(mainUI.style,{
-      left:from.left+'px',top:from.top+'px',width:from.width+'px',height:from.height+'px',opacity:'1'
-    });
     scene.classList.add('open');
 
     const anim = mainUI.animate([
