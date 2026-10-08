@@ -17,6 +17,21 @@
   let mode = 'hero';
   let step = 0;
   let wheelLock = false;
+  // Existing inline WebP is retained exactly as supplied. If its data is invalid, flag it instead of inventing a character.
+  const originalCui = document.querySelector('.agent-image');
+  const flagCuiAsset = () => {
+    if (!originalCui || document.querySelector('.cui-test-asset-alert')) return;
+    originalCui.style.display = 'none';
+    const alert = document.createElement('span');
+    alert.className = 'cui-test-asset-alert';
+    alert.textContent = 'CUI 原角色素材无法解码\\n待补透明背景原件';
+    originalCui.insertAdjacentElement('afterend', alert);
+    document.body.dataset.cuiAsset = 'invalid';
+  };
+  if(originalCui){
+    originalCui.addEventListener('error',flagCuiAsset,{once:true});
+    if(originalCui.complete && !originalCui.naturalWidth) flagCuiAsset();
+  }
 
   const copy = [
     ['01 / 结构化输入','把 Prompt 变成商户会选的字段。','把行业、场景、主题、风格、构图和规格拆成可选字段，降低商户使用门槛。','看实时预览 →','zoom-input'],
