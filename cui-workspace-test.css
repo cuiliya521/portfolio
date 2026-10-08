@@ -77,3 +77,9 @@ body.cui-test-active{overflow:hidden}
   .test-workspace__project{padding:18px}
   .pangu-scene .scene-body{grid-template-columns:225px minmax(0,1fr);padding:22px;gap:10px}
 }
+
+/* Intentionally textual fault marker, not a replacement illustration. */
+.cui-test-asset-alert{display:flex;align-items:center;justify-content:center;
+  width:148px;min-height:112px;padding:12px;text-align:center;white-space:pre-line;
+  border:1px dashed rgba(112,89,58,.55);border-radius:14px;
+  color:#826241;background:rgba(255,249,237,.96);font-size:12px;line-height:1.7}
