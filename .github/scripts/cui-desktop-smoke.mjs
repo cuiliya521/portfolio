@@ -35,19 +35,23 @@ try{
   await page.goto(base+'/',{waitUntil:'networkidle'});
   await page.screenshot({path:path.join(output,'01-hero-1440x900.png')});
   pass('Hero title and enter button visible',await shown('#enter-workspace') && await shown('h1'));
-  const cuiLoaded = await page.locator('.agent-image').evaluate(img=>img.complete&&img.naturalWidth>0);
-  if(cuiLoaded){
-    const transparency = await page.locator('.agent-image').evaluate(img => {
-      const c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;
-      const ctx=c.getContext('2d');ctx.drawImage(img,0,0);
-      const corner=(x,y)=>ctx.getImageData(x,y,1,1).data[3];
-      return {size:[c.width,c.height],cornerAlpha:[corner(0,0),corner(c.width-1,0),corner(0,c.height-1),corner(c.width-1,c.height-1)]};
-    });
-    results.push('CUI existing WebP corner alpha: '+JSON.stringify(transparency));
-  } else {
-    pass('Damaged original CUI image is clearly flagged, not redrawn',await shown('.cui-test-asset-alert'));
-    results.push('WARNING: Existing embedded WebP CUI image did not decode. No replacement character generated.');
-  }
+  const cuiLoaded = await page.locator('.agent-image').evaluate(img => img.complete && img.naturalWidth===1211 && img.naturalHeight===1479 && img.currentSrc.includes('/assets/cui-agent-4.png'));
+  const transparency = cuiLoaded ? await page.locator('.agent-image').evaluate(img => {
+    const c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;
+    const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(img,0,0);
+    const corner=(x,y)=>ctx.getImageData(x,y,1,1).data[3];
+    const rect=img.getBoundingClientRect(),heading=document.querySelector('h1').getBoundingClientRect();
+    const viewOk=rect.left>=0 && rect.right<=innerWidth && rect.top>=0 && rect.bottom<=innerHeight;
+    const noHeadingOverlap=rect.right<=heading.left || rect.left>=heading.right || rect.bottom<=heading.top || rect.top>=heading.bottom;
+    const renderedAspect=rect.width/rect.height;
+    const correctAspect=Math.abs(renderedAspect-(1211/1479))<0.02;
+    return {size:[c.width,c.height],cornerAlpha:[corner(0,0),corner(c.width-1,0),corner(0,c.height-1),corner(c.width-1,c.height-1)],centerAlpha:corner(Math.round(c.width/2),Math.round(c.height/2)),viewOk,noHeadingOverlap,correctAspect,renderedBounds:{x:rect.x,y:rect.y,width:rect.width,height:rect.height}};
+  }) : null;
+  pass('CUI original PNG loaded, transparent and not clipped',Boolean(cuiLoaded && transparency && transparency.cornerAlpha.every(x=>x===0) && transparency.centerAlpha===255 && transparency.viewOk && transparency.noHeadingOverlap && transparency.correctAspect && !(await shown('.cui-test-asset-alert').catch(()=>false))));
+  results.push('CUI PNG inspection: '+JSON.stringify(transparency));
+  console.log('CUI PNG inspection: '+JSON.stringify(transparency));
+  const cuiBubble = page.locator('.agent-wrap');
+  await cuiBubble.screenshot({path:path.join(output,'04-cui-agent-local-browser-crop.png')});
   await page.locator('#enter-workspace').click();
   pass('Hero → Workspace',await shown('#cui-test-workspace'));
   pass('Three project entrances visible',await Promise.all(['#open-test-pangu','#test-xhs','#test-noteguard'].map(shown)).then(v=>v.every(Boolean)));
