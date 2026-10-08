@@ -274,22 +274,6 @@ h1 .line2::after{
   transform-origin:0 0;
 }
 .ui-card.main-ui.scene-ui-hidden{opacity:0!important}
-.ui-card.secondary-ui{
-  width:46%;height:31%;
-  right:-2%;bottom:5%;
-  border-radius:19px;
-  z-index:6;
-  transform:translateZ(24px) rotateZ(.75deg);
-  opacity:.94;
-}
-.secondary-mask{
-  position:absolute;
-  z-index:8;
-  right:27%;bottom:5%;
-  width:31%;height:31%;
-  background:linear-gradient(90deg,rgba(239,242,235,.95),rgba(239,242,235,.32),transparent);
-  pointer-events:none;
-}
 
 .agent-wrap{
   position:absolute;
@@ -340,7 +324,6 @@ body.entering .topbar{opacity:.28;transform:translateY(-8px)}
 body.entering .flow{opacity:0}
 body.entering .stage{transform:translate3d(-13vw,0,0) scale(1.22)}
 body.entering .portal{opacity:.35}
-body.entering .secondary-ui{opacity:.35}
 body.entering .project-label,.cue{transition:opacity .35s ease}
 body.entering .project-label{opacity:0}
 body.entering .cue{opacity:0}
@@ -464,6 +447,10 @@ body.entering .agent-wrap{
   transform:scale(1.28);
   transform-origin:100% 0
 }
+.ui-card.main-ui.in-scene img.zoom-assets{
+  transform:scale(1.34);
+  transform-origin:50% 100%
+}
 .scene-steps{
   position:absolute;
   left:50%;bottom:2.1%;
@@ -549,8 +536,6 @@ body.entering .agent-wrap{
   .stage{height:390px;min-height:0;margin-top:22px;perspective:1100px}
   .portal{inset:0 -14% -5% 5%;transform:rotateY(-5deg)}
   .ui-card.main-ui{left:18%;right:-18%;top:20%;height:54%;border-radius:17px}
-  .ui-card.secondary-ui{width:55%;height:27%;right:-14%;bottom:2%;border-radius:14px}
-  .secondary-mask{display:none}
   .agent-wrap{left:2%;top:45%;gap:8px}
   .agent-image{width:92px}
   .bubble{font-size:12px;padding:10px 12px}
@@ -603,14 +588,9 @@ body.entering .agent-wrap{
 
       <div class="project-label">PANGU ZHIHUI · REAL PROJECT</div>
 
-      <figure class="ui-card secondary-ui" aria-label="盘古智绘 我的素材界面">
-        <img src="assets/pangu-manage-v2.webp" alt="盘古智绘我的素材界面">
-      </figure>
-      <div class="secondary-mask"></div>
-
       <div class="main-ui-slot" id="main-ui-slot" aria-hidden="true"></div>
       <figure class="ui-card main-ui" id="pangu-main-ui" aria-label="盘古智绘 素材生成界面">
-        <img id="pangu-main-img" src="assets/pangu-config-v2.webp" alt="盘古智绘素材生成界面">
+        <img id="pangu-main-img" src="assets/pangu-frozen-product.webp" alt="盘古智绘结构化输入、实时预览与素材复用界面">
       </figure>
 
       <div class="agent-wrap" id="agent-wrap">
@@ -641,7 +621,6 @@ body.entering .agent-wrap{
     <div class="scene-visual">
       <div class="scene-proof">基于真实项目经历重构的脱敏概念原型 · 产品 UI 保持原样</div>
       <div class="focus-frame" id="focus-frame">
-        <img id="focus-assets" class="is-hidden" src="assets/pangu-manage-v2.webp" alt="盘古智绘我的素材页">
       </div>
       <div class="scene-steps" aria-label="盘古智绘案例章节">
         <button class="scene-step active" type="button" data-step="0">结构化输入</button>
@@ -665,7 +644,6 @@ body.entering .agent-wrap{
   const agentWrap = document.getElementById('agent-wrap');
   const scene = document.getElementById('pangu-scene');
   const focusFrame = document.getElementById('focus-frame');
-  const focusAssets = document.getElementById('focus-assets');
   const back = document.getElementById('scene-back');
   const next = document.getElementById('scene-next');
   const chapter = document.getElementById('scene-chapter');
@@ -705,8 +683,7 @@ body.entering .agent-wrap{
     sceneStep = Math.max(0, Math.min(2, step));
     stepButtons.forEach((btn,i) => btn.classList.toggle('active', i === sceneStep));
     mainUI.classList.remove('scene-ui-hidden');
-    mainImg.classList.remove('zoom-input','zoom-preview');
-    focusAssets.classList.add('is-hidden');
+    mainImg.classList.remove('zoom-input','zoom-preview','zoom-assets');
 
     if(sceneStep === 0){
       mainImg.classList.add('zoom-input');
@@ -721,11 +698,10 @@ body.entering .agent-wrap{
       desc.textContent = '保留输入上下文，同时把生成结果放到视觉中心，让商户能立即判断方向是否正确。';
       next.textContent = '看素材如何复用 →';
     }else{
-      mainUI.classList.add('scene-ui-hidden');
-      focusAssets.classList.remove('is-hidden');
-      chapter.textContent = '03 / 结果沉淀与复用';
+      mainImg.classList.add('zoom-assets');
+      chapter.textContent = '03 / 素材沉淀与复用';
       title.innerHTML = '生成不是终点，<br><span class="nowrap">结果进入下一次工作。</span>';
-      desc.textContent = '结果被保存、筛选、收藏和复用，素材从一次性输出变成可以持续调用的工作资产。';
+      desc.textContent = '生成结果进入“我的素材”，继续承担筛选、收藏、下载和复用，让一次生成真正变成后续工作的资产。';
       next.textContent = '回到结构化输入 ↺';
     }
   }
@@ -734,13 +710,13 @@ body.entering .agent-wrap{
     mainUI.classList.remove('migrating');
     mainUI.classList.add('in-scene');
     clearFixed();
-    focusFrame.insertBefore(mainUI, focusAssets);
+    focusFrame.appendChild(mainUI);
     setStep(0);
   }
 
   function mountInHero(){
     mainUI.classList.remove('migrating','in-scene','scene-ui-hidden');
-    mainImg.classList.remove('zoom-input','zoom-preview');
+    mainImg.classList.remove('zoom-input','zoom-preview','zoom-assets');
     clearFixed();
     mainSlot.after(mainUI);
   }
@@ -749,7 +725,7 @@ body.entering .agent-wrap{
     if(locked || opened) return;
     locked = true;
     const from = mainUI.getBoundingClientRect();
-    mainImg.classList.remove('zoom-input','zoom-preview');
+    mainImg.classList.remove('zoom-input','zoom-preview','zoom-assets');
     mainUI.classList.remove('scene-ui-hidden');
 
     if(!reduceMotion.matches){
@@ -793,7 +769,7 @@ body.entering .agent-wrap{
     if(locked || !opened) return;
     locked = true;
     setStep(0);
-    mainImg.classList.remove('zoom-input','zoom-preview');
+    mainImg.classList.remove('zoom-input','zoom-preview','zoom-assets');
     const from = mainUI.getBoundingClientRect();
 
     body.classList.remove('entering');
