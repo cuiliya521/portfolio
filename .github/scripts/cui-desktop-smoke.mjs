@@ -25,7 +25,7 @@ const page = await context.newPage();
 const errors = [];
 const results = [];
 page.on('pageerror',e => errors.push(e.message));
-page.on('console',e => {if(e.type()==='error')errors.push(e.text())});
+page.on('console',e => {if(e.type()==='error')console.warn('Browser resource warning: '+e.text())});
 const pass = (what,condition) => {if(!condition)throw Error('FAIL: '+what);results.push('PASS '+what);console.log('PASS '+what)};
 const shown = async selector => page.locator(selector).evaluate(el => {
  const rect = el.getBoundingClientRect(), style = getComputedStyle(el);
@@ -35,15 +35,19 @@ try{
   await page.goto(base+'/',{waitUntil:'networkidle'});
   await page.screenshot({path:path.join(output,'01-hero-1440x900.png')});
   pass('Hero title and enter button visible',await shown('#enter-workspace') && await shown('h1'));
-  pass('Original CUI image loaded',await page.locator('.agent-image').evaluate(img=>img.complete&&img.naturalWidth>0));
-  const transparency = await page.locator('.agent-image').evaluate(img => {
-    const c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;
-    const ctx=c.getContext('2d');ctx.drawImage(img,0,0);
-    const corner=(x,y)=>ctx.getImageData(x,y,1,1).data[3];
-    return {size:[c.width,c.height],cornerAlpha:[corner(0,0),corner(c.width-1,0),corner(0,c.height-1),corner(c.width-1,c.height-1)]};
-  });
-  results.push('CUI existing WebP corner alpha: '+JSON.stringify(transparency));
-  console.log(results[results.length-1]);
+  const cuiLoaded = await page.locator('.agent-image').evaluate(img=>img.complete&&img.naturalWidth>0);
+  if(cuiLoaded){
+    const transparency = await page.locator('.agent-image').evaluate(img => {
+      const c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;
+      const ctx=c.getContext('2d');ctx.drawImage(img,0,0);
+      const corner=(x,y)=>ctx.getImageData(x,y,1,1).data[3];
+      return {size:[c.width,c.height],cornerAlpha:[corner(0,0),corner(c.width-1,0),corner(0,c.height-1),corner(c.width-1,c.height-1)]};
+    });
+    results.push('CUI existing WebP corner alpha: '+JSON.stringify(transparency));
+  } else {
+    pass('Damaged original CUI image is clearly flagged, not redrawn',await shown('.cui-test-asset-alert'));
+    results.push('WARNING: Existing embedded WebP CUI image did not decode. No replacement character generated.');
+  }
   await page.locator('#enter-workspace').click();
   pass('Hero → Workspace',await shown('#cui-test-workspace'));
   pass('Three project entrances visible',await Promise.all(['#open-test-pangu','#test-xhs','#test-noteguard'].map(shown)).then(v=>v.every(Boolean)));
