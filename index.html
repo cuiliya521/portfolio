@@ -423,11 +423,46 @@ body.entering .agent-wrap{
   position:absolute;inset:0;
   width:100%;height:100%;
   object-fit:contain;background:#fff;
-  transition:opacity .48s ease,transform .65s cubic-bezier(.2,.75,.16,1);
+  transition:opacity .48s ease,transform .78s cubic-bezier(.2,.75,.16,1),transform-origin .78s cubic-bezier(.2,.75,.16,1);
   image-rendering:auto
 }
 .focus-frame img.is-hidden{
   opacity:0;transform:translateX(26px) scale(.985)
+}
+.focus-frame img.zoom-input{
+  transform:scale(1.48);
+  transform-origin:29% 49%
+}
+.focus-frame img.zoom-preview{
+  transform:scale(1.52);
+  transform-origin:76% 49%
+}
+.scene-steps{
+  position:absolute;
+  left:50%;bottom:2.1%;
+  transform:translateX(-50%);
+  z-index:6;
+  display:flex;gap:8px;
+  padding:6px;
+  border-radius:999px;
+  background:rgba(250,248,242,.82);
+  border:1px solid rgba(23,56,47,.08);
+  backdrop-filter:blur(10px)
+}
+.scene-step{
+  border:0;
+  padding:8px 11px;
+  border-radius:999px;
+  background:transparent;
+  color:#6f7d76;
+  cursor:pointer;
+  font-size:10px;
+  transition:background .25s ease,color .25s ease,transform .25s ease
+}
+.scene-step.active{
+  background:var(--ink);
+  color:#f9f6ee;
+  transform:translateY(-1px)
 }
 .scene-next{
   position:absolute;
@@ -589,7 +624,12 @@ body.entering .agent-wrap{
         <img id="focus-generate" src="assets/pangu-config.png" alt="盘古智绘素材生成页">
         <img id="focus-assets" class="is-hidden" src="assets/pangu-manage.png" alt="盘古智绘我的素材页">
       </div>
-      <button class="scene-next" id="scene-next" type="button">看结果如何沉淀 →</button>
+      <div class="scene-steps" aria-label="盘古智绘案例章节">
+        <button class="scene-step active" type="button" data-step="0">结构化输入</button>
+        <button class="scene-step" type="button" data-step="1">实时预览</button>
+        <button class="scene-step" type="button" data-step="2">素材复用</button>
+      </div>
+      <button class="scene-next" id="scene-next" type="button">看实时预览 →</button>
       <div class="scene-note">基于真实项目经历重构的脱敏概念原型 · 产品 UI 保持原样</div>
     </div>
   </div>
@@ -608,6 +648,7 @@ body.entering .agent-wrap{
   const chapter = document.getElementById('scene-chapter');
   const title = document.getElementById('scene-title');
   const desc = document.getElementById('scene-desc');
+  const stepButtons = [...document.querySelectorAll('.scene-step')];
   let sceneStep = 0;
   let locked = false;
 
@@ -653,33 +694,45 @@ body.entering .agent-wrap{
   }
 
   function setStep(step){
-    sceneStep = Math.max(0, Math.min(1, step));
-    const second = sceneStep === 1;
-    imgGenerate.classList.toggle('is-hidden', second);
-    imgAssets.classList.toggle('is-hidden', !second);
-    if(second){
-      chapter.textContent = '02 / 结果沉淀与复用';
+    sceneStep = Math.max(0, Math.min(2, step));
+    stepButtons.forEach((btn,i) => btn.classList.toggle('active', i === sceneStep));
+    imgGenerate.classList.remove('zoom-input','zoom-preview','is-hidden');
+    imgAssets.classList.add('is-hidden');
+
+    if(sceneStep === 0){
+      imgGenerate.classList.add('zoom-input');
+      chapter.textContent = '01 / 结构化输入';
+      title.innerHTML = '把 Prompt，<br>变成商户会选的字段。';
+      desc.textContent = '不是让商户学习提示词，而是把行业、场景、主题、风格、构图和规格拆成商户能直接选择的字段。';
+      next.textContent = '看实时预览 →';
+    }else if(sceneStep === 1){
+      imgGenerate.classList.add('zoom-preview');
+      chapter.textContent = '02 / 实时预览';
+      title.innerHTML = '选择之后，<br>马上看到结果。';
+      desc.textContent = '让“我描述得对不对”变成可见结果，降低试错成本，也让生成过程更像产品工作流而不是一次性 Prompt。';
+      next.textContent = '看素材如何复用 →';
+    }else{
+      imgGenerate.classList.add('is-hidden');
+      imgAssets.classList.remove('is-hidden');
+      chapter.textContent = '03 / 结果沉淀与复用';
       title.innerHTML = '生成不是终点，<br>结果要进入下一次工作。';
       desc.textContent = '生成结果被保存、筛选、收藏和复用，素材从一次性输出变成可以持续调用的工作资产。';
-      next.textContent = '回到结构化输入 ←';
-    }else{
-      chapter.textContent = '01 / 结构化输入 + 实时预览';
-      title.innerHTML = '把 Prompt，<br>变成商户会选的字段。';
-      desc.textContent = '不是让商户学习提示词，而是把复杂生成能力藏进产品流程里，让“描述需求”变成“选择需求”。';
-      next.textContent = '看结果如何沉淀 →';
+      next.textContent = '回到结构化输入 ↺';
     }
   }
 
+  setStep(0);
   enter.addEventListener('click', openScene);
   stage.addEventListener('click', e => { if(!e.target.closest('button')) openScene(); });
   back.addEventListener('click', closeScene);
-  next.addEventListener('click', () => setStep(sceneStep ? 0 : 1));
+  next.addEventListener('click', () => setStep(sceneStep === 2 ? 0 : sceneStep + 1));
+  stepButtons.forEach(btn => btn.addEventListener('click', () => setStep(Number(btn.dataset.step))));
 
   window.addEventListener('keydown', e => {
     if(e.key === 'Enter' && !scene.classList.contains('open')) openScene();
     if(e.key === 'Escape' && scene.classList.contains('open')) closeScene();
-    if(scene.classList.contains('open') && (e.key === 'ArrowRight' || e.key === 'ArrowDown')) setStep(1);
-    if(scene.classList.contains('open') && (e.key === 'ArrowLeft' || e.key === 'ArrowUp')) setStep(0);
+    if(scene.classList.contains('open') && (e.key === 'ArrowRight' || e.key === 'ArrowDown')) setStep(Math.min(2, sceneStep + 1));
+    if(scene.classList.contains('open') && (e.key === 'ArrowLeft' || e.key === 'ArrowUp')) setStep(Math.max(0, sceneStep - 1));
   });
 
   let wheelLock = false;
@@ -687,8 +740,8 @@ body.entering .agent-wrap{
     if(wheelLock) return;
     if(Math.abs(e.deltaY) < 18) return;
     wheelLock = true;
-    if(e.deltaY > 0) setStep(1);
-    else setStep(0);
+    if(e.deltaY > 0) setStep(Math.min(2, sceneStep + 1));
+    else setStep(Math.max(0, sceneStep - 1));
     setTimeout(() => wheelLock = false, 650);
   }, {passive:true});
 })();
