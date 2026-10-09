@@ -69,6 +69,8 @@ try{
     requestAnimationFrame(sample);
   });
   await page.locator('#enter-workspace').click();
+  await page.waitForTimeout(350);
+  await page.screenshot({path:path.join(output,'05-transition-1440x900.png')});
   await page.waitForFunction(() => document.body.dataset.transition === 'idle');
   pass('Hero → Workspace',await shown('#cui-test-workspace'));
   pass('Workspace defaults to no open project',!(await shown('#pangu-scene')));
