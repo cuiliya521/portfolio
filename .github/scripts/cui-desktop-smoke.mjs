@@ -66,7 +66,8 @@ try{
       motionSamples.push({t:time-start,x:r.x,y:r.y,w:r.width,count:document.querySelectorAll('.agent-image').length,same:originalAgent===document.getElementById('agent-wrap')});
       if(time-start<1050) requestAnimationFrame(sample);
     };
-    requestAnimationFrame(sample);
+    // Anchor observation to the actual input, not Playwright's pre-click actionability wait.
+    document.getElementById('enter-workspace').addEventListener('click',()=>requestAnimationFrame(sample),{once:true});
   });
   await page.locator('#enter-workspace').click();
   await page.waitForTimeout(350);
@@ -76,10 +77,10 @@ try{
   pass('Workspace defaults to no open project',!(await shown('#pangu-scene')));
   await page.waitForTimeout(200);
   const motion = await page.evaluate(() => motionSamples);
+  results.push('Motion samples: '+JSON.stringify(motion));
   pass('Same CUI node persists, without duplicates throughout transition',motion.length>10 && motion.every(x=>x.same && x.count===1));
   pass('CUI has multiple intermediate positions instead of a hard cut',new Set(motion.map(x=>Math.round(x.w))).size>8);
   pass('CUI stays within viewport in Workspace',await page.locator('.agent-image').evaluate(el=>{const r=el.getBoundingClientRect();return r.x>=0&&r.y>=0&&r.right<=innerWidth&&r.bottom<=innerHeight}));
-  results.push('Motion samples: '+JSON.stringify(motion));
   pass('Three project entrances visible' ,await Promise.all(['#open-test-pangu','#test-xhs','#test-noteguard'].map(shown)).then(v=>v.every(Boolean)));
   await page.screenshot({path:path.join(output,'02-workspace-1440x900.png')});
   await page.locator('#test-xhs').click();
