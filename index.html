@@ -553,6 +553,7 @@ body.entering .agent-wrap{
 <link rel="stylesheet" href="cui-workspace-test.css">
 </head>
 <body>
+<div class="digital-space" aria-hidden="true"><div class="space-plane plane-back"></div><div class="space-plane plane-side"></div><div class="space-floor"></div><div class="space-orbit"></div></div>
 <section class="hero" id="hero">
   <header class="topbar">
     <a class="brand" href="#hero"><span>CUI</span><i class="brand-dot"></i></a>
@@ -566,12 +567,12 @@ body.entering .agent-wrap{
 
   <main class="hero-main">
     <section class="copy">
-      <div class="kicker">AI 产品运营 · 产品运营 · AI 应用产品</div>
-      <h1>把真实问题，<br><span class="line2">做成真正能用的 AI 产品。</span></h1>
-      <p class="lede">从用户洞察、产品设计到 Vibe Coding 与验证迭代，我关注的是 AI 如何真正进入工作流。</p>
+      <div class="kicker">崔丽娅 · 2027 届 · AI 产品运营</div>
+      <h1>欢迎来到我的<br><span class="line2">AI 工作现场</span></h1>
+      <p class="lede">和 CUI 一起，探索我的真实项目。</p>
       <div class="action-row">
         <button class="enter" id="enter-workspace" type="button">
-          <span>进入工作现场</span><span class="arrow">→</span>
+          <span>进入工作空间</span><span class="arrow">→</span>
         </button>
         <span class="micro">ENTER THE WORKSPACE</span>
       </div>
@@ -594,16 +595,17 @@ body.entering .agent-wrap{
         <img id="pangu-main-img" src="assets/pangu-frozen-product.webp" alt="盘古智绘结构化输入、实时预览与素材复用界面">
       </figure>
 
-      <div class="agent-wrap" id="agent-wrap">
-        <img class="agent-image" src="assets/cui-agent-4.png" alt="CUI Agent 小精灵">
-        <div class="bubble">Hi，要进去看看吗？</div>
-      </div>
       <div class="cue">SCROLL TO ENTER</div>
     </section>
 
     <div class="flow">PROBLEM → PRODUCT → VALIDATION</div>
   </main>
 </section>
+
+      <div class="agent-wrap" id="agent-wrap">
+        <img class="agent-image" src="assets/cui-agent-4.png" alt="CUI Agent 小精灵">
+        <div class="bubble">Hi，要进去看看吗？</div>
+      </div>
 
 <!-- Three-state interaction test only. No AI-rendered interface or new character illustration. -->
 <section class="test-workspace" id="cui-test-workspace" aria-label="CUI 数字工作空间" aria-hidden="true" hidden>
@@ -612,9 +614,9 @@ body.entering .agent-wrap{
     <button class="test-workspace__back" id="test-workspace-home" type="button">← 返回首页</button>
   </header>
   <main class="test-workspace__main">
-    <p class="test-workspace__eyebrow">PERSONAL DIGITAL WORKSPACE / INTERACTION TEST</p>
+    <p class="test-workspace__eyebrow">CUI / WORKSPACE</p>
     <h2>我的数字工作空间</h2>
-    <p class="test-workspace__intro">从项目入口进入真实工作内容。这一版只验证进入、打开、关闭与返回，不做最终视觉设计。</p>
+    <p class="test-workspace__intro">选一个项目，我们一起进去看看。</p>
     <div class="test-workspace__projects" aria-label="项目入口">
       <button class="test-workspace__project" id="open-test-pangu" type="button" aria-label="打开盘古智绘项目窗口">
         <span class="test-workspace__number">01 / AI PRODUCT</span>
@@ -624,7 +626,7 @@ body.entering .agent-wrap{
       </button>
       <button class="test-workspace__project" id="test-xhs" type="button">
         <span class="test-workspace__number">02 / CONTENT OPERATIONS</span>
-        <strong>小红书</strong><span class="test-workspace__en">XIAOHONGSHU</span>
+        <strong>小红书内容运营</strong><span class="test-workspace__en">XIAOHONGSHU</span>
         <span class="test-workspace__description">教育内容运营与内容效果验证。</span>
         <span class="test-workspace__action test-workspace__pending">项目入口预留 <span aria-hidden="true">↗</span></span>
       </button>
@@ -636,7 +638,7 @@ body.entering .agent-wrap{
       </button>
     </div>
     <p class="test-workspace__status" id="cui-test-status" role="status" aria-live="polite">提示：目前只有盘古项目窗口开放交互测试。</p>
-    <p class="test-workspace__footer">DESKTOP 1440 × 900 · TEST BUILD · NOT FINAL VISUAL DESIGN</p>
+    <p class="test-workspace__footer"></p>
   </main>
 </section>
 

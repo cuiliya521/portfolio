@@ -88,3 +88,52 @@ body.cui-test-active{overflow:hidden}
 #stage .portal,#stage .stage-glow,#stage .cue{display:none!important}
 /* Show the complete evidence-bearing UI on first opening; later focus tabs retain their existing behavior. */
 .pangu-scene .ui-card.main-ui.in-scene img.zoom-input{transform:none!important}
+
+/* H3 continuous space prototype: one environment, one original CUI node. */
+html,body{height:100%;overflow:hidden}
+.digital-space{position:fixed;inset:0;overflow:hidden;pointer-events:none;background:radial-gradient(ellipse at 65% 26%,#fffefa 0,transparent 56%),linear-gradient(120deg,#f6f3eb,#dce7df);perspective:1400px}
+.space-plane{position:absolute;border:1px solid rgba(255,255,255,.85);border-radius:30px;background:linear-gradient(145deg,rgba(255,255,255,.18),rgba(172,198,180,.16));box-shadow:inset 0 0 50px rgba(255,255,255,.4);transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.plane-back{inset:12% 14% 18% 12%;transform:rotateY(-12deg) translateZ(-100px)}
+.plane-side{width:38%;height:75%;right:-25%;top:10%;transform:rotateY(-32deg)}
+.space-floor{position:absolute;inset:65% -30% -35%;background:repeating-linear-gradient(90deg,transparent 0 160px,rgba(255,255,255,.48) 161px 162px),linear-gradient(transparent,rgba(255,255,255,.6));transform:rotateX(62deg);border-top:1px solid rgba(189,149,88,.36);transition:transform .9s ease}
+.space-orbit{position:absolute;inset:17% -15% 15%;border:1px solid rgba(189,149,88,.28);border-radius:50%;transform:rotate(-13deg);transition:transform .9s ease}
+body.cui-test-active .plane-back{transform:rotateY(0) translateZ(110px) scale(1.07)}
+body.cui-test-active .plane-side{transform:rotateY(-12deg) translateX(-35%)}
+body.cui-test-active .space-floor{transform:rotateX(48deg) translateY(35px)}
+body.cui-test-active .space-orbit{transform:rotate(-8deg) scale(1.22)}
+.hero{background:transparent;height:100svh;min-height:0;overflow:visible}
+.hero::before,.hero::after{display:none}
+.topbar{border:0}.nav,.micro,.flow{display:none}
+.hero-main{display:block;min-height:0;height:calc(100svh - 78px);padding:0}
+.copy{position:absolute;left:48%;top:18%;max-width:670px;transform:none}
+h1{font-size:clamp(54px,4.8vw,76px);line-height:1.15;letter-spacing:-.035em}
+h1 .line2::after{height:2px;bottom:-12px}
+.kicker{font-size:15px;letter-spacing:.06em;margin-bottom:23px}
+.lede{font-size:19px;margin:32px 0 29px}
+.enter{padding:17px 30px;font-size:17px}
+#stage{position:absolute;inset:0;height:100%;min-height:0;pointer-events:none;z-index:-1}
+#stage .project-label,#stage .main-ui-slot,#stage > #pangu-main-ui{visibility:hidden}
+.agent-wrap{position:fixed;left:8vw;top:19vh;width:430px;display:block;z-index:90;animation:none;transform:scale(1);transform-origin:top left;transition:left .9s cubic-bezier(.2,.7,.2,1),top .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+.agent-image{width:100%;animation:cuiFloat 3.8s ease-in-out infinite}
+.agent-wrap::after{display:none}
+.agent-wrap .bubble{position:absolute;left:68%;top:80%;font-size:14px;margin:0;font-weight:500;transition:opacity .25s ease}
+.agent-wrap.in-workspace{left:6vw;top:62vh;transform:scale(.38)}
+.agent-wrap.in-workspace .bubble{transform:scale(2);transform-origin:top left;top:48%;left:92%;font-size:15px}
+.agent-wrap.in-project{visibility:hidden}
+body[data-transition="running"] .bubble{opacity:0}
+body.cui-test-active .copy{opacity:0;transform:translateY(-40px);pointer-events:none}
+body.cui-test-active .hero .topbar{opacity:0;transform:translateY(-20px)}
+.test-workspace{background:transparent;opacity:0;transform:translateY(30px) scale(.97);transition:opacity .65s ease,transform .9s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+body.cui-test-active .test-workspace{opacity:1;transform:none;pointer-events:auto}
+.test-workspace__top{background:transparent;border:0}
+.test-workspace__main{width:min(1040px,calc(100% - 240px));margin:80px 6vw auto auto;padding:0}
+.test-workspace h2{font-size:48px}
+.test-workspace__intro{margin-bottom:35px}
+.test-workspace__project{min-height:290px;background:rgba(255,254,248,.73);border:1px solid rgba(255,255,255,.95);box-shadow:0 20px 60px rgba(36,65,49,.07);backdrop-filter:blur(15px)}
+.test-workspace__project strong{font-size:24px}
+.test-workspace__status{margin-left:220px}
+.test-workspace__footer{display:none}
+button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:5px}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}

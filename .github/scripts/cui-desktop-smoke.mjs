@@ -18,7 +18,7 @@ const server = http.createServer(async (req,res) => {
 const output = path.join(root,'cui-test-screenshots');
 await fs.mkdir(output,{recursive:true});
 await new Promise(resolve => server.listen(0,'127.0.0.1',resolve));
-const base = 'http://127.0.0.1:' + server.address().port;
+const base = process.env.CUI_TEST_URL || 'http://127.0.0.1:' + server.address().port;
 const browser = await chromium.launch({headless:true});
 const context = await browser.newContext({viewport:{width:1440,height:900},deviceScaleFactor:1});
 const page = await context.newPage();
@@ -56,9 +56,29 @@ try{
     return {x:Math.max(0,Math.floor(r.left-pad)),y:Math.max(0,Math.floor(r.top-pad)),width:Math.min(innerWidth-Math.max(0,Math.floor(r.left-pad)),Math.ceil(r.width+pad*2)),height:Math.min(innerHeight-Math.max(0,Math.floor(r.top-pad)),Math.ceil(r.height+pad*2))};
   });
   await page.screenshot({path:path.join(output,'04-cui-agent-local-browser-crop.png'),clip:box,animations:'disabled'});
+  await page.evaluate(() => {
+    window.originalAgent = document.getElementById('agent-wrap');
+    window.motionSamples = [];
+    let start;
+    const sample = time => {
+      start ??= time;
+      const r = originalAgent.getBoundingClientRect();
+      motionSamples.push({t:time-start,x:r.x,y:r.y,w:r.width,count:document.querySelectorAll('.agent-image').length,same:originalAgent===document.getElementById('agent-wrap')});
+      if(time-start<1050) requestAnimationFrame(sample);
+    };
+    requestAnimationFrame(sample);
+  });
   await page.locator('#enter-workspace').click();
+  await page.waitForFunction(() => document.body.dataset.transition === 'idle');
   pass('Hero → Workspace',await shown('#cui-test-workspace'));
-  pass('Three project entrances visible',await Promise.all(['#open-test-pangu','#test-xhs','#test-noteguard'].map(shown)).then(v=>v.every(Boolean)));
+  pass('Workspace defaults to no open project',!(await shown('#pangu-scene')));
+  await page.waitForTimeout(200);
+  const motion = await page.evaluate(() => motionSamples);
+  pass('Same CUI node persists, without duplicates throughout transition',motion.length>10 && motion.every(x=>x.same && x.count===1));
+  pass('CUI has multiple intermediate positions instead of a hard cut',new Set(motion.map(x=>Math.round(x.w))).size>8);
+  pass('CUI stays within viewport in Workspace',await page.locator('.agent-image').evaluate(el=>{const r=el.getBoundingClientRect();return r.x>=0&&r.y>=0&&r.right<=innerWidth&&r.bottom<=innerHeight}));
+  results.push('Motion samples: '+JSON.stringify(motion));
+  pass('Three project entrances visible' ,await Promise.all(['#open-test-pangu','#test-xhs','#test-noteguard'].map(shown)).then(v=>v.every(Boolean)));
   await page.screenshot({path:path.join(output,'02-workspace-1440x900.png')});
   await page.locator('#test-xhs').click();
   pass('Xiaohongshu entrance gives honest scope notice',(await page.locator('#cui-test-status').innerText()).includes('小红书'));
@@ -83,14 +103,23 @@ try{
   await page.locator('#cui-test-workspace').waitFor({state:'hidden'});
   pass('Escape from Workspace → Hero',await shown('#enter-workspace') && !(await shown('#cui-test-workspace')));
   await page.locator('#enter-workspace').click();
+  await page.waitForFunction(() => document.body.dataset.transition === 'idle');
   await page.locator('#test-workspace-home').click();
   await page.locator('#cui-test-workspace').waitFor({state:'hidden'});
   pass('Workspace home button → Hero',!(await shown('#cui-test-workspace')));
   await page.locator('#enter-workspace').click();
+  await page.waitForFunction(() => document.body.dataset.transition === 'idle');
   await page.locator('#open-test-pangu').click();
   await page.keyboard.press('Escape');
   await page.locator('#pangu-scene').waitFor({state:'hidden'});
   pass('Escape from Pangu → Workspace',await shown('#cui-test-workspace') && !(await shown('#pangu-scene')));
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await page.goto(base+'/',{waitUntil:'networkidle'});
+  await page.locator('#enter-workspace').click();
+  pass('Reduced motion settles immediately with animations disabled',await page.evaluate(()=>document.body.dataset.transition==='idle' && getComputedStyle(document.querySelector('.agent-image')).animationName==='none' && getComputedStyle(document.getElementById('agent-wrap')).transitionDuration==='0s'));
+  await page.locator('#test-workspace-home').click();
+  await page.locator('#cui-test-workspace').waitFor({state:'hidden'});
+  pass('Reduced motion return to Hero works',await shown('#enter-workspace'));
   pass('No browser JavaScript errors',errors.length===0);
 } catch (e){
   results.push(e.stack||String(e));

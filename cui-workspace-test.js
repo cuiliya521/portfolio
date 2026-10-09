@@ -72,24 +72,47 @@
     return 'hero';
   }
 
+  let settleTimer;
+  let transitionId = 0;
+  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
   function render(nextMode, shouldFocus=true){
+    const previous = mode;
+    const crossing = (previous === "hero") !== (nextMode === "hero");
+    const ticket = ++transitionId;
+    clearTimeout(settleTimer);
     mode = nextMode;
     const inside = mode !== 'hero';
     const inPangu = mode === 'pangu';
-    workspace.hidden = !inside;
+    // Keep both DOM surfaces mounted during entry/exit; only hide after exit settles.
+    if(inside) workspace.hidden = false;
+    workspace.inert = !inside || inPangu;
+    $("hero").inert = inside;
+    $("hero").setAttribute("aria-hidden", String(inside));
+    document.body.dataset.transition = crossing && !reducedMotion.matches ? "running" : "idle";
+    workspace.getBoundingClientRect();
     workspace.setAttribute('aria-hidden', String(!inside));
-    workspace.inert = inPangu;
+
     document.body.classList.toggle('cui-test-active',inside);
     scene.classList.toggle('open',inPangu);
     scene.classList.remove('preparing');
     scene.setAttribute('aria-hidden',String(!inPangu));
     mountUI(inPangu);
     setStep(inPangu ? step : 0);
-    if(shouldFocus){
+    $("agent-wrap").classList.toggle("in-workspace",inside);
+    $("agent-wrap").classList.toggle("in-project",inPangu);
+    document.querySelector(".bubble").textContent = inside ? "选一个项目，一起看看。" : "Hi，要进去看看吗？";
+    const finish = () => {
+      if(ticket !== transitionId) return;
+      if(!inside) workspace.hidden = true;
+      document.body.dataset.transition = "idle";
+      if(shouldFocus){
       if(inPangu) $('scene-back').focus({preventScroll:true});
       else if(mode === 'workspace') $('open-test-pangu').focus({preventScroll:true});
       else $('enter-workspace').focus({preventScroll:true});
-    }
+      }
+    };
+    if(crossing && !reducedMotion.matches) settleTimer = setTimeout(finish,900);
+    else finish();
   }
 
   function navigate(target, replace=false){
