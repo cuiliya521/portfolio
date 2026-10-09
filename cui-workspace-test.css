@@ -137,3 +137,7 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offse
 @media(prefers-reduced-motion:reduce){
  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 }
+/* Clear Hero copy before glass project cards become legible. */
+.copy{transition:opacity .2s ease,transform .4s cubic-bezier(.2,.7,.2,1)}
+.hero .topbar{transition:opacity .2s ease,transform .3s ease}
+body.cui-test-active .test-workspace{transition:opacity .5s ease .18s,transform .9s cubic-bezier(.2,.7,.2,1)}
