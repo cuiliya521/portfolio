@@ -25,7 +25,7 @@
 .hero .action-row{justify-content:center;transform:translateX(-2.1vw)}
 .hero .enter{justify-content:center;width:19.1vw;height:6.9vh;padding:0 22px;gap:17px;font-size:1.55vw;font-weight:400;border:1px solid #48714d;border-radius:999px;background:linear-gradient(145deg,#164735,#08382a 75%,#164737);box-shadow:inset 0 1px 4px #f2ffac1c,0 7px 17px #647a3720;color:#fffef0}
 .hero .enter .arrow{font-size:24px;font-weight:300}
-.agent-wrap:not(.in-workspace){left:1.8vw;top:12vh;transform:scale(1.34)}
+.agent-wrap:not(.in-workspace){left:0.4vw;top:11vh;transform:scale(1.48);transform-origin:top left}
 .agent-wrap:not(.in-workspace) .bubble{opacity:0}
 .h3-projects{position:absolute;left:43.8%;top:56.3%;width:54.7%;height:24.5%;display:grid;grid-template-columns:1.09fr 1fr 1fr;gap:17px;pointer-events:auto;perspective:1200px;transition:opacity .2s ease,transform .5s ease}
 .h3-project{position:relative;display:flex;flex-direction:column;gap:14px;min-width:0;align-items:stretch;text-align:left;height:100%;padding:16px 13px 12px;border:1.5px solid #ffffefcf;border-radius:19px;background:linear-gradient(135deg,#fffff3cf,#fffff8ab 67%,#edf1e6bd);box-shadow:inset 0 2px 5px #fffff7,0 12px 40px #6b875020;backdrop-filter:blur(12px);cursor:pointer;font-family:inherit;transform:rotateZ(-2.5deg) rotateY(-7deg);transform-origin:center bottom;transition:box-shadow .25s ease,filter .25s ease}
@@ -47,3 +47,7 @@
 body.cui-test-active .hero .h3-atmosphere{opacity:0;transform:scale(1.08)}
 body.cui-test-active .h3-projects{opacity:0;transform:translateY(25px);pointer-events:none}
 @media(prefers-reduced-motion:reduce){.hero *, .agent-wrap{animation:none!important;transition:none!important}}
+
+/* H3 final polish: readable candidate identity at the actual 1440px desktop viewport. */
+.hero .kicker{font-size:clamp(15px,1.18vw,18px);letter-spacing:.025em;font-weight:650;color:#214b3c;top:-41px;white-space:nowrap}
+@media(max-width:980px){.agent-wrap:not(.in-workspace){left:2%;top:45%;transform:none}.hero .kicker{font-size:13px;white-space:normal}}
