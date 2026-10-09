@@ -27,11 +27,11 @@
 .hero .enter .arrow{font-size:24px;font-weight:300}
 .agent-wrap:not(.in-workspace){left:1.8vw;top:12vh;transform:scale(1.34)}
 .agent-wrap:not(.in-workspace) .bubble{opacity:0}
-.h3-projects{position:absolute;left:43.8%;top:55%;width:54.7%;height:26%;display:grid;grid-template-columns:1.09fr 1fr 1fr;gap:17px;pointer-events:auto;perspective:1200px;transition:opacity .2s ease,transform .5s ease}
+.h3-projects{position:absolute;left:43.8%;top:56.3%;width:54.7%;height:24.5%;display:grid;grid-template-columns:1.09fr 1fr 1fr;gap:17px;pointer-events:auto;perspective:1200px;transition:opacity .2s ease,transform .5s ease}
 .h3-project{position:relative;display:flex;flex-direction:column;gap:14px;min-width:0;align-items:stretch;text-align:left;height:100%;padding:16px 13px 12px;border:1.5px solid #ffffefcf;border-radius:19px;background:linear-gradient(135deg,#fffff3cf,#fffff8ab 67%,#edf1e6bd);box-shadow:inset 0 2px 5px #fffff7,0 12px 40px #6b875020;backdrop-filter:blur(12px);cursor:pointer;font-family:inherit;transform:rotateZ(-2.5deg) rotateY(-7deg);transform-origin:center bottom;transition:box-shadow .25s ease,filter .25s ease}
 .h3-project:hover{box-shadow:inset 0 2px 5px #fffff7,0 16px 40px #38633c38;filter:brightness(1.025)}
-.h3-xhs{height:calc(100% + 34px);margin-top:-34px;transform:rotateZ(-4deg) rotateY(-7deg)}
-.h3-noteguard{height:calc(100% + 83px);margin-top:-83px;transform:rotateZ(-6deg) rotateY(-7deg)}
+.h3-xhs{height:calc(100% + 26px);margin-top:-30px;transform:rotateZ(-4deg) rotateY(-7deg)}
+.h3-noteguard{height:calc(100% + 55px);margin-top:-73px;transform:rotateZ(-6deg) rotateY(-7deg)}
 .h3-project-name{display:flex;align-items:center;gap:9px;font-size:clamp(16px,1.5vw,23px);font-weight:750;color:#142f28;white-space:nowrap;height:37px;flex:none;letter-spacing:-.045em}
 .h3-pangu-icon{width:33px;height:28px;flex:none;background:url('assets/pangu-frozen-product.webp') -55px -40px/910px 660px no-repeat}
 .h3-xhs-icon{display:flex;align-items:center;justify-content:center;background:#ff254b;color:white;font-size:9px;border-radius:9px;width:35px;height:35px;flex:none;letter-spacing:-1px}
