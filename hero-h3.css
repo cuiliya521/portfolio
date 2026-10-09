@@ -1,0 +1,49 @@
+/* H3 Hero visual layer only. Workspace/controller styles remain frozen at b1495d9. */
+@font-face{font-family:H3Serif;src:url('assets/h3-serif-600.ttf') format('truetype');font-weight:600;font-display:swap}
+@font-face{font-family:H3Serif;src:url('assets/h3-serif-700.ttf') format('truetype');font-weight:700;font-display:swap}
+.hero .h3-atmosphere{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:-1;transition:opacity .65s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.h3-light{position:absolute;inset:0;width:100%;height:100%;object-fit:fill}
+.h3-glass{position:absolute;overflow:hidden;border:2px solid rgba(255,255,242,.57);border-radius:26px;background:rgba(173,201,184,.22);box-shadow:inset 0 2px 10px #fff8,0 10px 50px #456b4612;filter:blur(2px)}
+.h3-glass img{width:100%;height:100%;object-fit:cover;opacity:.23;filter:blur(2px) saturate(.55)}
+.h3-glass::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#fefee66b,transparent 55%,#fffbd879);z-index:1}
+.h3-glass-left{left:-12%;top:21%;width:40%;height:54%;transform:perspective(1000px) rotateY(23deg) rotateZ(12deg);opacity:.64}
+.h3-glass-right{right:-14%;top:5%;width:35%;height:64%;transform:perspective(1200px) rotateY(-20deg) rotateZ(-11deg);opacity:.7}
+.h3-glass-back{left:27%;top:46%;width:21%;height:36%;transform:perspective(900px) rotateY(15deg);opacity:.4;filter:blur(4px)}
+.hero .topbar{height:112px;padding:0 3.5vw;align-items:center}
+.hero .brand{gap:14px;font-family:H3Serif,'Songti SC',serif;font-size:27px;letter-spacing:.02em}
+.hero .brand-dot{display:none}.h3-mark{width:46px;height:46px}
+.hero .hero-main{position:absolute;inset:0;height:100%;min-height:0;pointer-events:none}
+.hero .copy{left:44.1%;top:21.1%;width:30.5%;max-width:none;text-align:center;pointer-events:auto}
+.hero .kicker{position:absolute;top:-34px;left:0;width:100%;display:block;font-size:13px;letter-spacing:.11em;color:#3d6257;font-weight:500;margin:0}
+.hero .kicker::before{display:none}
+.hero h1{font-family:H3Serif,'Songti SC','STSong','Noto Serif SC',serif;font-size:3.86vw;line-height:1.08;letter-spacing:-.035em;font-weight:700;white-space:nowrap;text-shadow:0 1px 0 #fcfff1}
+.hero h1 .line2{display:block;font-size:4.68vw;line-height:1.06;margin-top:9px}
+.hero h1 .line2::after{display:none}
+.hero .copy::before{content:'';position:absolute;inset:-20px -40px 122px;border:1.5px solid #b89b5b;border-left-color:transparent;border-bottom-color:transparent;border-radius:50%;transform:rotate(-17deg);opacity:.65;pointer-events:none}
+.hero .copy::after{content:'✦';position:absolute;right:-21px;top:-28px;color:#bda063;font-size:26px;text-shadow:-414px 156px #bda063;font-weight:400;pointer-events:none}
+.hero .lede{font-family:H3Serif,'Songti SC',serif;font-size:1.43vw;line-height:1.6;font-weight:600;white-space:nowrap;color:#264e40;margin:18px -20px 22px}
+.hero .action-row{justify-content:center}
+.hero .enter{justify-content:center;width:19.1vw;height:6.9vh;padding:0 22px;gap:17px;font-size:1.55vw;font-weight:400;border:1px solid #48714d;border-radius:999px;background:linear-gradient(145deg,#164735,#08382a 75%,#164737);box-shadow:inset 0 1px 4px #f2ffac1c,0 7px 17px #647a3720;color:#fffef0}
+.hero .enter .arrow{font-size:24px;font-weight:300}
+.agent-wrap:not(.in-workspace){left:1.8vw;top:12vh;transform:scale(1.34)}
+.agent-wrap:not(.in-workspace) .bubble{opacity:0}
+.h3-projects{position:absolute;left:43.8%;top:56%;width:54.7%;height:26%;display:grid;grid-template-columns:1.09fr 1fr 1fr;gap:17px;pointer-events:auto;perspective:1200px;transition:opacity .2s ease,transform .5s ease}
+.h3-project{position:relative;display:flex;flex-direction:column;gap:14px;min-width:0;align-items:stretch;text-align:left;height:100%;padding:16px 13px 12px;border:1.5px solid #ffffefcf;border-radius:19px;background:linear-gradient(135deg,#fffff3cf,#fffff8ab 67%,#edf1e6bd);box-shadow:inset 0 2px 5px #fffff7,0 12px 40px #6b875020;backdrop-filter:blur(12px);cursor:pointer;font-family:inherit;transform:rotateZ(-2.5deg) rotateY(-7deg);transform-origin:center bottom;transition:box-shadow .25s ease,filter .25s ease}
+.h3-project:hover{box-shadow:inset 0 2px 5px #fffff7,0 16px 40px #38633c38;filter:brightness(1.025)}
+.h3-xhs{height:calc(100% + 26px);margin-top:-26px;transform:rotateZ(-4deg) rotateY(-7deg)}
+.h3-noteguard{height:calc(100% + 65px);margin-top:-65px;transform:rotateZ(-6deg) rotateY(-7deg)}
+.h3-project-name{display:flex;align-items:center;gap:9px;font-size:clamp(16px,1.36vw,23px);font-weight:750;color:#142f28;white-space:nowrap;height:37px;flex:none;letter-spacing:-.045em}
+.h3-pangu-icon{color:#2688ed;font-size:34px;line-height:1;font-weight:900}
+.h3-xhs-icon{display:flex;align-items:center;justify-content:center;background:#ff254b;color:white;font-size:9px;border-radius:9px;width:35px;height:35px;flex:none;letter-spacing:-1px}
+.h3-note-icon{font-size:34px;color:#15715a;line-height:1}
+.h3-project-preview{width:100%;min-height:0;flex:1;object-fit:cover;object-position:left top;border-radius:9px;border:1px solid #a7bcb836}
+.h3-xhs-preview{display:grid;grid-template-columns:1.2fr 1fr;grid-template-rows:1fr 1fr;gap:5px;flex:1;min-height:0;overflow:hidden;border-radius:9px;background:#fff9f6}
+.h3-xhs-preview img{width:100%;height:100%;min-height:0;object-fit:cover;object-position:left top}
+.h3-xhs-preview img:first-child{grid-row:1/3}
+.h3-note-preview{position:relative;display:flex;flex-direction:column;justify-content:center;gap:17px;padding:25px 19px;flex:1;min-height:0;overflow:hidden;border-radius:9px;background:linear-gradient(135deg,#f7faf5,#e0eadc);color:#355a46;font-size:16px;border:1px solid #bad0bf6b}
+.h3-note-preview>span:not(.h3-note-shield){border-bottom:1px solid #bfd1bb66;padding-bottom:7px}
+.h3-note-shield{position:absolute;right:14px;top:50%;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;width:60px;height:74px;color:#fffbe9;background:linear-gradient(135deg,#40996b,#145943);clip-path:polygon(50% 0,100% 18%,95% 68%,50% 100%,5% 68%,0 18%);font-size:34px;opacity:.86}
+.h3-project-arrow{position:absolute;right:12px;bottom:13px;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:#0c4835;color:#fffdef;font-size:24px;box-shadow:0 3px 9px #174c3833}
+body.cui-test-active .hero .h3-atmosphere{opacity:0;transform:scale(1.08)}
+body.cui-test-active .h3-projects{opacity:0;transform:translateY(25px);pointer-events:none}
+@media(prefers-reduced-motion:reduce){.hero *, .agent-wrap{animation:none!important;transition:none!important}}

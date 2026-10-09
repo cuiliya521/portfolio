@@ -551,12 +551,13 @@ body.entering .agent-wrap{
 }
 </style>
 <link rel="stylesheet" href="cui-workspace-test.css">
+<link rel="stylesheet" href="hero-h3.css">
 </head>
 <body>
 <div class="digital-space" aria-hidden="true"><div class="space-plane plane-back"></div><div class="space-plane plane-side"></div><div class="space-floor"></div><div class="space-orbit"></div></div>
 <section class="hero" id="hero">
   <header class="topbar">
-    <a class="brand" href="#hero"><span>CUI</span><i class="brand-dot"></i></a>
+    <a class="brand" href="#hero"><svg class="h3-mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M38 7A21 21 0 1 0 41 36A17 17 0 1 1 38 7" fill="currentColor"/><circle cx="25" cy="25" r="6" fill="currentColor"/><circle cx="36" cy="14" r="2" fill="#b89a59"/></svg><span>CUI</span><i class="brand-dot"></i></a>
     <nav class="nav">
       <a href="#hero">WORK</a>
       <a href="#about">ABOUT</a>
@@ -565,6 +566,12 @@ body.entering .agent-wrap{
     </nav>
   </header>
 
+  <div class="h3-atmosphere" aria-hidden="true">
+      <img class="h3-light" src="assets/h3-space.svg" alt="">
+      <div class="h3-glass h3-glass-left"><img src="assets/pangu-manage.png" alt=""></div>
+      <div class="h3-glass h3-glass-right"><img src="assets/pangu-config.png" alt=""></div>
+      <div class="h3-glass h3-glass-back"><img src="assets/pangu-manage.png" alt=""></div>
+    </div>
   <main class="hero-main">
     <section class="copy">
       <div class="kicker">崔丽娅 · 2027 届 · AI 产品运营</div>
@@ -599,6 +606,23 @@ body.entering .agent-wrap{
     </section>
 
     <div class="flow">PROBLEM → PRODUCT → VALIDATION</div>
+    <div class="h3-projects" aria-label="Hero 项目入口">
+      <button class="h3-project h3-pangu" type="button" aria-label="进入工作空间，探索盘古智绘" onclick="document.getElementById('enter-workspace').click()">
+        <span class="h3-project-name"><span class="h3-pangu-icon" aria-hidden="true">✦</span>盘古智绘</span>
+        <img class="h3-project-preview" src="assets/pangu-config.png" alt="已有盘古智绘产品原型">
+        <span class="h3-project-arrow" aria-hidden="true">→</span>
+      </button>
+      <button class="h3-project h3-xhs" type="button" aria-label="进入工作空间，探索小红书内容运营" onclick="document.getElementById('enter-workspace').click()">
+        <span class="h3-project-name"><span class="h3-xhs-icon" aria-hidden="true">小红书</span>小红书内容运营</span>
+        <span class="h3-xhs-preview"><img src="assets/case-result.png" alt="已有教育内容笔记素材"><img src="assets/case-blackboard.png" alt="已有课程内容笔记素材"><img src="assets/case-insight.png" alt="已有内容洞察笔记素材"></span>
+        <span class="h3-project-arrow" aria-hidden="true">→</span>
+      </button>
+      <button class="h3-project h3-noteguard" type="button" aria-label="进入工作空间，探索 NoteGuard AI" onclick="document.getElementById('enter-workspace').click()">
+        <span class="h3-project-name"><span class="h3-note-icon" aria-hidden="true">◇</span>NoteGuard AI</span>
+        <span class="h3-note-preview"><span class="h3-note-shield" aria-hidden="true">✓</span><span>风险审核</span><span>人机确认</span><span>采用后复检</span></span>
+        <span class="h3-project-arrow" aria-hidden="true">→</span>
+      </button>
+    </div>
   </main>
 </section>
 
