@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900">
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" preserveAspectRatio="none">
 <defs>
  <linearGradient id="room" x1="0" y1="0" x2=".85" y2="1"><stop stop-color="#dce5df"/><stop offset=".43" stop-color="#f7f5e9"/><stop offset="1" stop-color="#c3d4c4"/></linearGradient>
  <radialGradient id="sun"><stop stop-color="#fffff7"/><stop offset=".45" stop-color="#fffdee" stop-opacity=".8"/><stop offset="1" stop-color="#fffbee" stop-opacity="0"/></radialGradient>
@@ -17,7 +17,7 @@
 <ellipse cx="861" cy="257" rx="586" ry="473" fill="url(#sun)"/>
 <g filter="url(#soft)"><path d="M755 0L990 0L370 754H190Z" fill="url(#beam)" opacity=".5"/><path d="M1080 0L1180 0L148 865H0V778Z" fill="url(#beam)" opacity=".53"/><path d="M1310 0L1440 0V75L900 810H668Z" fill="#fffcdf" opacity=".18"/></g>
 <path d="M0 734Q705 766 1440 712V900H0Z" fill="url(#floor)"/>
-<path d="M0 767Q623 722 1440 771M0 876L946 736M287 900L1440 774M815 900L0 777" stroke="#fffdf0" stroke-width="5" opacity=".72"/>
+<path d="M0 767Q623 722 1440 771M0 876L946 736M287 900L1440 774M815 900L0 777" fill="none" stroke="#fffdf0" stroke-width="5" opacity=".72"/>
 <path d="M0 796Q847 704 1440 786M0 733Q670 779 1440 728" fill="none" stroke="url(#gold)" stroke-width="3"/>
 <path d="M0 315Q590 539 1440 290M0 108Q596 334 1440 63" fill="none" stroke="#fffef6" stroke-width="2.5" opacity=".43"/>
 <path d="M0 616Q684 801 1440 604M0 535Q922 641 1440 379" fill="none" stroke="url(#gold)" stroke-width="2" opacity=".72"/>

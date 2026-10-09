@@ -16,24 +16,24 @@
 .hero .copy{left:44.1%;top:21.1%;width:30.5%;max-width:none;text-align:center;pointer-events:auto}
 .hero .kicker{position:absolute;top:-34px;left:0;width:100%;display:block;font-size:13px;letter-spacing:.11em;color:#3d6257;font-weight:500;margin:0}
 .hero .kicker::before{display:none}
-.hero h1{font-family:H3Serif,'Songti SC','STSong','Noto Serif SC',serif;font-size:3.86vw;line-height:1.08;letter-spacing:-.035em;font-weight:700;white-space:nowrap;text-shadow:0 1px 0 #fcfff1}
-.hero h1 .line2{display:block;font-size:4.68vw;line-height:1.06;margin-top:9px}
+.hero h1{font-family:H3Serif,'Songti SC','STSong','Noto Serif SC',serif;font-size:4.24vw;line-height:1.08;letter-spacing:-.035em;font-weight:700;white-space:nowrap;text-shadow:0 1px 0 #fcfff1;transform:translateX(-1.2vw)}
+.hero h1 .line2{display:block;font-size:4.68vw;line-height:1.06;margin-top:6px;transform:translateX(1.5vw)}
 .hero h1 .line2::after{display:none}
 .hero .copy::before{content:'';position:absolute;inset:-20px -40px 122px;border:1.5px solid #b89b5b;border-left-color:transparent;border-bottom-color:transparent;border-radius:50%;transform:rotate(-17deg);opacity:.65;pointer-events:none}
 .hero .copy::after{content:'✦';position:absolute;right:-21px;top:-28px;color:#bda063;font-size:26px;text-shadow:-414px 156px #bda063;font-weight:400;pointer-events:none}
-.hero .lede{font-family:H3Serif,'Songti SC',serif;font-size:1.43vw;line-height:1.6;font-weight:600;white-space:nowrap;color:#264e40;margin:18px -20px 22px}
-.hero .action-row{justify-content:center}
+.hero .lede{font-family:H3Serif,'Songti SC',serif;font-size:1.43vw;line-height:1.6;font-weight:600;white-space:nowrap;color:#264e40;margin:11px -20px 22px;transform:translateX(-8px)}
+.hero .action-row{justify-content:center;transform:translateX(-2.1vw)}
 .hero .enter{justify-content:center;width:19.1vw;height:6.9vh;padding:0 22px;gap:17px;font-size:1.55vw;font-weight:400;border:1px solid #48714d;border-radius:999px;background:linear-gradient(145deg,#164735,#08382a 75%,#164737);box-shadow:inset 0 1px 4px #f2ffac1c,0 7px 17px #647a3720;color:#fffef0}
 .hero .enter .arrow{font-size:24px;font-weight:300}
 .agent-wrap:not(.in-workspace){left:1.8vw;top:12vh;transform:scale(1.34)}
 .agent-wrap:not(.in-workspace) .bubble{opacity:0}
-.h3-projects{position:absolute;left:43.8%;top:56%;width:54.7%;height:26%;display:grid;grid-template-columns:1.09fr 1fr 1fr;gap:17px;pointer-events:auto;perspective:1200px;transition:opacity .2s ease,transform .5s ease}
+.h3-projects{position:absolute;left:43.8%;top:55%;width:54.7%;height:26%;display:grid;grid-template-columns:1.09fr 1fr 1fr;gap:17px;pointer-events:auto;perspective:1200px;transition:opacity .2s ease,transform .5s ease}
 .h3-project{position:relative;display:flex;flex-direction:column;gap:14px;min-width:0;align-items:stretch;text-align:left;height:100%;padding:16px 13px 12px;border:1.5px solid #ffffefcf;border-radius:19px;background:linear-gradient(135deg,#fffff3cf,#fffff8ab 67%,#edf1e6bd);box-shadow:inset 0 2px 5px #fffff7,0 12px 40px #6b875020;backdrop-filter:blur(12px);cursor:pointer;font-family:inherit;transform:rotateZ(-2.5deg) rotateY(-7deg);transform-origin:center bottom;transition:box-shadow .25s ease,filter .25s ease}
 .h3-project:hover{box-shadow:inset 0 2px 5px #fffff7,0 16px 40px #38633c38;filter:brightness(1.025)}
-.h3-xhs{height:calc(100% + 26px);margin-top:-26px;transform:rotateZ(-4deg) rotateY(-7deg)}
-.h3-noteguard{height:calc(100% + 65px);margin-top:-65px;transform:rotateZ(-6deg) rotateY(-7deg)}
-.h3-project-name{display:flex;align-items:center;gap:9px;font-size:clamp(16px,1.36vw,23px);font-weight:750;color:#142f28;white-space:nowrap;height:37px;flex:none;letter-spacing:-.045em}
-.h3-pangu-icon{color:#2688ed;font-size:34px;line-height:1;font-weight:900}
+.h3-xhs{height:calc(100% + 34px);margin-top:-34px;transform:rotateZ(-4deg) rotateY(-7deg)}
+.h3-noteguard{height:calc(100% + 83px);margin-top:-83px;transform:rotateZ(-6deg) rotateY(-7deg)}
+.h3-project-name{display:flex;align-items:center;gap:9px;font-size:clamp(16px,1.5vw,23px);font-weight:750;color:#142f28;white-space:nowrap;height:37px;flex:none;letter-spacing:-.045em}
+.h3-pangu-icon{width:33px;height:28px;flex:none;background:url('assets/pangu-frozen-product.webp') -55px -40px/910px 660px no-repeat}
 .h3-xhs-icon{display:flex;align-items:center;justify-content:center;background:#ff254b;color:white;font-size:9px;border-radius:9px;width:35px;height:35px;flex:none;letter-spacing:-1px}
 .h3-note-icon{font-size:34px;color:#15715a;line-height:1}
 .h3-project-preview{width:100%;min-height:0;flex:1;object-fit:cover;object-position:left top;border-radius:9px;border:1px solid #a7bcb836}
