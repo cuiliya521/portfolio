@@ -20,12 +20,12 @@
  syncPanguSource();
  document.addEventListener('cui:modechange',e => {
   const inHero = e.detail.mode === 'hero';
-  agent.src = inHero ? heroSource : guideSource;
+  agent.src = inHero ? heroSource : e.detail.mode === 'pangu' ? 'assets/pangu-r1/cui-pointing.png' : guideSource;
   agent.alt = inHero ? 'CUI Agent 小精灵' : '冻结 CUI 导览角色';
   if(inHero && $('workspace-info').open) $('workspace-info').close();
  });
  // The controller's initial render precedes this script.
- if(document.body.classList.contains('cui-test-active')) agent.src = guideSource;
+ if(document.body.classList.contains('cui-test-active')) agent.src = $('pangu-scene').classList.contains('open') ? 'assets/pangu-r1/cui-pointing.png' : guideSource;
  const panel = $('workspace-info');
  let invoker;
  const switches = '<nav class="project-switches" aria-label="直接切换项目"><button type="button" data-switch="pangu">盘古智绘</button><button type="button" data-switch="xhs">小红书内容运营</button><button type="button" data-switch="noteguard">NoteGuard AI</button></nav>';
@@ -51,9 +51,6 @@
  $('workspace-info-close').addEventListener('click',()=>panel.close());
  panel.addEventListener('close',()=>{if(invoker?.isConnected&&document.body.classList.contains('cui-test-active')) invoker.focus({preventScroll:true})});
  $('workspace-dock-home').addEventListener('click',()=>{$('cui-test-workspace').scrollTo({top:0,behavior:'smooth'});$('open-test-pangu').focus({preventScroll:true})});
- const sceneNav=document.createElement('nav');sceneNav.className='project-switches';sceneNav.setAttribute('aria-label','直接切换项目');
- sceneNav.innerHTML='<button type="button" data-switch="xhs">小红书</button><button type="button" data-switch="noteguard">NoteGuard</button>';
- document.querySelector('.scene-top').insertBefore(sceneNav,$('scene-back'));
  document.addEventListener('click',e=>{
   const b=e.target.closest('[data-switch]');if(!b)return;
   const key=b.dataset.switch;

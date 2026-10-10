@@ -1,0 +1,29 @@
+/* R1: complete supplied product image, independent typography and a single CUI node. */
+.pangu-scene.pangu-r1{inset:0;border:0;border-radius:0;background:transparent;box-shadow:none;padding:0;overflow:hidden;z-index:110;transform:none;transition:opacity .35s ease,visibility .35s ease}
+.pangu-r1-background{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(1.025)}
+.pangu-r1-top{position:absolute;left:4.2%;right:4%;top:3.7%;display:flex;align-items:center;justify-content:space-between;color:#7b8590;font:14px/1.5 system-ui,sans-serif;z-index:2}
+.pangu-r1 .scene-back{margin:0;border:0;background:transparent;color:#677787;padding:8px;font:16px/1.5 system-ui,sans-serif;box-shadow:none;white-space:nowrap}
+.pangu-r1-aside{position:absolute;left:3.5%;top:12.5%;width:22%;color:#07172f;z-index:2}
+.pangu-r1-aside h2{font:700 clamp(32px,3.4vw,54px)/1.2 H3Serif,serif;margin:0 0 12px}
+.pangu-r1-aside p{font:500 clamp(16px,1.6vw,26px)/1.6 system-ui,sans-serif;margin:0 0 24px;white-space:nowrap}
+.pangu-r1-hint{display:inline-block;border:1px solid #fff;border-radius:28px;background:#fffdf4a6;padding:12px 17px;color:#304c36;font:15px/1.4 system-ui,sans-serif}
+.pangu-r1-aside ol{list-style:none;margin:18px 0 0;padding:0;border-left:1px solid #a9b2a9}
+.pangu-r1-aside li{padding:12px 14px;color:#81898b;font:17px/1.5 system-ui,sans-serif;white-space:nowrap}
+.pangu-r1-aside li span{font-size:12px;margin-right:10px}.pangu-r1-aside li[aria-current]{background:#fffdf2bb;border:1px solid white;border-radius:25px;color:#304e29;font-weight:700}
+.pangu-r1-window{position:absolute;left:26%;top:8.5%;width:70.5%;height:85%;margin:0;padding:13px;box-sizing:border-box;border:2px solid #fffef6;border-radius:25px;background:#fffff68c;box-shadow:0 15px 35px #4a674329,0 0 16px #f2daa362,inset 0 0 15px #fff9;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pangu-r1-window img{display:block;width:100%;height:100%;object-fit:contain;border-radius:12px}
+.pangu-r1-window figcaption{position:absolute;bottom:2px;right:20px;color:#69796d;font:10px/1 system-ui,sans-serif;background:#fffc;pointer-events:none}
+.agent-wrap.in-workspace.in-project{visibility:visible;left:.7vw;right:auto;top:41vh;bottom:auto;width:25.2vw;transform:none;z-index:111;pointer-events:none}
+.agent-wrap.in-project .agent-image{transform:none;animation:none;filter:drop-shadow(0 8px 12px #8a7c4e22)}
+.agent-wrap.in-project .bubble{display:none}
+@media(max-width:700px){
+ .pangu-scene.pangu-r1{overflow-y:auto}
+ .pangu-r1-background{position:fixed}
+ .pangu-r1-top{left:18px;right:12px;top:14px;font-size:10px}.pangu-r1 .scene-back{font-size:12px}
+ .pangu-r1-aside{left:20px;top:70px;width:calc(100% - 40px)}.pangu-r1-aside h2{font-size:31px}.pangu-r1-aside p{font-size:15px;margin-bottom:12px}.pangu-r1-hint{font-size:12px;padding:8px 12px}
+ .pangu-r1-aside ol{display:flex;border:0;margin-top:13px;gap:3px}.pangu-r1-aside li{font-size:12px;padding:7px}.pangu-r1-aside li span{font-size:10px;margin-right:2px}
+ .pangu-r1-window{left:12px;top:270px;width:calc(100% - 24px);height:auto;aspect-ratio:1.5;padding:7px;border-radius:16px}
+ .pangu-r1-window figcaption{font-size:8px;right:12px}
+ .agent-wrap.in-workspace.in-project{left:auto;right:14px;top:75px;width:85px;transform:none}
+}
+@media(prefers-reduced-motion:reduce){.pangu-scene.pangu-r1{transition:none}}

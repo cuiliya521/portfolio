@@ -179,13 +179,11 @@ try{
   await page.locator('#open-test-pangu').click();
   await page.waitForTimeout(550);
   pass('Workspace → Pangu modal',await shown('#pangu-scene'));
-  pass('Reconstructed Pangu UI is loaded',await page.locator('#pangu-main-img').evaluate(img=>img.complete&&img.naturalWidth>0));
-  pass('Original Pangu DOM element remains unique',(await page.locator('#pangu-main-ui').count())===1);
-  pass('Original Pangu UI mounted inside focus frame',await page.locator('#focus-frame > #pangu-main-ui').count()===1);
-  pass('Source-disclosure label visible',(await page.locator('.scene-proof').innerText()).includes('脱敏'));
+  pass('R1 original complete product screenshot loaded',await page.locator('#pangu-r1-product').evaluate(img=>img.complete&&img.naturalWidth===1536&&getComputedStyle(img).objectFit==='contain'));
+  pass('Single CUI uses fixed pointing material',await page.locator('.agent-image').getAttribute('src')==='assets/pangu-r1/cui-pointing.png');
+  pass('R1 exploration is static without fake buttons',await page.locator('.pangu-r1-aside button').count()===0);
+  await page.waitForTimeout(950);
   await page.screenshot({path:path.join(output,'03-pangu-window-1440x900.png')});
-  await page.locator('#scene-next').click();
-  pass('Pangu steps are clickable',await page.locator('.scene-step.active').evaluate(el=>el.dataset.step==='1'));
   await page.locator('#scene-back').click();
   await page.locator('#pangu-scene').waitFor({state:'hidden'});
   await page.locator('#cui-test-workspace').waitFor({state:'visible'});

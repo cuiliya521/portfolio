@@ -554,6 +554,7 @@ body.entering .agent-wrap{
 <link rel="stylesheet" href="hero-h3.css">
 <link rel="stylesheet" href="cui-hero-agent.css">
 <link rel="stylesheet" href="workspace-v6.css">
+<link rel="stylesheet" href="pangu-r1.css">
 </head>
 <body>
 <div class="digital-space" aria-hidden="true"><div class="space-plane plane-back"></div><div class="space-plane plane-side"></div><div class="space-floor"></div><div class="space-orbit"></div></div>
@@ -670,32 +671,11 @@ body.entering .agent-wrap{
   <div id="workspace-info-content"></div>
 </dialog>
 
-<section class="pangu-scene" id="pangu-scene" aria-hidden="true" role="dialog" aria-modal="true" aria-label="盘古智绘项目窗口">
-  <header class="scene-top">
-    <div class="scene-index">01 / 盘古智绘 · AIGC PRODUCT OPERATIONS</div>
-    <button class="scene-back" id="scene-back" type="button">← 关闭窗口 · 返回 Workspace</button>
-  </header>
-
-  <div class="scene-body">
-    <aside class="scene-copy">
-      <div class="chapter" id="scene-chapter">01 / 结构化输入 + 实时预览</div>
-      <h2 id="scene-title">把 Prompt，<br>变成商户会选的字段。</h2>
-      <p id="scene-desc">不是让商户学习提示词，而是把复杂生成能力藏进产品流程里，让“描述需求”变成“选择需求”。</p>
-
-    </aside>
-
-    <div class="scene-visual">
-      <div class="scene-proof">基于真实项目经历重构的脱敏概念原型 · 产品 UI 保持原样</div>
-      <div class="focus-frame" id="focus-frame">
-      </div>
-      <div class="scene-steps" aria-label="盘古智绘案例章节">
-        <button class="scene-step active" type="button" data-step="0">结构化输入</button>
-        <button class="scene-step" type="button" data-step="1">实时预览</button>
-        <button class="scene-step" type="button" data-step="2">素材复用</button>
-      </div>
-      <button class="scene-next" id="scene-next" type="button">看实时预览 →</button>
-    </div>
-  </div>
+<section class="pangu-scene pangu-r1" id="pangu-scene" aria-hidden="true" role="dialog" aria-modal="true" aria-label="盘古智绘产品探索总览">
+ <img class="pangu-r1-background" src="assets/workspace-v6/background.png" alt="">
+ <header class="pangu-r1-top"><span>CUI / Workspace / Pangu</span><button class="scene-back" id="scene-back" type="button">返回工作台 ↗</button></header>
+ <aside class="pangu-r1-aside"><h2>盘古智绘</h2><p>把写 Prompt 变成选字段。</p><span class="pangu-r1-hint">点击探索产品机制 →</span><ol aria-label="探索导航（后续交互预留）"><li aria-current="step"><span>01</span> 选择字段</li><li><span>02</span> 查看预览</li><li><span>03</span> 管理素材</li></ol></aside>
+ <figure class="pangu-r1-window"><img id="pangu-r1-product" src="assets/pangu-r1/product-source.jpg" alt="用户提供的盘古智绘完整生成界面：原始导航、六字段、实时预览及底部我的素材"><figcaption>提供的产品界面素材 · 非在线生成</figcaption></figure>
 </section>
 
 <script type="text/plain" id="cui-legacy-controller">
