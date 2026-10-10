@@ -175,6 +175,7 @@ try{
   await page.locator('#test-workspace-home').click();
   await page.locator('#cui-test-workspace').waitFor({state:'hidden'});
   pass('Reduced motion return to Hero works',await shown('#enter-workspace'));
+  pass('Reduced motion disables Hero float and tap feedback',await page.locator('.agent-image').evaluate(el=>getComputedStyle(el).animationName==='none'));
   pass('No browser JavaScript errors',errors.length===0);
   await page.emulateMedia({reducedMotion:'no-preference'});
   await page.goto(base+'/',{waitUntil:'networkidle'});
@@ -211,8 +212,20 @@ try{
   await page.screenshot({path:path.join(output,'09-cui-panel-390x844.png')});
   await page.locator('#cui-meet-liya').click();
   pass('Mobile introduction is readable and internally scrollable',await page.locator('#cui-liya-intro').isVisible() && await page.locator('#cui-agent-panel').evaluate(el=>el.scrollHeight>=el.clientHeight&&el.getBoundingClientRect().bottom<=innerHeight));
+  await page.locator('#cui-agent-trigger').click({position:{x:90,y:35}});
+  pass('Mobile can click visible CUI again to close expanded drawer',await page.locator('#cui-agent-panel').evaluate(el=>!el.open));
+  await page.locator('#cui-agent-trigger').click();
+  await page.locator('#cui-panel-close').click();
+  pass('Mobile close button removes panel and restores CUI focus',await page.evaluate(()=>!document.getElementById('cui-agent-panel').open&&document.activeElement.id==='cui-agent-trigger'));
+  await page.keyboard.press('Space');
   await page.keyboard.press('Escape');
   pass('Mobile Escape restores CUI focus',await page.evaluate(()=>!document.getElementById('cui-agent-panel').open&&document.activeElement.id==='cui-agent-trigger'));
+  await page.locator('#cui-agent-trigger').click();
+  await page.locator('#cui-enter-workspace').click();
+  await page.waitForFunction(()=>document.body.dataset.transition==='idle');
+  pass('Mobile agent Workspace navigation works',await shown('#cui-test-workspace'));
+  await page.goBack();
+  await page.waitForFunction(()=>document.body.dataset.transition==='idle'&&!document.body.classList.contains('cui-test-active'));
   await page.locator('#cui-agent-trigger').click();
   await page.locator('#cui-view-projects').click();
   await page.waitForFunction(()=>document.body.dataset.transition==='idle');
@@ -225,6 +238,12 @@ try{
   await freshPage.goto(base+'/',{waitUntil:'networkidle'});
   pass('Fresh mobile session shows welcome',await freshPage.locator('#cui-welcome').isVisible());
   await freshPage.screenshot({path:path.join(output,'10-cui-welcome-390x844.png')});
+  await freshPage.locator('#enter-workspace').click();
+  await freshPage.waitForFunction(()=>document.body.dataset.transition==='idle');
+  pass('Welcome permits immediate entry and disappears on navigation',await freshPage.evaluate(()=>location.hash==='#cui-workspace'&&document.getElementById('cui-welcome').hidden));
+  await freshPage.goBack();
+  await freshPage.waitForFunction(()=>document.body.dataset.transition==='idle'&&!document.body.classList.contains('cui-test-active'));
+  pass('Fast mobile exit and browser return do not replay welcome',await freshPage.locator('#cui-welcome').evaluate(el=>el.hidden));
   await freshContext.close();
 
 } catch (e){
