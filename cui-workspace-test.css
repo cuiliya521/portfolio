@@ -169,3 +169,9 @@ body.cui-test-active .test-workspace{transition:opacity .5s ease .18s,transform 
  .pangu-scene .scene-copy{display:none}
  .pangu-scene .scene-visual{height:100%}
 }
+
+/* Screenshot review R3: keep the small CUI away from all project card labels. */
+@media(max-width:700px){
+ .agent-wrap.in-workspace{left:auto;right:8px;top:74px;bottom:auto;width:92px;transform:scale(.65);transform-origin:top right;z-index:81}
+ .agent-wrap.in-workspace .agent-image{width:100%}
+}
