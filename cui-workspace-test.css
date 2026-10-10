@@ -141,3 +141,31 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offse
 .copy{transition:opacity .2s ease,transform .4s cubic-bezier(.2,.7,.2,1)}
 .hero .topbar{transition:opacity .2s ease,transform .3s ease}
 body.cui-test-active .test-workspace{transition:opacity .5s ease .18s,transform .9s cubic-bezier(.2,.7,.2,1)}
+
+/* Mobile usability: restore a full-width reading column and stacked project cards. */
+@media(max-width:700px){
+ html,body{overflow-x:hidden}
+ .test-workspace{overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain}
+ .test-workspace__top{height:64px;padding:0 18px;gap:10px}
+ .test-workspace__brand{font-size:11px;letter-spacing:.06em;line-height:1.4;min-width:0}
+ .test-workspace__brand span{font-size:10px}
+ .test-workspace__back{flex:none;padding:9px 12px;font-size:12px;white-space:nowrap}
+ .test-workspace__main{width:calc(100% - 40px);max-width:520px;margin:30px auto 48px;padding:0}
+ .test-workspace__eyebrow{font-size:10px;margin-bottom:10px}
+ .test-workspace h2{font-size:clamp(29px,8vw,38px);line-height:1.2;overflow-wrap:normal}
+ .test-workspace__intro{font-size:14px;line-height:1.6;margin:12px 0 24px}
+ .test-workspace__projects{display:grid;grid-template-columns:minmax(0,1fr);gap:13px}
+ .test-workspace__project{min-height:160px;padding:19px 20px;border-radius:16px}
+ .test-workspace__number{margin-bottom:13px;font-size:10px}
+ .test-workspace__project strong{font-size:22px}
+ .test-workspace__description{font-size:13px;margin-top:10px}
+ .test-workspace__action{padding-top:15px}
+ .test-workspace__status{margin:20px 0 0;font-size:12px}
+ .agent-wrap.in-workspace{left:1vw;top:auto;bottom:3vh;width:150px;transform:scale(.65)}
+ .agent-wrap.in-workspace .bubble{display:none}
+ .pangu-scene{inset:2vh 3vw;border-radius:15px}
+ .pangu-scene .scene-top{height:55px;padding:0 12px}
+ .pangu-scene .scene-body{height:calc(100% - 55px);grid-template-columns:minmax(0,1fr);padding:12px;gap:0}
+ .pangu-scene .scene-copy{display:none}
+ .pangu-scene .scene-visual{height:100%}
+}
