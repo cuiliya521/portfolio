@@ -57,7 +57,7 @@ try{
  }
  const guide=await page.locator('.agent-image').evaluate(el=>({src:el.getAttribute('src'),transform:getComputedStyle(el).transform}));
  check('Mobile guide points inward with the same frozen PNG',guide.src==='assets/workspace-v6/cui-guide.png'&&guide.transform==='matrix(-1, 0, 0, 1, 0, 0)',guide);
- check('Pangu uses original aspect ratio with contain, no CSS stretch',imageSizes.every(i=>i.objectFit==='contain'&&i.natural[0]===502&&i.natural[1]===373),imageSizes);
+ check('Pangu uses original aspect ratio with contain, no CSS stretch',imageSizes.every(i=>i.objectFit==='contain'&&(i.viewport[0]===390?i.natural[0]===1536&&i.natural[1]===1024&&i.src==='assets/workspace-v6/pangu-mobile-source.jpg':i.natural[0]===502&&i.natural[1]===373&&i.src==='assets/workspace-v6/pangu.png')),imageSizes);
  for(const [selector,name] of [['#open-test-pangu','pangu'],['#test-xhs','xhs'],['#test-noteguard','noteguard']]){
   await center(selector);
   const g=await geometry(selector);check(name+' project control is usable above Dock',g.fullyInside&&g.hit,g);

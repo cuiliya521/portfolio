@@ -12,6 +12,12 @@
  document.addEventListener('cui:modechange', syncGuideScroll);
  syncGuideScroll();
  const preload = new Image(); preload.src = guideSource;
+ // User-supplied higher-resolution source for mobile only; desktop stays frozen.
+ const mobilePangu = window.matchMedia('(max-width:700px)');
+ const panguEvidence = document.querySelector('.workspace-pangu .window-evidence img');
+ const syncPanguSource = () => { panguEvidence.src = mobilePangu.matches ? 'assets/workspace-v6/pangu-mobile-source.jpg' : 'assets/workspace-v6/pangu.png'; };
+ mobilePangu.addEventListener('change', syncPanguSource);
+ syncPanguSource();
  document.addEventListener('cui:modechange',e => {
   const inHero = e.detail.mode === 'hero';
   agent.src = inHero ? heroSource : guideSource;
