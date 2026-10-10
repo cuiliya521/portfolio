@@ -86,3 +86,28 @@ body.cui-test-active .h3-projects{opacity:0;transform:translateY(25px);pointer-e
  .h3-project-preview,.h3-xhs-preview{border-radius:6px}
 }
 @media(max-width:380px){.agent-wrap:not(.in-workspace){top:39%;width:54vw}.h3-projects{bottom:3%;height:24%}}
+
+/* Desktop home-only composition polish, 2026-10-10.
+   Keep Workspace, mobile rules, and the original H3 direction intact. */
+@media(min-width:981px){
+  .hero .copy{top:25.5%;left:42%;width:34.5%}
+  .hero .copy::before{opacity:.40}
+  .hero .copy::after{opacity:.75}
+  .hero .enter{height:6.5vh;min-height:51px}
+  .agent-wrap:not(.in-workspace){top:13.5vh;left:1.2vw;transform:scale(1.39)}
+  .h3-projects{
+    left:43%;top:60%;width:55%;height:27%;
+    grid-template-columns:1.15fr 1fr 1.12fr;gap:12px
+  }
+  .h3-project{padding:13px 12px 12px;gap:9px;transform:rotateZ(-1deg) rotateY(-3deg)}
+  .h3-xhs{height:calc(100% + 12px);margin-top:-16px;transform:rotateZ(-2deg) rotateY(-3deg)}
+  .h3-noteguard{height:calc(100% + 18px);margin-top:-23px;transform:rotateZ(-2deg) rotateY(-3deg)}
+  .h3-project-name{font-size:clamp(15px,1.24vw,19px);gap:6px;letter-spacing:-.035em}
+  .h3-xhs-icon{width:29px;height:29px;font-size:8px}
+  .h3-note-icon{font-size:27px}
+  .h3-project-preview,.h3-xhs-preview{object-position:left top}
+  .h3-glass-left{opacity:.35;filter:blur(5px)}
+  .h3-glass-right{opacity:.38;filter:blur(6px)}
+  .h3-glass-back{opacity:.22;filter:blur(7px)}
+  .h3-light{opacity:.78}
+}
