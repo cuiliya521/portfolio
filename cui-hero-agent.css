@@ -8,7 +8,7 @@
 .cui-welcome{position:fixed;left:clamp(24px,16vw,230px);top:55vh;width:340px;max-width:calc(100vw - 48px);box-sizing:border-box;z-index:100;padding:14px 18px;border:1px solid #fffdf0;border-radius:18px 18px 18px 4px;background:rgba(255,253,243,.94);box-shadow:0 8px 28px #25423114;backdrop-filter:blur(14px);color:#284c3d;font:500 15px/1.65 system-ui,sans-serif;pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .45s ease,transform .45s ease}
 .cui-welcome.is-visible{opacity:1;transform:translateY(0)}
 .cui-welcome[hidden]{display:none}
-.cui-agent-panel{position:fixed;inset:auto auto 24px 24px;margin:0;width:394px;max-width:calc(100vw - 48px);max-height:calc(100dvh - 48px);overflow-y:auto;box-sizing:border-box;z-index:120;padding:22px;border:1px solid #fffff5;border-radius:24px;background:linear-gradient(145deg,rgba(255,253,243,.97),rgba(231,239,224,.96));box-shadow:0 16px 48px #29433424;backdrop-filter:blur(20px);color:#234a3b;font:15px/1.6 system-ui,sans-serif}
+.cui-agent-panel{position:fixed;inset:auto 24px 24px auto;margin:0;width:340px;max-width:calc(100vw - 48px);max-height:calc(100dvh - 48px);overflow-y:auto;box-sizing:border-box;z-index:120;padding:22px;border:1px solid #fffff5;border-radius:24px;background:linear-gradient(145deg,rgba(255,253,243,.97),rgba(231,239,224,.96));box-shadow:0 16px 48px #29433424;backdrop-filter:blur(20px);color:#234a3b;font:15px/1.6 system-ui,sans-serif}
 .cui-agent-panel:not([open]){display:none;pointer-events:none}
 .cui-panel-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .cui-panel-header h2{margin:0;font-size:19px;font-weight:650}
@@ -24,6 +24,8 @@
  .cui-agent-panel{inset:auto 12px 12px 12px;width:auto;max-width:none;max-height:36dvh;padding:16px;border-radius:24px 24px 18px 18px;font-size:14px;line-height:1.5}
  .cui-panel-header h2{font-size:17px}.cui-panel-close{width:36px;height:36px;font-size:24px}
  #cui-panel-welcome{margin:10px 0 14px}.cui-panel-actions button{min-height:44px;padding:8px 12px;font-size:14px}
+ /* Reposition the same frozen CUI only while the drawer is open. */
+ body:has(#cui-agent-panel[open]) .agent-wrap:not(.in-workspace){left:32%;top:46%;width:36%}
 }
 @media(prefers-reduced-motion:reduce){
  .agent-wrap:not(.in-workspace) .agent-image,.agent-wrap:not(.in-workspace).cui-tapped .agent-image{animation:none!important}

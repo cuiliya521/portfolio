@@ -33,7 +33,10 @@ const shown = async selector => page.locator(selector).evaluate(el => {
 });
 try{
   await page.goto(base+'/',{waitUntil:'networkidle'});
+  await page.evaluate(()=>document.fonts.ready);
+  await page.waitForFunction(()=>getComputedStyle(document.getElementById('cui-welcome')).opacity==='1');
   await page.screenshot({path:path.join(output,'01-hero-1440x900.png')});
+  pass('Welcome screenshot captured only after full opacity',await page.locator('#cui-welcome').evaluate(el=>getComputedStyle(el).opacity==='1'));
   pass('First-session welcome has exact text',await page.locator('#cui-welcome').isVisible() && (await page.locator('#cui-welcome').innerText())==='你好呀，我是 CUI！欢迎来到丽娅的 AI 工作现场。一起进去看看吗？');
   const noCopyOverlap = selector => page.locator(selector).evaluate(el=>{
     const r=el.getBoundingClientRect();
@@ -49,10 +52,16 @@ try{
   await page.keyboard.press('Enter');
   pass('Keyboard Enter opens CUI panel',await page.locator('#cui-agent-panel').evaluate(el=>el.open));
   pass('Desktop panel avoids frozen title and entrances',await noCopyOverlap('#cui-agent-panel'));
+  const noAgentOverlap = () => page.locator('#cui-agent-panel').evaluate(el=>{
+    const p=el.getBoundingClientRect(),a=document.querySelector('.agent-image').getBoundingClientRect();
+    return p.left>=a.right||p.right<=a.left||p.top>=a.bottom||p.bottom<=a.top;
+  });
+  pass('Desktop panel leaves entire CUI silhouette visible',await noAgentOverlap());
   await page.screenshot({path:path.join(output,'07-cui-panel-1440x900.png')});
   await page.locator('#cui-meet-liya').click();
   pass('Meet Liya reveals verified introduction',await page.locator('#cui-liya-intro').isVisible() && (await page.locator('#cui-liya-intro').innerText()).includes('2027 届本科生'));
   pass('Expanded introduction also avoids title and entrances',await noCopyOverlap('#cui-agent-panel'));
+  pass('Expanded desktop panel leaves entire CUI silhouette visible',await noAgentOverlap());
   await page.screenshot({path:path.join(output,'08-cui-introduction-1440x900.png')});
   await page.keyboard.press('Escape');
   pass('Escape closes panel and returns focus to CUI',await page.evaluate(()=>!document.getElementById('cui-agent-panel').open && document.activeElement.id==='cui-agent-trigger'));
@@ -207,12 +216,26 @@ try{
     return r.top>=c.bottom||r.bottom<=c.top||r.right<=c.left||r.left>=c.right;
   }));
   await page.screenshot({path:path.join(output,'06-mobile-390x844.png')});
+  const mobileOriginal=await page.locator('#agent-wrap').boundingBox();
   await page.locator('#cui-agent-trigger').click();
+  await page.waitForTimeout(1100);
+  const mobileHeadAndHandVisible = () => page.evaluate(()=>{
+    const a=document.querySelector('.agent-image').getBoundingClientRect(),p=document.getElementById('cui-agent-panel').getBoundingClientRect(),c=document.querySelector('.hero .copy').getBoundingClientRect();
+    // Frozen PNG: upper 62% includes the whole head and inviting front hand.
+    return a.top>=c.bottom && a.top+a.height*.62<=p.top && a.left>=0 && a.right<=innerWidth;
+  });
+  pass('Mobile open drawer keeps CUI head and inviting hand clear of copy and drawer',await mobileHeadAndHandVisible());
   pass('Mobile CUI panel fits viewport without overflow',await page.locator('#cui-agent-panel').evaluate(el=>{const r=el.getBoundingClientRect();return el.open && r.left>=0&&r.right<=innerWidth&&r.top>=0&&r.bottom<=innerHeight&&document.documentElement.scrollWidth<=innerWidth}));
   await page.screenshot({path:path.join(output,'09-cui-panel-390x844.png')});
   await page.locator('#cui-meet-liya').click();
+  pass('Expanded mobile introduction still leaves head and hand visible',await mobileHeadAndHandVisible());
+  await page.screenshot({path:path.join(output,'11-cui-introduction-390x844.png')});
   pass('Mobile introduction is readable and internally scrollable',await page.locator('#cui-liya-intro').isVisible() && await page.locator('#cui-agent-panel').evaluate(el=>el.scrollHeight>=el.clientHeight&&el.getBoundingClientRect().bottom<=innerHeight));
   await page.locator('#cui-agent-trigger').click({position:{x:90,y:35}});
+  await page.waitForTimeout(1100);
+  const restoredMobile=await page.locator('#agent-wrap').boundingBox();
+  pass('Mobile close restores frozen CUI position and size',Math.abs(restoredMobile.x-mobileOriginal.x)<1 && Math.abs(restoredMobile.y-mobileOriginal.y)<1 && Math.abs(restoredMobile.width-mobileOriginal.width)<1);
+  await page.screenshot({path:path.join(output,'12-cui-restored-390x844.png')});
   pass('Mobile can click visible CUI again to close expanded drawer',await page.locator('#cui-agent-panel').evaluate(el=>!el.open));
   await page.locator('#cui-agent-trigger').click();
   await page.locator('#cui-panel-close').click();
