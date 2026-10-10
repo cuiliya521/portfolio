@@ -5,7 +5,9 @@
 .agent-wrap:not(.in-workspace).cui-tapped .agent-image{animation:cuiInvitationTap .28s ease-out}
 @keyframes cuiInvitationFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 @keyframes cuiInvitationTap{0%,100%{transform:translateY(0) scale(1)}45%{transform:translateY(-2px) scale(1.006)}}
-.cui-welcome{position:fixed;left:clamp(24px,16vw,230px);top:55vh;width:340px;max-width:calc(100vw - 48px);box-sizing:border-box;z-index:100;padding:14px 18px;border:1px solid #fffdf0;border-radius:18px 18px 18px 4px;background:rgba(255,253,243,.94);box-shadow:0 8px 28px #25423114;backdrop-filter:blur(14px);color:#284c3d;font:500 15px/1.65 system-ui,sans-serif;pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .45s ease,transform .45s ease}
+.cui-welcome{position:fixed;left:33vw;top:4vh;width:310px;max-width:calc(100vw - 48px);box-sizing:border-box;z-index:100;padding:16px 20px;border:1px solid #b7c6a8;border-radius:20px;background:linear-gradient(135deg,#fffdf5,rgba(245,249,236,.98));box-shadow:0 10px 30px #25423124,inset 0 1px 0 #fff;backdrop-filter:blur(14px);color:#163d2e;font:600 16px/1.6 system-ui,sans-serif;pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .45s ease,transform .45s ease}
+.cui-welcome::before,.cui-welcome::after{content:'';position:absolute;left:-13px;top:calc(50% - 10px);width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-right:13px solid #b7c6a8}
+.cui-welcome::after{left:-11px;border-right:12px solid #fffdf5}
 .cui-welcome.is-visible{opacity:1;transform:translateY(0)}
 .cui-welcome[hidden]{display:none}
 .cui-agent-panel{position:fixed;inset:auto 24px 24px auto;margin:0;width:340px;max-width:calc(100vw - 48px);max-height:calc(100dvh - 48px);overflow-y:auto;box-sizing:border-box;z-index:120;padding:22px;border:1px solid #fffff5;border-radius:24px;background:linear-gradient(145deg,rgba(255,253,243,.97),rgba(231,239,224,.96));box-shadow:0 16px 48px #29433424;backdrop-filter:blur(20px);color:#234a3b;font:15px/1.6 system-ui,sans-serif}
@@ -20,7 +22,8 @@
 .cui-panel-actions button:focus-visible,.cui-panel-close:focus-visible{outline:3px solid #829c6d;outline-offset:3px}
 .cui-liya-intro{margin:16px 0 0;padding:12px 14px;border-radius:12px;background:#fffdf6a6;font-size:14px;line-height:1.75}
 @media(max-width:700px){
- .cui-welcome{left:20px;top:auto;bottom:24px;width:calc(100vw - 40px);max-width:none;font-size:14px}
+ .cui-welcome{left:64%;top:62%;bottom:auto;width:calc(36vw - 16px);max-width:none;padding:12px 10px;border-radius:16px;font-size:13.5px;line-height:1.6}
+ .cui-welcome::before,.cui-welcome::after{top:calc(36% - 10px)}
  .cui-agent-panel{inset:auto 12px 12px 12px;width:auto;max-width:none;max-height:36dvh;padding:16px;border-radius:24px 24px 18px 18px;font-size:14px;line-height:1.5}
  .cui-panel-header h2{font-size:17px}.cui-panel-close{width:36px;height:36px;font-size:24px}
  #cui-panel-welcome{margin:10px 0 14px}.cui-panel-actions button{min-height:44px;padding:8px 12px;font-size:14px}

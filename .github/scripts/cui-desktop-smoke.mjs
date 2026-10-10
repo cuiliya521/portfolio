@@ -45,6 +45,11 @@ try{
     });
   });
   pass('Welcome does not cover title or entrances',await noCopyOverlap('#cui-welcome'));
+  pass('Desktop speech bubble has dark readable text and a CUI-facing tail',await page.locator('#cui-welcome').evaluate(el=>getComputedStyle(el).color==='rgb(22, 61, 46)'&&getComputedStyle(el).fontWeight==='600'&&getComputedStyle(el,'::after').content!=='none'));
+  pass('Desktop welcome stays above face and hand, clear of identity',await page.locator('#cui-welcome').evaluate(el=>{
+    const w=el.getBoundingClientRect(),a=document.querySelector('.agent-image').getBoundingClientRect(),k=document.querySelector('.hero .kicker').getBoundingClientRect();
+    return w.bottom<a.top+a.height*.23 && (w.bottom<=k.top||w.right<=k.left||w.left>=k.right);
+  }));
   pass('Welcome never intercepts clicks and no audio exists',await page.locator('#cui-welcome').evaluate(el=>getComputedStyle(el).pointerEvents==='none') && await page.locator('audio,video').count()===0);
   await page.locator('#cui-welcome').waitFor({state:'hidden',timeout:6500});
   pass('Welcome fades away after about five seconds',await page.locator('#cui-welcome').evaluate(el=>el.hidden));
@@ -259,7 +264,14 @@ try{
   const freshContext=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:1});
   const freshPage=await freshContext.newPage();
   await freshPage.goto(base+'/',{waitUntil:'networkidle'});
+  await freshPage.evaluate(()=>document.fonts.ready);
+  await freshPage.waitForFunction(()=>getComputedStyle(document.getElementById('cui-welcome')).opacity==='1');
   pass('Fresh mobile session shows welcome',await freshPage.locator('#cui-welcome').isVisible());
+  pass('Mobile welcome fully visible beside CUI, outside face and front hand',await freshPage.locator('#cui-welcome').evaluate(el=>{
+    const w=el.getBoundingClientRect(),a=document.querySelector('.agent-image').getBoundingClientRect(),c=document.querySelector('.hero .copy').getBoundingClientRect();
+    return getComputedStyle(el).opacity==='1' && w.left>=a.left+a.width*.83 && w.top>=c.bottom && w.top<a.top+a.height*.3 && w.bottom<innerHeight-80 && w.right<=innerWidth;
+  }));
+  pass('Welcome never opens the interaction panel automatically',await freshPage.locator('#cui-agent-panel').evaluate(el=>!el.open));
   await freshPage.screenshot({path:path.join(output,'10-cui-welcome-390x844.png')});
   await freshPage.locator('#enter-workspace').click();
   await freshPage.waitForFunction(()=>document.body.dataset.transition==='idle');
