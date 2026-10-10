@@ -128,6 +128,20 @@
   }
 
   $('enter-workspace').addEventListener('click',() => navigate('workspace'));
+  $('hero-view-projects').addEventListener('click',() => {
+    navigate('workspace');
+    document.querySelector('.test-workspace__projects').scrollIntoView({block:'center',behavior:'auto'});
+  });
+  // Reuse the same navigation state and CUI node for wheel/keyboard entry.
+  let heroWheelTotal = 0;
+  let heroWheelTimer;
+  $('hero').addEventListener('wheel',e => {
+    if(mode !== 'hero' || e.deltaY <= 0 || document.body.dataset.transition !== 'idle') return;
+    heroWheelTotal += e.deltaY;
+    clearTimeout(heroWheelTimer);
+    heroWheelTimer = setTimeout(() => heroWheelTotal = 0,240);
+    if(heroWheelTotal > 80){e.preventDefault();heroWheelTotal = 0;navigate('workspace');}
+  },{passive:false});
   $('test-workspace-home').addEventListener('click',() => goBack('hero'));
   $('open-test-pangu').addEventListener('click',() => {
     step = 0;
@@ -147,6 +161,10 @@
 
   window.addEventListener('popstate',() => render(fromHash()));
   window.addEventListener('keydown',e => {
+    if(mode === 'hero' && ['Enter','ArrowDown'].includes(e.key) &&
+       !e.target.closest('button,a,input,textarea,select')){
+      e.preventDefault();navigate('workspace');return;
+    }
     if(e.key === 'Escape'){
       if(mode === 'pangu'){e.preventDefault();goBack('workspace')}
       else if(mode === 'workspace'){e.preventDefault();goBack('hero')}

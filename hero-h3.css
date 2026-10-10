@@ -1,199 +1,41 @@
-/* H3 Hero visual layer only. Workspace/controller styles remain frozen at b1495d9. */
+/* Final frozen Hero: background image, original Alpha CUI, live HTML copy.
+   Workspace remains governed by cui-workspace-test.css and its single controller. */
 @font-face{font-family:H3Serif;src:url('assets/h3-serif-600.ttf') format('truetype');font-weight:600;font-display:swap}
 @font-face{font-family:H3Serif;src:url('assets/h3-serif-700.ttf') format('truetype');font-weight:700;font-display:swap}
+.hero{overflow:hidden}
 .hero .h3-atmosphere{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:-1;transition:opacity .65s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
-.h3-light{position:absolute;inset:0;width:100%;height:100%;object-fit:fill}
-.h3-glass{position:absolute;overflow:hidden;border:2px solid rgba(255,255,242,.57);border-radius:26px;background:rgba(173,201,184,.22);box-shadow:inset 0 2px 10px #fff8,0 10px 50px #456b4612;filter:blur(2px)}
-.h3-glass img{width:100%;height:100%;object-fit:cover;opacity:.23;filter:blur(2px) saturate(.55)}
-.h3-glass::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#fefee66b,transparent 55%,#fffbd879);z-index:1}
-.h3-glass-left{left:-12%;top:21%;width:40%;height:54%;transform:perspective(1000px) rotateY(23deg) rotateZ(12deg);opacity:.64}
-.h3-glass-right{right:-14%;top:5%;width:35%;height:64%;transform:perspective(1200px) rotateY(-20deg) rotateZ(-11deg);opacity:.7}
-.h3-glass-back{left:27%;top:46%;width:21%;height:36%;transform:perspective(900px) rotateY(15deg);opacity:.4;filter:blur(4px)}
-.hero .topbar{height:112px;padding:0 3.5vw;align-items:center}
-.hero .brand{gap:14px;font-family:H3Serif,'Songti SC',serif;font-size:27px;letter-spacing:.02em}
+.h3-light{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.hero .topbar{height:15.5vh;padding:0 3.5vw;align-items:center}
+.hero .brand{gap:13px;font-family:H3Serif,serif;font-size:27px;letter-spacing:.02em}
 .hero .brand-dot{display:none}.h3-mark{width:46px;height:46px}
 .hero .hero-main{position:absolute;inset:0;height:100%;min-height:0;pointer-events:none}
-.hero .copy{left:44.1%;top:21.1%;width:30.5%;max-width:none;text-align:center;pointer-events:auto}
-.hero .kicker{position:absolute;top:-45px;left:0;width:100%;display:block;font-size:clamp(14px,1.1vw,17px);letter-spacing:.065em;color:#214a3b;font-weight:650;margin:0;text-shadow:0 1px 3px #fff9}
-.hero .kicker::before{display:none}
-.hero h1{font-family:H3Serif,'Songti SC','STSong','Noto Serif SC',serif;font-size:4.24vw;line-height:1.08;letter-spacing:-.035em;font-weight:700;white-space:nowrap;text-shadow:0 1px 0 #fcfff1;transform:translateX(-1.2vw)}
-.hero h1 .line2{display:block;font-size:4.68vw;line-height:1.06;margin-top:6px;transform:translateX(1.5vw)}
+.hero .copy{left:45%;top:27.2%;width:30%;max-width:none;text-align:center;pointer-events:auto}
+.hero .kicker{position:absolute;top:-8.6vh;left:-1%;width:102%;display:block;margin:0;padding:6px 12px;border:1px solid #caa458;border-radius:999px;font-family:H3Serif,serif;font-size:1.48vw;letter-spacing:0;font-weight:600;white-space:nowrap;background:#fffdf22e}
+.hero .kicker strong{font-weight:700}.hero .kicker::before{display:none}
+.hero .kicker::after{content:'✦';position:absolute;left:-14px;top:0;color:#ce9f40;font-size:27px;text-shadow:30vw 0 #ce9f40}
+.hero h1{font-family:H3Serif,'Songti SC',serif;font-size:4.04vw;line-height:1.12;letter-spacing:-.035em;font-weight:700;white-space:nowrap;margin:0;text-shadow:0 1px 1px #ffffef88}
+.hero h1 .line2{display:block;font-size:4.52vw;line-height:1.12;margin-top:3px}
 .hero h1 .line2::after{display:none}
-.hero .copy::before{content:'';position:absolute;inset:-20px -40px 122px;border:1.5px solid #b89b5b;border-left-color:transparent;border-bottom-color:transparent;border-radius:50%;transform:rotate(-17deg);opacity:.65;pointer-events:none}
-.hero .copy::after{content:'✦';position:absolute;right:-21px;top:-28px;color:#bda063;font-size:26px;text-shadow:-414px 156px #bda063;font-weight:400;pointer-events:none}
-.hero .lede{font-family:H3Serif,'Songti SC',serif;font-size:1.43vw;line-height:1.6;font-weight:600;white-space:nowrap;color:#264e40;margin:11px -20px 22px;transform:translateX(-8px)}
-.hero .action-row{justify-content:center;transform:translateX(-2.1vw)}
-.hero .enter{justify-content:center;width:19.1vw;height:6.9vh;padding:0 22px;gap:17px;font-size:1.55vw;font-weight:400;border:1px solid #48714d;border-radius:999px;background:linear-gradient(145deg,#164735,#08382a 75%,#164737);box-shadow:inset 0 1px 4px #f2ffac1c,0 7px 17px #647a3720;color:#fffef0}
-.hero .enter .arrow{font-size:24px;font-weight:300}
-.agent-wrap:not(.in-workspace){left:0.4vw;top:11vh;transform:scale(1.48);transform-origin:top left}
+.hero .copy::before{content:'';position:absolute;inset:-15px -28px 190px;border:1.5px solid #caa458;border-left-color:transparent;border-bottom-color:transparent;border-radius:50%;transform:rotate(-17deg);opacity:.8;pointer-events:none}
+.hero .copy::after{content:'✦';position:absolute;right:-30px;top:-21px;color:#caa458;font-size:27px;text-shadow:-31vw 17vh #caa458;pointer-events:none}
+.hero .lede{font-family:H3Serif,serif;font-size:1.7vw;line-height:1.5;font-weight:600;white-space:nowrap;color:#173e33;margin:13px -36px 22px}
+.hero .action-row{justify-content:center}
+.hero .enter{justify-content:center;width:23.3vw;height:8.3vh;min-height:56px;padding:0 22px;gap:12px;font-size:1.8vw;font-weight:400;border:1px solid #aa9959;border-radius:999px;background:linear-gradient(135deg,#103f30,#063226 70%,#154835);box-shadow:inset 0 1px 4px #ffffb51c,0 6px 18px #556a331c;color:#fffef2}
+.hero .enter .arrow{font-size:1.9vw}
+.hero-project-link{display:inline-block;font:600 1.45vw H3Serif,serif;line-height:1.5;margin-top:23px;padding:0 2px 4px;color:#173e33;border:0;border-bottom:1px solid #cda85e;background:transparent;cursor:pointer}
+.hero-project-link:hover{color:#246b52}.hero-project-link:focus-visible,.hero .enter:focus-visible{outline:3px solid #a58239;outline-offset:5px}
+.agent-wrap:not(.in-workspace){left:1.4%;top:13.8%;width:41.8%;transform:none}
+.agent-wrap:not(.in-workspace) .agent-image{animation:none;width:100%}
 .agent-wrap:not(.in-workspace) .bubble{opacity:0}
-.h3-projects{position:absolute;left:43.8%;top:54.9%;width:54.7%;height:29.5%;display:grid;grid-template-columns:1.09fr 1fr 1fr;gap:17px;pointer-events:auto;perspective:1200px;transition:opacity .2s ease,transform .5s ease}
-.h3-project{position:relative;display:flex;flex-direction:column;gap:14px;min-width:0;align-items:stretch;text-align:left;height:100%;padding:16px 13px 12px;border:1.5px solid #ffffefcf;border-radius:19px;background:linear-gradient(135deg,#fffff3cf,#fffff8ab 67%,#edf1e6bd);box-shadow:inset 0 2px 5px #fffff7,0 12px 40px #6b875020;backdrop-filter:blur(12px);cursor:pointer;font-family:inherit;transform:rotateZ(-1.2deg) rotateY(-3deg);transform-origin:center bottom;transition:box-shadow .25s ease,filter .25s ease}
-.h3-project:hover{box-shadow:inset 0 2px 5px #fffff7,0 16px 40px #38633c38;filter:brightness(1.025)}
-.h3-xhs{height:calc(100% + 12px);margin-top:-14px;transform:rotateZ(-1.8deg) rotateY(-3deg)}
-.h3-noteguard{height:calc(100% + 24px);margin-top:-29px;transform:rotateZ(-2.2deg) rotateY(-3deg)}
-.h3-project-name{display:flex;align-items:center;gap:9px;font-size:clamp(16px,1.5vw,23px);font-weight:750;color:#142f28;white-space:nowrap;height:37px;flex:none;letter-spacing:-.045em}
-.h3-pangu-icon{width:33px;height:28px;flex:none;background:url('assets/pangu-frozen-product.webp') -55px -40px/910px 660px no-repeat}
-.h3-xhs-icon{display:flex;align-items:center;justify-content:center;background:#ff254b;color:white;font-size:9px;border-radius:9px;width:35px;height:35px;flex:none;letter-spacing:-1px}
-.h3-note-icon{font-size:34px;color:#15715a;line-height:1}
-.h3-project-preview{width:100%;min-height:0;flex:1;object-fit:cover;object-position:left top;border-radius:9px;border:1px solid #a7bcb836}
-.h3-xhs-preview{display:grid;grid-template-columns:1.2fr 1fr;grid-template-rows:1fr 1fr;gap:5px;flex:1;min-height:0;overflow:hidden;border-radius:9px;background:#fff9f6}
-.h3-xhs-preview img{width:100%;height:100%;min-height:0;object-fit:cover;object-position:left top}
-.h3-xhs-preview img:first-child{grid-row:1/3}
-.h3-note-preview{position:relative;display:flex;flex-direction:column;justify-content:center;gap:17px;padding:25px 19px;flex:1;min-height:0;overflow:hidden;border-radius:9px;background:linear-gradient(135deg,#f7faf5,#e0eadc);color:#355a46;font-size:16px;border:1px solid #bad0bf6b}
-.h3-note-preview>span:not(.h3-note-shield){border-bottom:1px solid #bfd1bb66;padding-bottom:7px}
-.h3-note-shield{position:absolute;right:14px;top:50%;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;width:60px;height:74px;color:#fffbe9;background:linear-gradient(135deg,#40996b,#145943);clip-path:polygon(50% 0,100% 18%,95% 68%,50% 100%,5% 68%,0 18%);font-size:34px;opacity:.86}
-.h3-project-arrow{position:absolute;right:12px;bottom:13px;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:#0c4835;color:#fffdef;font-size:24px;box-shadow:0 3px 9px #174c3833}
 body.cui-test-active .hero .h3-atmosphere{opacity:0;transform:scale(1.08)}
-body.cui-test-active .h3-projects{opacity:0;transform:translateY(25px);pointer-events:none}
-@media(prefers-reduced-motion:reduce){.hero *, .agent-wrap{animation:none!important;transition:none!important}}
-
-/* H3 final polish: readable candidate identity at the actual 1440px desktop viewport. */
-.hero .kicker{font-size:clamp(15px,1.18vw,18px);letter-spacing:.025em;font-weight:650;color:#214b3c;top:-41px;white-space:nowrap}
-@media(max-width:980px){.agent-wrap:not(.in-workspace){left:2%;top:45%;transform:none}.hero .kicker{font-size:13px;white-space:normal}}
-
-/* Authentic NoteGuard review UI crop, not a generated interface. */
-.h3-noteguard-real{object-fit:cover;object-position:52% 25%;background:#f4f6ef}
-
-/* Mobile: deliberate stacked composition; desktop H3 remains unchanged. */
+@media(max-width:980px){
+ .hero .copy{left:43%;top:25%;width:51%}.hero .kicker{font-size:2vw}.hero h1{font-size:5vw}.hero h1 .line2{font-size:5.6vw}.hero .lede{font-size:2vw;margin:12px -10px 19px}.hero .enter{width:31vw;font-size:2.4vw}.hero-project-link{font-size:2vw}.agent-wrap:not(.in-workspace){width:43%;top:27%}
+}
 @media(max-width:700px){
- html,body{overflow-x:hidden}
- .hero{height:100svh;min-height:100svh;overflow:hidden}
- .hero .topbar{height:64px;padding:0 20px}
- .hero .brand{font-size:22px;gap:8px}
- .hero .h3-mark{width:34px;height:34px}
- .hero .hero-main{position:absolute;inset:64px 0 0;height:auto;min-height:0}
- .hero .copy{left:6%;top:4%;width:88%;max-width:none;text-align:center}
- .hero .kicker{position:static;width:100%;margin:0 0 12px;font-size:12px;line-height:1.5;letter-spacing:0;white-space:normal}
- .hero h1{font-size:clamp(30px,8.5vw,42px);line-height:1.15;white-space:normal;transform:none}
- .hero h1 .line2{font-size:clamp(32px,9vw,44px);transform:none;margin-top:2px}
- .hero .lede{font-size:12px;line-height:1.5;white-space:normal;margin:12px 0 15px;transform:none}
- .hero .action-row{transform:none;justify-content:center}
- .hero .enter{width:auto;min-width:175px;height:46px;min-height:46px;padding:0 19px;gap:13px;font-size:14px;white-space:nowrap}
- .hero .enter span:first-child{white-space:nowrap}
- .hero .enter .arrow{font-size:20px}
- .hero .copy::before{inset:-8px 10px 80px;opacity:.3}
- .hero .copy::after{right:10px;top:30px;font-size:15px;text-shadow:none}
- .agent-wrap:not(.in-workspace){left:0;top:36%;width:min(59vw,255px);transform:scale(1);transform-origin:top left}
- .agent-wrap:not(.in-workspace) .agent-image{width:100%}
- .h3-projects{left:7%;top:auto;bottom:4%;width:86%;height:26%;gap:7px;grid-template-columns:repeat(3,minmax(0,1fr))}
- .h3-project,.h3-xhs,.h3-noteguard{height:100%;margin:0;transform:none;padding:9px 7px 8px;gap:6px;border-radius:12px}
- .h3-project-name{font-size:clamp(10px,2.8vw,13px);height:auto;min-height:26px;gap:4px;letter-spacing:-.04em;white-space:normal;line-height:1.2}
- .h3-pangu-icon,.h3-xhs-icon{width:18px;height:18px;flex:none}
- .h3-xhs-icon{font-size:6px;border-radius:5px}
- .h3-note-icon{font-size:18px}
- .h3-project-arrow{width:22px;height:22px;font-size:15px;right:5px;bottom:5px}
- .h3-project-preview,.h3-xhs-preview{border-radius:6px}
+ html,body{overflow-x:hidden}.hero{height:100svh;min-height:100svh}.hero .topbar{height:65px;padding:0 20px}.hero .brand{font-size:22px;gap:8px}.h3-mark{width:34px;height:34px}
+ .hero .copy{left:6%;top:18%;width:88%}.hero .kicker{top:-45px;font-size:12px;padding:5px 8px}.hero .kicker::after{display:none}
+ .hero h1{font-size:clamp(30px,8.5vw,42px)}.hero h1 .line2{font-size:clamp(32px,9vw,44px)}.hero .lede{font-size:clamp(12px,3.5vw,16px);white-space:normal;margin:12px 0 18px}
+ .hero .enter{width:220px;max-width:100%;height:48px;min-height:48px;font-size:16px}.hero .enter .arrow{font-size:20px}.hero-project-link{font-size:14px;margin-top:17px}
+ .hero .copy::before,.hero .copy::after{display:none}.agent-wrap:not(.in-workspace){left:12%;top:57%;width:60%;max-width:300px}.hero .h3-light{object-position:40% center}
 }
-@media(max-width:380px){.agent-wrap:not(.in-workspace){top:39%;width:54vw}.h3-projects{bottom:3%;height:24%}}
-
-/* Desktop home-only composition polish, 2026-10-10.
-   Keep Workspace, mobile rules, and the original H3 direction intact. */
-@media(min-width:981px){
-  .hero .copy{top:25.5%;left:42%;width:34.5%}
-  .hero .copy::before{opacity:.40}
-  .hero .copy::after{opacity:.75}
-  .hero .enter{height:6.5vh;min-height:51px}
-  .agent-wrap:not(.in-workspace){top:13.5vh;left:1.2vw;transform:scale(1.39)}
-  .h3-projects{
-    left:43%;top:60%;width:55%;height:27%;
-    grid-template-columns:1.15fr 1fr 1.12fr;gap:12px
-  }
-  .h3-project{padding:13px 12px 12px;gap:9px;transform:rotateZ(-1deg) rotateY(-3deg)}
-  .h3-xhs{height:calc(100% + 12px);margin-top:-16px;transform:rotateZ(-2deg) rotateY(-3deg)}
-  .h3-noteguard{height:calc(100% + 18px);margin-top:-23px;transform:rotateZ(-2deg) rotateY(-3deg)}
-  .h3-project-name{font-size:clamp(15px,1.24vw,19px);gap:6px;letter-spacing:-.035em}
-  .h3-xhs-icon{width:29px;height:29px;font-size:8px}
-  .h3-note-icon{font-size:27px}
-  .h3-project-preview,.h3-xhs-preview{object-position:left top}
-  .h3-glass-left{opacity:.35;filter:blur(5px)}
-  .h3-glass-right{opacity:.38;filter:blur(6px)}
-  .h3-glass-back{opacity:.22;filter:blur(7px)}
-  .h3-light{opacity:.78}
-}
-
-/* Requested local Hero changes: identity, aligned glass cards and source screenshots. */
-.hero .kicker strong{font-weight:750}
-.h3-project-role{display:block;flex:none;color:#42604f;font-size:11px;line-height:1.5;white-space:nowrap;letter-spacing:0}
-.h3-project:focus-visible{outline:3px solid #b59c62;outline-offset:4px}
-.h3-project:active{filter:brightness(.96)}
-.h3-project-arrow{transition:background .2s ease}
-.h3-project:hover .h3-project-arrow{background:#17684d}
-.h3-noteguard-real{object-fit:contain!important;object-position:center!important;background:#f6f7ef}
-@media(min-width:981px){
- .h3-projects{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
- .h3-project{gap:7px;padding:13px 12px 45px}
- .h3-project-name{height:31px;font-size:18px}
- .h3-project-preview{object-fit:contain;background:#fffff6}
- .h3-xhs-preview{grid-template-columns:1.15fr 1fr;gap:4px}
- .h3-project-arrow{bottom:8px;width:29px;height:29px;font-size:21px}
-}
-@media(max-width:700px){.h3-project-role{font-size:8px;white-space:normal;line-height:1.25}.h3-project{padding-bottom:28px}}
-
-/* R2: reuse untouched H3 background pixels only where the source has no foreground UI.
-   CUI, copy, mobile layout and Workspace rules deliberately remain unchanged. */
-@media(min-width:981px){
- .h3-reference-fragment{position:absolute;inset:0;background:url('assets/h3-reference-source.png') center/100% 100% no-repeat;z-index:2;pointer-events:none}
- .h3-reference-top{clip-path:polygon(14% 0,100% 0,100% 17%,42% 17%,42% 11%,14% 11%);mask-image:linear-gradient(to bottom,#000 0,transparent 11%)}
- .h3-reference-right{clip-path:polygon(80% 0,100% 0,100% 46%,80% 46%);mask-image:linear-gradient(to right,transparent 79.8%,#000 86%),linear-gradient(to bottom,#000 0,#000 34%,transparent 46%);mask-composite:intersect}
- .h3-reference-floor{clip-path:polygon(43% 85%,100% 85%,100% 100%,43% 100%);mask-image:linear-gradient(to right,transparent 43%,#000 52%),linear-gradient(to bottom,transparent 85%,#000 95%);mask-composite:intersect}
- .hero .h3-light{opacity:1;filter:saturate(1.12) contrast(1.06)}
- .hero .h3-glass-left{left:-13%;top:17%;width:40%;height:52%;opacity:.72;filter:blur(2px)}
- .hero .h3-glass-right{right:-13%;top:6%;width:34%;height:57%;opacity:.66;filter:blur(2px)}
- .hero .h3-glass-back{left:28%;top:44%;width:20%;height:36%;opacity:.5;filter:blur(3px)}
- .hero .h3-glass img{opacity:.28;filter:blur(2px) saturate(.6)}
- .h3-projects{left:44.1%;top:57.5%;width:53.8%;height:24.7%;grid-template-columns:1.08fr 1fr 1fr;gap:28px;perspective:1400px}
- .h3-project{padding:12px 11px 36px;gap:5px;border-radius:17px;background:linear-gradient(130deg,#fffff0cb,#fafff0a3 65%,#eaf1e2ba);border:1.5px solid #fffff1ec;box-shadow:inset 0 1px 5px #fff,0 12px 32px #456a392b,0 3px 12px #fff8;backdrop-filter:blur(8px);transform:rotateZ(-1.8deg) rotateY(-5deg)}
- .h3-xhs{height:calc(100% + 15px);margin-top:-22px;transform:rotateZ(-2.6deg) rotateY(-5deg)}
- .h3-noteguard{height:calc(100% + 34px);margin-top:-53px;transform:rotateZ(-3.4deg) rotateY(-5deg)}
- .h3-project-name{height:30px;font-size:18px;gap:6px;letter-spacing:-.03em}
- .h3-project-role{font-size:10px;line-height:1.3}
- .h3-project-preview{min-height:0;object-fit:cover;object-position:left top;background:#fffff7}
- .h3-project-arrow{width:29px;height:29px;bottom:7px;right:9px}
- .h3-noteguard-real{object-fit:cover!important;object-position:72% 72%!important}
- .h3-project:hover{box-shadow:inset 0 1px 5px #fff,0 16px 38px #456a3945,0 3px 12px #fff8;filter:brightness(1.035)}
-}
-
-/* Frozen H3, Desktop only: independent DOM cards in a 1 + 2 composition.
-   The existing CUI asset is retained pending the matching transparent master. */
-@media(min-width:981px){
- .hero{overflow:hidden}
- .hero .topbar{height:13.5vh}
- .hero .copy{left:43.5%;top:16.2%;width:29.5%}
- .hero .kicker{top:-6.4vh;font-family:H3Serif,serif;font-size:1.62vw;letter-spacing:0}
- .hero h1{font-size:4.05vw;line-height:1.12;transform:none;letter-spacing:-.035em;margin:0}
- .hero h1 .line2{font-size:4.55vw;transform:none;margin-top:2px}
- .hero .lede{font-size:1.48vw;margin:9px -28px 12px;transform:none;line-height:1.55}
- .hero .action-row{transform:none}
- .hero .enter{width:19.4vw;height:5.6vh;min-height:48px;font-size:1.52vw;gap:10px}
- .hero .copy::before{inset:-20px -26px 102px;opacity:.65;border-color:#cfaa60;border-left-color:transparent;border-bottom-color:transparent}
- .hero .copy::after{right:-22px;top:-21px;font-size:24px;text-shadow:-405px 135px #cfaa60}
- .agent-wrap:not(.in-workspace){left:1%;top:12%;width:35%;transform:none}
- .agent-wrap:not(.in-workspace) .agent-image{animation:none;width:100%}
- .h3-projects{left:37.6%;top:42%;width:59.5%;height:47%;grid-template-columns:1.28fr 1fr;grid-template-rows:repeat(2,minmax(0,1fr));gap:13px 18px;perspective:none}
- .h3-project,.h3-xhs,.h3-noteguard{min-height:0;height:100%;margin:0;transform:none;border-radius:20px;padding:14px 13px 12px;gap:5px;border:2px solid #fffef2;box-shadow:inset 0 0 0 2px #e6e8d970,0 0 12px #fff9d3a6,0 14px 28px #697b4320;background:linear-gradient(135deg,#ffffffec,#f9fcf2df)}
- .h3-pangu{grid-column:1;grid-row:1/3;margin-top:26px;height:calc(100% - 26px);transform:rotate(-1.5deg)}
- .h3-xhs{grid-column:2;grid-row:1}
- .h3-noteguard{grid-column:2;grid-row:2}
- .h3-project-name{height:30px;font-size:1.35vw;letter-spacing:0;gap:9px}
- .h3-pangu .h3-project-name{height:39px;font-size:1.7vw}
- .h3-pangu-icon{width:38px;height:34px}
- .h3-project-role{font-size:.86vw;padding-left:42px;line-height:1.3}
- .h3-project-preview{object-fit:contain;object-position:center;border-radius:9px;background:#f8faf3}
- .h3-noteguard-real{object-fit:contain!important;object-position:center!important}
- .h3-project-arrow{display:none}
- .h3-xhs-preview{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:1fr;gap:6px;background:transparent}
- .h3-xhs-preview img:first-child{grid-row:auto}
- .h3-xhs-preview img{object-fit:cover;object-position:center;border-radius:7px}
-}
-
-/* R3: background-only light/reflection pass. Original CUI stays in place because
-   the supplied black-matted JPEG did not yield a clean, faithful cutout. */
-@media(min-width:981px){
- .hero .h3-atmosphere::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 31% 39%,#fff8dd55,transparent 38%),radial-gradient(ellipse at 73% 88%,#ffe4bc44,transparent 45%);z-index:3}
- .hero .h3-light{filter:saturate(1.08) contrast(1.04)}
- .hero .h3-glass-left{background:linear-gradient(135deg,#73998d30,#fcfff029 60%,#faf2d62e);box-shadow:inset 0 1px 5px #ffffea99,0 10px 45px #56766814}
- .hero .h3-glass-right{background:linear-gradient(135deg,#7fa79730,#f8fcf330);box-shadow:inset 0 1px 6px #fff9,0 12px 55px #486f5820}
- .h3-reference-floor{opacity:.65}
- .h3-project{-webkit-box-reflect:below 9px linear-gradient(transparent 60%,rgba(255,255,255,.08));box-shadow:inset 0 0 0 2px #e6e8d970,0 0 16px #fff6d599,0 14px 28px #697b4320}
-}
+@media(prefers-reduced-motion:reduce){.hero *, .agent-wrap{animation:none!important;transition:none!important}}

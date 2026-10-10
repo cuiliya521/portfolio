@@ -135,26 +135,28 @@ try{
   await page.emulateMedia({reducedMotion:'no-preference'});
   await page.goto(base+'/',{waitUntil:'networkidle'});
   pass('Hero identity uses exact name and graduation year',(await page.locator('.hero .kicker').innerText())==='崔丽娅 · 2027届 · AI 产品运营');
-  pass('All authentic Hero project screenshots decode',await page.locator('.h3-project img').evaluateAll(imgs=>imgs.length===5&&imgs.every(img=>img.complete&&img.naturalWidth>0)));
-  const cards=await page.locator('.h3-project').evaluateAll(nodes=>nodes.map(n=>{const r=n.getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,w:r.width,h:r.height,name:n.querySelector('.h3-project-name').innerText}}));
-  const [primary,upper,lower]=cards;
-  pass('Frozen H3 cards form one main plus two stacked auxiliary cards',
-    primary.w>upper.w && primary.h>upper.h &&
-    primary.right<=Math.min(upper.x,lower.x) && upper.bottom<=lower.y &&
-    Math.abs(upper.x-lower.x)<2 &&
-    cards.every(r=>r.x>1440*.35&&r.y>900*.35&&r.right<=1440&&r.bottom<=900));
-  pass('Hero cards do not cover the CUI image',await page.locator('.agent-image').evaluate((img,cards)=>{
-    const r=img.getBoundingClientRect();return cards.every(c=>c.x>=r.right||c.right<=r.left||c.y>=r.bottom||c.bottom<=r.top);
-  },cards));
-  results.push('Hero card bounds: '+JSON.stringify(cards));
-  for(const [card,notice] of [['.h3-pangu','pangu'],['.h3-xhs','小红书'],['.h3-noteguard','NoteGuard']]){
-    await page.goto(base+'/',{waitUntil:'networkidle'});
-    await page.locator(card).click();
-    await page.waitForFunction(()=>document.body.dataset.transition==='idle');
-    if(notice==='pangu')await page.locator('#pangu-scene').waitFor({state:'visible'});
-    else await page.waitForFunction(text=>document.getElementById('cui-test-status').textContent.includes(text),notice);
-    pass('Hero card routes to existing '+notice+' entry',notice==='pangu'?await shown('#pangu-scene'):(await page.locator('#cui-test-status').innerText()).includes(notice));
-  }
+  pass('Frozen subtitle is exact',(await page.locator('.hero .lede').innerText())==='和 CUI 一起，走进我的 AI 工作空间。');
+  pass('Home has no project cards',await page.locator('.h3-projects').count()===0);
+  pass('Provided background decodes',await page.locator('.h3-light').evaluate(img=>img.complete&&img.naturalWidth===1536&&img.naturalHeight===1024&&img.currentSrc.includes('hero-final-background.png')));
+  await page.locator('#hero-view-projects').click();
+  await page.waitForFunction(()=>document.body.dataset.transition==='idle');
+  pass('Direct project entry reaches existing Workspace projects',await shown('.test-workspace__projects')&&await shown('#open-test-pangu'));
+  await page.keyboard.press('Escape');
+  await page.waitForFunction(()=>document.body.dataset.transition==='idle');
+  await page.mouse.wheel(0,180);
+  await page.waitForFunction(()=>document.body.dataset.transition==='idle'&&document.body.classList.contains('cui-test-active'));
+  pass('Hero wheel enters existing Workspace',await shown('#cui-test-workspace'));
+  await page.keyboard.press('Escape');
+  await page.waitForFunction(()=>document.body.dataset.transition==='idle');
+  await page.evaluate(()=>document.activeElement.blur());
+  await page.keyboard.press('ArrowDown');
+  await page.waitForFunction(()=>document.body.dataset.transition==='idle'&&document.body.classList.contains('cui-test-active'));
+  pass('Hero keyboard entry reaches existing Workspace',await shown('#cui-test-workspace'));
+  await page.goto(base+'/',{waitUntil:'networkidle'});
+  await page.setViewportSize({width:390,height:844});
+  pass('Mobile has no horizontal overflow',await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+  pass('Mobile entry controls remain in viewport',await page.locator('#enter-workspace,#hero-view-projects').evaluateAll(nodes=>nodes.every(el=>{const r=el.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth&&r.top>=0&&r.bottom<=innerHeight})));
+  await page.screenshot({path:path.join(output,'06-mobile-390x844.png')});
 
 } catch (e){
   results.push(e.stack||String(e));
