@@ -14,7 +14,7 @@
 .hero .brand-dot{display:none}.h3-mark{width:46px;height:46px}
 .hero .hero-main{position:absolute;inset:0;height:100%;min-height:0;pointer-events:none}
 .hero .copy{left:44.1%;top:21.1%;width:30.5%;max-width:none;text-align:center;pointer-events:auto}
-.hero .kicker{position:absolute;top:-34px;left:0;width:100%;display:block;font-size:13px;letter-spacing:.11em;color:#3d6257;font-weight:500;margin:0}
+.hero .kicker{position:absolute;top:-45px;left:0;width:100%;display:block;font-size:clamp(14px,1.1vw,17px);letter-spacing:.065em;color:#214a3b;font-weight:650;margin:0;text-shadow:0 1px 3px #fff9}
 .hero .kicker::before{display:none}
 .hero h1{font-family:H3Serif,'Songti SC','STSong','Noto Serif SC',serif;font-size:4.24vw;line-height:1.08;letter-spacing:-.035em;font-weight:700;white-space:nowrap;text-shadow:0 1px 0 #fcfff1;transform:translateX(-1.2vw)}
 .hero h1 .line2{display:block;font-size:4.68vw;line-height:1.06;margin-top:6px;transform:translateX(1.5vw)}
@@ -27,11 +27,11 @@
 .hero .enter .arrow{font-size:24px;font-weight:300}
 .agent-wrap:not(.in-workspace){left:0.4vw;top:11vh;transform:scale(1.48);transform-origin:top left}
 .agent-wrap:not(.in-workspace) .bubble{opacity:0}
-.h3-projects{position:absolute;left:43.8%;top:56.3%;width:54.7%;height:24.5%;display:grid;grid-template-columns:1.09fr 1fr 1fr;gap:17px;pointer-events:auto;perspective:1200px;transition:opacity .2s ease,transform .5s ease}
-.h3-project{position:relative;display:flex;flex-direction:column;gap:14px;min-width:0;align-items:stretch;text-align:left;height:100%;padding:16px 13px 12px;border:1.5px solid #ffffefcf;border-radius:19px;background:linear-gradient(135deg,#fffff3cf,#fffff8ab 67%,#edf1e6bd);box-shadow:inset 0 2px 5px #fffff7,0 12px 40px #6b875020;backdrop-filter:blur(12px);cursor:pointer;font-family:inherit;transform:rotateZ(-2.5deg) rotateY(-7deg);transform-origin:center bottom;transition:box-shadow .25s ease,filter .25s ease}
+.h3-projects{position:absolute;left:43.8%;top:54.9%;width:54.7%;height:29.5%;display:grid;grid-template-columns:1.09fr 1fr 1fr;gap:17px;pointer-events:auto;perspective:1200px;transition:opacity .2s ease,transform .5s ease}
+.h3-project{position:relative;display:flex;flex-direction:column;gap:14px;min-width:0;align-items:stretch;text-align:left;height:100%;padding:16px 13px 12px;border:1.5px solid #ffffefcf;border-radius:19px;background:linear-gradient(135deg,#fffff3cf,#fffff8ab 67%,#edf1e6bd);box-shadow:inset 0 2px 5px #fffff7,0 12px 40px #6b875020;backdrop-filter:blur(12px);cursor:pointer;font-family:inherit;transform:rotateZ(-1.2deg) rotateY(-3deg);transform-origin:center bottom;transition:box-shadow .25s ease,filter .25s ease}
 .h3-project:hover{box-shadow:inset 0 2px 5px #fffff7,0 16px 40px #38633c38;filter:brightness(1.025)}
-.h3-xhs{height:calc(100% + 26px);margin-top:-30px;transform:rotateZ(-4deg) rotateY(-7deg)}
-.h3-noteguard{height:calc(100% + 55px);margin-top:-73px;transform:rotateZ(-6deg) rotateY(-7deg)}
+.h3-xhs{height:calc(100% + 12px);margin-top:-14px;transform:rotateZ(-1.8deg) rotateY(-3deg)}
+.h3-noteguard{height:calc(100% + 24px);margin-top:-29px;transform:rotateZ(-2.2deg) rotateY(-3deg)}
 .h3-project-name{display:flex;align-items:center;gap:9px;font-size:clamp(16px,1.5vw,23px);font-weight:750;color:#142f28;white-space:nowrap;height:37px;flex:none;letter-spacing:-.045em}
 .h3-pangu-icon{width:33px;height:28px;flex:none;background:url('assets/pangu-frozen-product.webp') -55px -40px/910px 660px no-repeat}
 .h3-xhs-icon{display:flex;align-items:center;justify-content:center;background:#ff254b;color:white;font-size:9px;border-radius:9px;width:35px;height:35px;flex:none;letter-spacing:-1px}
