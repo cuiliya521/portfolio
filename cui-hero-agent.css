@@ -25,7 +25,7 @@
  .cui-panel-header h2{font-size:17px}.cui-panel-close{width:36px;height:36px;font-size:24px}
  #cui-panel-welcome{margin:10px 0 14px}.cui-panel-actions button{min-height:44px;padding:8px 12px;font-size:14px}
  /* Reposition the same frozen CUI only while the drawer is open. */
- body:has(#cui-agent-panel[open]) .agent-wrap:not(.in-workspace){left:32%;top:46%;width:36%}
+ body:has(#cui-agent-panel[open]) .agent-wrap:not(.in-workspace){left:28%;top:46%;width:44%}
 }
 @media(prefers-reduced-motion:reduce){
  .agent-wrap:not(.in-workspace) .agent-image,.agent-wrap:not(.in-workspace).cui-tapped .agent-image{animation:none!important}
