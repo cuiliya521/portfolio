@@ -302,3 +302,6 @@ try{
   await browser.close();
   server.close();
 }
+
+// Dedicated final audit: actual 390x844 wheel scroll and project/Dock controls.
+if(!process.exitCode) await import('./cui-workspace-mobile-audit.mjs');
