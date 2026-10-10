@@ -574,7 +574,7 @@ body.entering .agent-wrap{
     </div>
   <main class="hero-main">
     <section class="copy">
-      <div class="kicker">崔丽娅 · 2027 届 · AI 产品运营</div>
+      <div class="kicker"><strong>崔丽娅</strong> · 2027届 · AI 产品运营</div>
       <h1>欢迎来到我的<br><span class="line2">AI 工作现场</span></h1>
       <p class="lede">和 CUI 一起，探索我的真实项目。</p>
       <div class="action-row">
@@ -607,22 +607,43 @@ body.entering .agent-wrap{
 
     <div class="flow">PROBLEM → PRODUCT → VALIDATION</div>
     <div class="h3-projects" aria-label="Hero 项目入口">
-      <button class="h3-project h3-pangu" type="button" aria-label="进入工作空间，探索盘古智绘" onclick="document.getElementById('enter-workspace').click()">
+      <button class="h3-project h3-pangu" type="button" aria-label="进入工作空间，探索盘古智绘" data-workspace-target="open-test-pangu">
         <span class="h3-project-name"><span class="h3-pangu-icon" aria-hidden="true"></span>盘古智绘</span>
+        <span class="h3-project-role">AIGC 产品运营 · 中小商户营销</span>
         <img class="h3-project-preview" src="assets/pangu-frozen-product.webp" alt="已有盘古智绘产品原型">
         <span class="h3-project-arrow" aria-hidden="true">→</span>
       </button>
-      <button class="h3-project h3-xhs" type="button" aria-label="进入工作空间，探索小红书内容运营" onclick="document.getElementById('enter-workspace').click()">
+      <button class="h3-project h3-xhs" type="button" aria-label="进入工作空间，探索小红书内容运营" data-workspace-target="test-xhs">
         <span class="h3-project-name"><span class="h3-xhs-icon" aria-hidden="true">小红书</span>小红书内容运营</span>
+        <span class="h3-project-role">教育内容运营 · 内容策略与增长</span>
         <span class="h3-xhs-preview"><img src="assets/case-result.png" alt="已有教育内容笔记素材"><img src="assets/case-blackboard.png" alt="已有课程内容笔记素材"><img src="assets/case-insight.png" alt="已有内容洞察笔记素材"></span>
         <span class="h3-project-arrow" aria-hidden="true">→</span>
       </button>
-      <button class="h3-project h3-noteguard" type="button" aria-label="进入工作空间，探索 NoteGuard AI" onclick="document.getElementById('enter-workspace').click()">
+      <button class="h3-project h3-noteguard" type="button" aria-label="进入工作空间，探索 NoteGuard AI" data-workspace-target="test-noteguard">
         <span class="h3-project-name"><span class="h3-note-icon" aria-hidden="true">◇</span>NoteGuard AI</span>
-        <img class="h3-project-preview h3-noteguard-real" src="assets/noteguard-audit-real.svg" alt="NoteGuard AI 真实产品审核界面截图（早期版本）" loading="eager">
+        <span class="h3-project-role">AI 内容审核 · 人机协作工作流</span>
+        <img class="h3-project-preview h3-noteguard-real" src="assets/noteguard-forest-paper.png" alt="NoteGuard AI Forest & Paper 审核工作台原始截图：审核原文、风险审阅与人工决策" loading="eager">
         <span class="h3-project-arrow" aria-hidden="true">→</span>
       </button>
     </div>
+    <script>
+      document.querySelectorAll('.h3-project[data-workspace-target]').forEach(card => {
+        card.addEventListener('click', () => {
+          document.getElementById('enter-workspace').click();
+          const openExistingEntry = () => {
+            if (document.body.dataset.transition !== 'idle') {
+              requestAnimationFrame(openExistingEntry);
+              return;
+            }
+            if (!document.body.classList.contains('cui-test-active')) return;
+            const entry = document.getElementById(card.dataset.workspaceTarget);
+            entry.click();
+            entry.focus({preventScroll:true});
+          };
+          requestAnimationFrame(openExistingEntry);
+        });
+      });
+    </script>
   </main>
 </section>
 

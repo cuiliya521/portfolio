@@ -124,6 +124,22 @@ try{
   await page.locator('#cui-test-workspace').waitFor({state:'hidden'});
   pass('Reduced motion return to Hero works',await shown('#enter-workspace'));
   pass('No browser JavaScript errors',errors.length===0);
+  await page.emulateMedia({reducedMotion:'no-preference'});
+  await page.goto(base+'/',{waitUntil:'networkidle'});
+  pass('Hero identity uses exact name and graduation year',(await page.locator('.hero .kicker').innerText())==='崔丽娅 · 2027届 · AI 产品运营');
+  pass('All authentic Hero project screenshots decode',await page.locator('.h3-project img').evaluateAll(imgs=>imgs.length===5&&imgs.every(img=>img.complete&&img.naturalWidth>0)));
+  const cards=await page.locator('.h3-project').evaluateAll(nodes=>nodes.map(n=>{const r=n.getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,w:r.width,h:r.height,name:n.querySelector('.h3-project-name').innerText}}));
+  pass('Three Hero cards stay in lower right without overlap',cards.every((r,i)=>r.x>1440*.4&&r.y>900*.5&&r.right<=1440&&r.bottom<=900&&(i===0||r.x>cards[i-1].right)));
+  results.push('Hero card bounds: '+JSON.stringify(cards));
+  for(const [card,notice] of [['.h3-pangu','pangu'],['.h3-xhs','小红书'],['.h3-noteguard','NoteGuard']]){
+    await page.goto(base+'/',{waitUntil:'networkidle'});
+    await page.locator(card).click();
+    await page.waitForFunction(()=>document.body.dataset.transition==='idle');
+    if(notice==='pangu')await page.locator('#pangu-scene').waitFor({state:'visible'});
+    else await page.waitForFunction(text=>document.getElementById('cui-test-status').textContent.includes(text),notice);
+    pass('Hero card routes to existing '+notice+' entry',notice==='pangu'?await shown('#pangu-scene'):(await page.locator('#cui-test-status').innerText()).includes(notice));
+  }
+
 } catch (e){
   results.push(e.stack||String(e));
   console.error(e);

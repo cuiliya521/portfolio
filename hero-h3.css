@@ -111,3 +111,21 @@ body.cui-test-active .h3-projects{opacity:0;transform:translateY(25px);pointer-e
   .h3-glass-back{opacity:.22;filter:blur(7px)}
   .h3-light{opacity:.78}
 }
+
+/* Requested local Hero changes: identity, aligned glass cards and source screenshots. */
+.hero .kicker strong{font-weight:750}
+.h3-project-role{display:block;flex:none;color:#42604f;font-size:11px;line-height:1.5;white-space:nowrap;letter-spacing:0}
+.h3-project:focus-visible{outline:3px solid #b59c62;outline-offset:4px}
+.h3-project:active{filter:brightness(.96)}
+.h3-project-arrow{transition:background .2s ease}
+.h3-project:hover .h3-project-arrow{background:#17684d}
+.h3-noteguard-real{object-fit:contain!important;object-position:center!important;background:#f6f7ef}
+@media(min-width:981px){
+ .h3-projects{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+ .h3-project{gap:7px;padding:13px 12px 45px}
+ .h3-project-name{height:31px;font-size:18px}
+ .h3-project-preview{object-fit:contain;background:#fffff6}
+ .h3-xhs-preview{grid-template-columns:1.15fr 1fr;gap:4px}
+ .h3-project-arrow{bottom:8px;width:29px;height:29px;font-size:21px}
+}
+@media(max-width:700px){.h3-project-role{font-size:8px;white-space:normal;line-height:1.25}.h3-project{padding-bottom:28px}}
