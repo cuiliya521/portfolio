@@ -614,24 +614,12 @@ body.entering .agent-wrap{
 
       <div class="agent-wrap" id="agent-wrap">
         <img class="agent-image" src="assets/cui-agent-4.png" alt="CUI Agent 小精灵">
-        <button class="cui-agent-trigger" id="cui-agent-trigger" type="button" aria-label="与 CUI 互动" aria-controls="cui-agent-panel" aria-expanded="false"></button>
+        <button class="cui-agent-trigger" id="cui-agent-trigger" type="button" aria-label="与 CUI 互动" aria-controls="cui-welcome"></button>
         <div class="bubble">Hi，要进去看看吗？</div>
       </div>
 
 <div class="cui-welcome" id="cui-welcome" role="status" hidden>你好呀，我是 CUI！欢迎来到丽娅的 AI 工作现场。一起进去看看吗？</div>
-<dialog class="cui-agent-panel" id="cui-agent-panel" aria-labelledby="cui-panel-title" aria-describedby="cui-panel-welcome">
-  <header class="cui-panel-header">
-    <h2 id="cui-panel-title">和 CUI 一起探索</h2>
-    <button id="cui-panel-close" class="cui-panel-close" type="button" aria-label="关闭 CUI 面板">×</button>
-  </header>
-  <p id="cui-panel-welcome">想先认识丽娅，还是一起看看她做过的项目？</p>
-  <div class="cui-panel-actions">
-    <button id="cui-meet-liya" type="button" aria-expanded="false" aria-controls="cui-liya-intro">认识丽娅 <span aria-hidden="true">↓</span></button>
-    <button id="cui-enter-workspace" type="button">进入工作空间 <span aria-hidden="true">→</span></button>
-    <button id="cui-view-projects" type="button">直接查看项目 <span aria-hidden="true">→</span></button>
-  </div>
-  <p id="cui-liya-intro" class="cui-liya-intro" role="status" hidden>丽娅是 2027 届本科生，求职方向是 AI 产品运营。她参与过盘古智绘 AIGC 产品运营和小红书教育内容运营，并把实习中人工审核费时的问题做成了个人项目 NoteGuard AI。</p>
-</dialog>
+
 
 <!-- Three-state interaction test only. No AI-rendered interface or new character illustration. -->
 <section class="test-workspace" id="cui-test-workspace" aria-label="CUI 数字工作空间" aria-hidden="true" hidden>
