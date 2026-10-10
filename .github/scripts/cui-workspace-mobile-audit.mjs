@@ -53,6 +53,8 @@ try{
    return {viewport:[innerWidth,innerHeight],natural:[img.naturalWidth,img.naturalHeight],element:[r.width,r.height],painted:[img.naturalWidth*scale,img.naturalHeight*scale],scale,objectFit:s.objectFit,src:img.getAttribute('src')};
   }));
  }
+ const guide=await page.locator('.agent-image').evaluate(el=>({src:el.getAttribute('src'),transform:getComputedStyle(el).transform}));
+ check('Mobile guide points inward with the same frozen PNG',guide.src==='assets/workspace-v6/cui-guide.png'&&guide.transform==='matrix(-1, 0, 0, 1, 0, 0)',guide);
  check('Pangu uses original aspect ratio with contain, no CSS stretch',imageSizes.every(i=>i.objectFit==='contain'&&i.natural[0]===502&&i.natural[1]===373),imageSizes);
  for(const [selector,name] of [['#open-test-pangu','pangu'],['#test-xhs','xhs'],['#test-noteguard','noteguard']]){
   await center(selector);
