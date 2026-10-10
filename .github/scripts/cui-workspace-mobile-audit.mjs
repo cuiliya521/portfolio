@@ -36,6 +36,8 @@ try{
  for(let i=0;i<8;i++){
   const position=await page.locator('#cui-test-workspace').evaluate(el=>({top:el.scrollTop,max:el.scrollHeight-el.clientHeight,height:el.clientHeight,width:el.scrollWidth}));
   positions.push(position);await shot('scroll-'+String(i).padStart(2,'0'));
+  const guideBounds=await page.evaluate(()=>({guide:document.querySelector('.agent-wrap').getBoundingClientRect().toJSON(),first:document.getElementById('open-test-pangu').getBoundingClientRect().toJSON()}));
+  check('Mobile guide stays above project cards at scroll '+position.top,guideBounds.guide.bottom<=guideBounds.first.top,guideBounds);
   if(position.top>=position.max-1)break;
   await page.mouse.move(200,430);await page.mouse.wheel(0,560);await page.waitForTimeout(250);
  }

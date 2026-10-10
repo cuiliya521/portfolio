@@ -75,3 +75,8 @@ body[data-transition="running"] .agent-wrap.in-workspace .bubble{opacity:0}
 @media(max-width:700px){
  .agent-wrap.in-workspace .agent-image{transform:scaleX(-1)}
 }
+
+/* Mobile guide travels with the workbench introduction, never over project cards. */
+@media(max-width:700px){
+ .agent-wrap.in-workspace{top:calc(92px - var(--workspace-scroll-offset, 0px))}
+}

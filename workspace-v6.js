@@ -5,6 +5,12 @@
  const agent = document.querySelector('.agent-image');
  const heroSource = agent.getAttribute('src');
  const guideSource = 'assets/workspace-v6/cui-guide.png';
+ const workspace = $('cui-test-workspace');
+ const guideWrap = agent.closest('.agent-wrap');
+ const syncGuideScroll = () => guideWrap.style.setProperty('--workspace-scroll-offset', workspace.scrollTop + 'px');
+ workspace.addEventListener('scroll', syncGuideScroll, {passive:true});
+ document.addEventListener('cui:modechange', syncGuideScroll);
+ syncGuideScroll();
  const preload = new Image(); preload.src = guideSource;
  document.addEventListener('cui:modechange',e => {
   const inHero = e.detail.mode === 'hero';
