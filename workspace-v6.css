@@ -58,3 +58,8 @@ body[data-transition="running"] .agent-wrap.in-workspace .bubble{opacity:0}
  .agent-wrap.in-workspace{left:auto;right:10px;top:92px;bottom:auto;width:90px;transform:none;z-index:81}.agent-wrap.in-workspace .bubble{display:none}.test-workspace__status{position:relative;left:auto;top:auto;margin:10px 20px;font-size:12px;max-width:none}
  .workspace-info{padding:18px;width:94vw;max-height:86vh}.workspace-info h2{font-size:23px}.project-switches{flex-wrap:wrap}.scene-top .project-switches{display:none}
 }
+
+/* Preserve source aspect ratio while using a legible viewport of the supplied review UI. */
+.workspace-noteguard .window-evidence img{object-fit:cover;object-position:50% 44%}
+.workspace-mark{width:46px;height:46px}.workspace-dock svg{width:22px;height:22px;flex:none}.workspace-top-actions svg{width:17px;height:17px;vertical-align:middle}.workspace-jiya>svg{width:27px;height:27px;flex:none;color:#c79734}
+@media(max-width:700px){.workspace-mark{width:34px;height:34px}}

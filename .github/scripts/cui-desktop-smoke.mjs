@@ -145,6 +145,9 @@ try{
   pass('V6 asymmetric largest Pangu and right stacked windows',workspaceProof.panguLargest&&workspaceProof.asymmetry);
   pass('Dock fully visible with at least 12px gap from Jiya',workspaceProof.dockVisible&&workspaceProof.gap>=12);
   pass('V6 images decoded and single locked Workspace guide',workspaceProof.images.every(i=>i.loaded)&&workspaceProof.agentCount===1&&workspaceProof.agent==='assets/workspace-v6/cui-guide.png');
+  pass('Locked Workspace guide retains real Alpha',await page.locator('.agent-image').evaluate(img=>{
+    const c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;const x=c.getContext('2d');x.drawImage(img,0,0);return img.naturalWidth===1086&&img.naturalHeight===1448&&x.getImageData(0,0,1,1).data[3]===0;
+  }));
   pass('Three independent real cover images',await page.locator('.xhs-covers img').count()===3);
   await page.locator('#test-xhs').click();
   pass('Xiaohongshu opens supplied materials, no invented metrics',await page.locator('#workspace-info').isVisible()&&(await page.locator('#workspace-info-content').innerText()).includes('不作为留资'));
@@ -257,6 +260,8 @@ try{
   await page.locator('#enter-workspace').click();
   await page.waitForFunction(()=>document.body.dataset.transition==='idle');
   pass('Mobile independent Workspace entry works while greeting is visible',await shown('#cui-test-workspace')&&await page.locator('#cui-welcome').evaluate(el=>el.hidden));
+  await page.screenshot({path:path.join(output,'11-workspace-390x844.png')});
+  pass('Mobile Workspace has no horizontal overflow',await page.evaluate(()=>document.getElementById('cui-test-workspace').scrollWidth<=innerWidth));
   await page.goBack();
   await page.waitForFunction(()=>document.body.dataset.transition==='idle'&&!document.body.classList.contains('cui-test-active'));
   await page.locator('#hero-view-projects').click();

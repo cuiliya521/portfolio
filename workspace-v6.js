@@ -26,7 +26,7 @@
   contact:['联系我','<p><a href="mailto:3104306958@qq.com">3104306958@qq.com</a></p><p><a href="https://github.com/cuiliya521" target="_blank" rel="noreferrer">GitHub · cuiliya521 ↗</a></p>']
  };
  function show(key,button){
-  if(!$('pangu-scene').classList.contains('open')) invoker=button;
+  if(!$('pangu-scene').classList.contains('open')) {if(!panel.contains(button)) invoker=button}
   else {invoker=$('open-test-pangu');$('scene-back').click()}
   const [title,body]=content[key];
   $('workspace-info-title').textContent=title;
