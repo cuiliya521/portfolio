@@ -553,6 +553,7 @@ body.entering .agent-wrap{
 <link rel="stylesheet" href="cui-workspace-test.css">
 <link rel="stylesheet" href="hero-h3.css">
 <link rel="stylesheet" href="cui-hero-agent.css">
+<link rel="stylesheet" href="workspace-v6.css">
 </head>
 <body>
 <div class="digital-space" aria-hidden="true"><div class="space-plane plane-back"></div><div class="space-plane plane-side"></div><div class="space-floor"></div><div class="space-orbit"></div></div>
@@ -623,38 +624,51 @@ body.entering .agent-wrap{
 
 <!-- Three-state interaction test only. No AI-rendered interface or new character illustration. -->
 <section class="test-workspace" id="cui-test-workspace" aria-label="CUI 数字工作空间" aria-hidden="true" hidden>
+  <img class="workspace-background" src="assets/workspace-v6/background.png" alt="">
   <header class="test-workspace__top">
-    <div class="test-workspace__brand">CUI <span style="font-weight:400;color:#718178">/ DIGITAL WORKSPACE</span></div>
-    <button class="test-workspace__back" id="test-workspace-home" type="button">← 返回首页</button>
+    <div class="test-workspace__brand"><span class="workspace-moon" aria-hidden="true">◕</span> CUI</div>
+    <div class="workspace-top-actions"><button class="test-workspace__back" id="test-workspace-home" type="button">← 返回首页</button><button class="test-workspace__back" data-workspace-info="contact" type="button">联系我 <span aria-hidden="true">♙</span></button></div>
   </header>
   <main class="test-workspace__main">
     <p class="test-workspace__eyebrow">CUI / WORKSPACE</p>
-    <h2>我的数字工作空间</h2>
-    <p class="test-workspace__intro">选一个项目，我们一起进去看看。</p>
-    <div class="test-workspace__projects" aria-label="项目入口">
-      <button class="test-workspace__project" id="open-test-pangu" type="button" aria-label="打开盘古智绘项目窗口">
-        <span class="test-workspace__number">01 / AI PRODUCT</span>
-        <strong>盘古智绘</strong><span class="test-workspace__en">PANGU ZHIHUI</span>
-        <span class="test-workspace__description">AIGC 商户素材生成流程。打开已有脱敏重构产品界面。</span>
-        <span class="test-workspace__action">打开项目窗口 <span aria-hidden="true">↗</span></span>
-      </button>
-      <button class="test-workspace__project" id="test-xhs" type="button">
-        <span class="test-workspace__number">02 / CONTENT OPERATIONS</span>
-        <strong>小红书内容运营</strong><span class="test-workspace__en">XIAOHONGSHU</span>
-        <span class="test-workspace__description">教育内容运营与内容效果验证。</span>
-        <span class="test-workspace__action test-workspace__pending">项目入口预留 <span aria-hidden="true">↗</span></span>
-      </button>
-      <button class="test-workspace__project" id="test-noteguard" type="button">
-        <span class="test-workspace__number">03 / AI WORKFLOW</span>
-        <strong>NoteGuard AI</strong><span class="test-workspace__en">HUMAN-IN-THE-LOOP</span>
-        <span class="test-workspace__description">风险审核、人机确认与复检工作流。</span>
-        <span class="test-workspace__action test-workspace__pending">项目入口预留 <span aria-hidden="true">↗</span></span>
-      </button>
-    </div>
-    <p class="test-workspace__status" id="cui-test-status" role="status" aria-live="polite">提示：目前只有盘古项目窗口开放交互测试。</p>
-    <p class="test-workspace__footer"></p>
+    <h2>我的 AI 工作空间</h2>
+    <p class="test-workspace__intro">选择一个项目，走进真实的工作现场。</p>
   </main>
+  <div class="test-workspace__projects" aria-label="项目入口">
+    <button class="workspace-window workspace-pangu" id="open-test-pangu" type="button" aria-label="打开盘古智绘项目窗口">
+      <span class="window-chrome" aria-hidden="true"><i></i><i></i><i></i><b>···</b></span>
+      <span class="window-title"><strong>01｜盘古智绘</strong><span class="window-arrow" aria-hidden="true">→</span><span class="window-phrase">把灵感，变成产品能力。</span></span>
+      <span class="window-subtitle">AIGC 产品运营 · 主项目</span>
+      <span class="window-evidence"><img src="assets/workspace-v6/pangu.png" alt="盘古智绘结构化输入与实时预览，作品集 P04 脱敏界面重构"><small>作品集 P04 · 脱敏界面重构</small></span>
+      <span class="window-footer"><span class="window-tags"><span>AIGC</span><span>产品运营</span><span>商业增长</span><span>AI 落地</span></span><span class="window-enter">进入项目 →</span></span>
+    </button>
+    <button class="workspace-window workspace-xhs" id="test-xhs" type="button" aria-label="查看小红书真实内容素材">
+      <span class="window-chrome" aria-hidden="true"><i></i><i></i><i></i><b>···</b></span>
+      <span class="window-title"><strong>02｜小红书内容运营</strong><span class="window-arrow" aria-hidden="true">→</span></span>
+      <span class="window-subtitle">内容策略 · 数据分析 · 用户洞察</span>
+      <span class="xhs-covers"><img src="assets/workspace-v6/xhs-main.png" alt="真实主封面：AI 一对一补初阶数理思维"><img src="assets/workspace-v6/xhs-month.png" alt="真实辅助封面：700 每月"><img src="assets/workspace-v6/xhs-lesson.png" alt="真实辅助封面：66 元每课时"></span>
+    </button>
+    <button class="workspace-window workspace-noteguard" id="test-noteguard" type="button" aria-label="查看 NoteGuard AI 审核素材">
+      <span class="window-chrome" aria-hidden="true"><i></i><i></i><i></i><b>···</b></span>
+      <span class="window-title"><strong>03｜NoteGuard AI</strong><span class="window-arrow" aria-hidden="true">→</span></span>
+      <span class="window-subtitle">AI 审核 · 产品设计 · 人机协作</span>
+      <span class="window-evidence"><img src="assets/workspace-v6/noteguard.png" alt="NoteGuard AI 作品集 P08 审核界面"><small>作品集 P08 · 审核界面展示</small></span>
+    </button>
+  </div>
+  <button class="workspace-jiya" data-workspace-info="jiya" type="button"><span aria-hidden="true">▱</span><strong>04　冀芽成长（校园项目）</strong><span class="jiya-description">学前教育数字化赋能 · 用户调研 · 需求设计</span><span aria-hidden="true">↗</span></button>
+  <nav class="workspace-dock" aria-label="工作空间导航">
+    <button class="is-active" id="workspace-dock-home" type="button" aria-current="page"><span aria-hidden="true">⌂</span>工作台</button>
+    <button data-workspace-info="skills" type="button"><span aria-hidden="true">▥</span>我的能力</button>
+    <button data-workspace-info="about" type="button"><span aria-hidden="true">♙</span>关于我</button>
+    <button data-workspace-info="contact" type="button"><span aria-hidden="true">✉</span>联系我</button>
+    <a href="assets/workspace-v6/resume.pdf" download="崔丽娅27届-本科-产品运营.pdf" title="Library 存档简历（2026-08-14），原文件未修改"><span aria-hidden="true">⇩</span>下载简历</a>
+  </nav>
+  <p class="test-workspace__status" id="cui-test-status" role="status" aria-live="polite"></p>
 </section>
+<dialog id="workspace-info" class="workspace-info" aria-labelledby="workspace-info-title">
+  <header><h2 id="workspace-info-title"></h2><button id="workspace-info-close" type="button" aria-label="关闭">×</button></header>
+  <div id="workspace-info-content"></div>
+</dialog>
 
 <section class="pangu-scene" id="pangu-scene" aria-hidden="true" role="dialog" aria-modal="true" aria-label="盘古智绘项目窗口">
   <header class="scene-top">
@@ -899,5 +913,6 @@ body.entering .agent-wrap{
 </script>
 <script src="cui-workspace-test.js" defer></script>
 <script src="cui-hero-agent.js" defer></script>
+<script src="workspace-v6.js" defer></script>
 </body>
 </html>

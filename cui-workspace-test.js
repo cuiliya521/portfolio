@@ -101,7 +101,7 @@
     $("agent-wrap").classList.toggle("in-workspace",inside);
     $("agent-wrap").classList.toggle("in-project",inPangu);
     document.dispatchEvent(new CustomEvent('cui:modechange',{detail:{mode}}));
-    document.querySelector(".bubble").textContent = inside ? "选一个项目，一起看看。" : "Hi，要进去看看吗？";
+    document.querySelector(".bubble").textContent = inside ? "这是我的 AI 工作空间，一起看看正在做的项目吧。" : "Hi，要进去看看吗？";
     const finish = () => {
       if(ticket !== transitionId) return;
       if(!inside) workspace.hidden = true;
@@ -152,16 +152,9 @@
   next.addEventListener('click',() => setStep(step === 2 ? 0 : step + 1));
   steps.forEach(btn => btn.addEventListener('click',() => setStep(Number(btn.dataset.step))));
 
-  for(const id of ['test-xhs','test-noteguard']){
-    $(id).addEventListener('click',() => {
-      status.textContent = id === 'test-xhs'
-        ? '小红书项目入口已保留。本轮只测试盘古窗口，不虚构小红书界面。'
-        : 'NoteGuard AI 项目入口已保留。本轮只测试盘古窗口，不虚构 NoteGuard 界面。';
-    });
-  }
-
   window.addEventListener('popstate',() => render(fromHash()));
   window.addEventListener('keydown',e => {
+    if($('workspace-info')?.open) return;
     if(mode === 'hero' && ['Enter','ArrowDown'].includes(e.key) &&
        !e.target.closest('button,a,input,textarea,select')){
       e.preventDefault();navigate('workspace');return;
