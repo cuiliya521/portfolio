@@ -186,3 +186,14 @@ body.cui-test-active .h3-projects{opacity:0;transform:translateY(25px);pointer-e
  .h3-xhs-preview img:first-child{grid-row:auto}
  .h3-xhs-preview img{object-fit:cover;object-position:center;border-radius:7px}
 }
+
+/* R3: background-only light/reflection pass. Original CUI stays in place because
+   the supplied black-matted JPEG did not yield a clean, faithful cutout. */
+@media(min-width:981px){
+ .hero .h3-atmosphere::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 31% 39%,#fff8dd55,transparent 38%),radial-gradient(ellipse at 73% 88%,#ffe4bc44,transparent 45%);z-index:3}
+ .hero .h3-light{filter:saturate(1.08) contrast(1.04)}
+ .hero .h3-glass-left{background:linear-gradient(135deg,#73998d30,#fcfff029 60%,#faf2d62e);box-shadow:inset 0 1px 5px #ffffea99,0 10px 45px #56766814}
+ .hero .h3-glass-right{background:linear-gradient(135deg,#7fa79730,#f8fcf330);box-shadow:inset 0 1px 6px #fff9,0 12px 55px #486f5820}
+ .h3-reference-floor{opacity:.65}
+ .h3-project{-webkit-box-reflect:below 9px linear-gradient(transparent 60%,rgba(255,255,255,.08));box-shadow:inset 0 0 0 2px #e6e8d970,0 0 16px #fff6d599,0 14px 28px #697b4320}
+}

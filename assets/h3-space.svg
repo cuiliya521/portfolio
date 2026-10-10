@@ -1,12 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" preserveAspectRatio="none">
 <defs>
- <linearGradient id="room" x1="0" y1="0" x2=".85" y2="1"><stop stop-color="#dce5df"/><stop offset=".43" stop-color="#f7f5e9"/><stop offset="1" stop-color="#c3d4c4"/></linearGradient>
+ <linearGradient id="room" x1="0" y1="0" x2=".85" y2="1"><stop stop-color="#d6e3df"/><stop offset=".43" stop-color="#faf6eb"/><stop offset="1" stop-color="#c8dacb"/></linearGradient>
  <radialGradient id="sun"><stop stop-color="#fffff7"/><stop offset=".45" stop-color="#fffdee" stop-opacity=".8"/><stop offset="1" stop-color="#fffbee" stop-opacity="0"/></radialGradient>
  <linearGradient id="pane"><stop stop-color="#6e9a8c" stop-opacity=".26"/><stop offset=".55" stop-color="#e3eee3" stop-opacity=".3"/><stop offset="1" stop-color="#fffaf0" stop-opacity=".8"/></linearGradient>
- <linearGradient id="floor" x1="0" y1="0" x2=".5" y2="1"><stop stop-color="#eff0de"/><stop offset=".55" stop-color="#fffdf1"/><stop offset="1" stop-color="#d4ddce"/></linearGradient>
+ <linearGradient id="floor" x1="0" y1="0" x2=".5" y2="1"><stop stop-color="#eee6df"/><stop offset=".45" stop-color="#fff7e8"/><stop offset="1" stop-color="#d8d5d9"/></linearGradient>
  <linearGradient id="beam"><stop stop-color="#fffff7" stop-opacity="0"/><stop offset=".5" stop-color="#fffff7" stop-opacity=".9"/><stop offset="1" stop-color="#fff3cc" stop-opacity=".25"/></linearGradient>
  <linearGradient id="gold"><stop stop-color="#cfb06e" stop-opacity="0"/><stop offset=".5" stop-color="#cfb06e" stop-opacity=".65"/><stop offset="1" stop-color="#fffbe1" stop-opacity="0"/></linearGradient>
  <filter id="soft"><feGaussianBlur stdDeviation="12"/></filter><filter id="blur"><feGaussianBlur stdDeviation="3"/></filter>
+<radialGradient id="warm-reflection"><stop stop-color="#ffe3b1" stop-opacity=".64"/><stop offset=".5" stop-color="#f6dbcd" stop-opacity=".28"/><stop offset="1" stop-color="#f2d4df" stop-opacity="0"/></radialGradient>
+<radialGradient id="cool-depth"><stop stop-color="#9bb9b5" stop-opacity=".28"/><stop offset="1" stop-color="#d7e5df" stop-opacity="0"/></radialGradient>
+<filter id="reflection-soft"><feGaussianBlur stdDeviation="22"/></filter>
 </defs>
 <rect width="1440" height="900" fill="url(#room)"/>
 <path d="M0 0H245L195 716H0Z" fill="#faf8ef" opacity=".44"/>
@@ -21,6 +24,10 @@
 <path d="M0 796Q847 704 1440 786M0 733Q670 779 1440 728" fill="none" stroke="url(#gold)" stroke-width="3"/>
 <path d="M0 315Q590 539 1440 290M0 108Q596 334 1440 63" fill="none" stroke="#fffef6" stroke-width="2.5" opacity=".43"/>
 <path d="M0 616Q684 801 1440 604M0 535Q922 641 1440 379" fill="none" stroke="url(#gold)" stroke-width="2" opacity=".72"/>
-<ellipse cx="843" cy="534" rx="624" ry="216" fill="url(#sun)" opacity=".8"/>
+<ellipse cx="843" cy="534" rx="624" ry="216" fill="url(#sun)" opacity=".46"/>
+<ellipse cx="290" cy="160" rx="400" ry="310" fill="url(#cool-depth)"/>
+<ellipse cx="1140" cy="830" rx="590" ry="125" fill="url(#warm-reflection)"/>
+<ellipse cx="330" cy="813" rx="220" ry="70" fill="url(#warm-reflection)"/>
+<g filter="url(#reflection-soft)" opacity=".35"><path d="M230 740L130 900H290L370 750Z" fill="#ffe9ce"/><path d="M570 755L420 900H525L650 757Z" fill="#fffdf1"/><path d="M1010 740L1090 900H1175L1110 745Z" fill="#f9e4c5"/></g>
 <ellipse cx="359" cy="827" rx="190" ry="26" fill="#879b78" opacity=".12" filter="url(#soft)"/>
 </svg>
