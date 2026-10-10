@@ -63,3 +63,10 @@ body[data-transition="running"] .agent-wrap.in-workspace .bubble{opacity:0}
 .workspace-noteguard .window-evidence img{object-fit:cover;object-position:50% 44%}
 .workspace-mark{width:46px;height:46px}.workspace-dock svg{width:22px;height:22px;flex:none}.workspace-top-actions svg{width:17px;height:17px;vertical-align:middle}.workspace-jiya>svg{width:27px;height:27px;flex:none;color:#c79734}
 @media(max-width:700px){.workspace-mark{width:34px;height:34px}}
+
+/* Mobile project controls need separate rows to remain fully readable. */
+@media(max-width:700px){
+ .scene-steps{width:max-content;max-width:calc(100% - 28px);box-sizing:border-box}
+ .scene-step{flex-shrink:0;white-space:nowrap}
+ .scene-next{bottom:82px}
+}

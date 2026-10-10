@@ -62,6 +62,9 @@ try{
   if(name==='pangu'){
    await page.locator('#pangu-scene').waitFor({state:'visible'});
    await shot('pangu-open');
+   const rows=await page.evaluate(()=>{const a=document.querySelector('.scene-steps').getBoundingClientRect(),b=document.getElementById('scene-next').getBoundingClientRect();return {steps:a.toJSON(),next:b.toJSON(),separate:b.bottom<=a.top||a.bottom<=b.top}});
+   check('Mobile Pangu steps and next control have no visual overlap',rows.separate,rows);
+   if(!rows.separate) throw new Error('Pangu mobile controls overlap');
    const close=await page.locator('#scene-back').evaluate(el=>{const r=el.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return {bounds:r.toJSON(),inside:r.x>=0&&r.right<=innerWidth&&r.y>=0&&r.bottom<=innerHeight,hit:hit===el||el.contains(hit)}});
    check('Mobile Pangu close button stays in viewport and clickable',close.inside&&close.hit,close);
    await page.locator('#scene-next').click();check('Mobile Pangu next step works',await page.locator('.scene-step.active').getAttribute('data-step')==='1');
