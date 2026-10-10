@@ -54,3 +54,35 @@ body.cui-test-active .h3-projects{opacity:0;transform:translateY(25px);pointer-e
 
 /* Authentic NoteGuard review UI crop, not a generated interface. */
 .h3-noteguard-real{object-fit:cover;object-position:52% 25%;background:#f4f6ef}
+
+/* Mobile: deliberate stacked composition; desktop H3 remains unchanged. */
+@media(max-width:700px){
+ html,body{overflow-x:hidden}
+ .hero{height:100svh;min-height:100svh;overflow:hidden}
+ .hero .topbar{height:64px;padding:0 20px}
+ .hero .brand{font-size:22px;gap:8px}
+ .hero .h3-mark{width:34px;height:34px}
+ .hero .hero-main{position:absolute;inset:64px 0 0;height:auto;min-height:0}
+ .hero .copy{left:6%;top:4%;width:88%;max-width:none;text-align:center}
+ .hero .kicker{position:static;width:100%;margin:0 0 12px;font-size:12px;line-height:1.5;letter-spacing:0;white-space:normal}
+ .hero h1{font-size:clamp(30px,8.5vw,42px);line-height:1.15;white-space:normal;transform:none}
+ .hero h1 .line2{font-size:clamp(32px,9vw,44px);transform:none;margin-top:2px}
+ .hero .lede{font-size:12px;line-height:1.5;white-space:normal;margin:12px 0 15px;transform:none}
+ .hero .action-row{transform:none;justify-content:center}
+ .hero .enter{width:auto;min-width:175px;height:46px;min-height:46px;padding:0 19px;gap:13px;font-size:14px;white-space:nowrap}
+ .hero .enter span:first-child{white-space:nowrap}
+ .hero .enter .arrow{font-size:20px}
+ .hero .copy::before{inset:-8px 10px 80px;opacity:.3}
+ .hero .copy::after{right:10px;top:30px;font-size:15px;text-shadow:none}
+ .agent-wrap:not(.in-workspace){left:0;top:36%;width:min(59vw,255px);transform:scale(1);transform-origin:top left}
+ .agent-wrap:not(.in-workspace) .agent-image{width:100%}
+ .h3-projects{left:7%;top:auto;bottom:4%;width:86%;height:26%;gap:7px;grid-template-columns:repeat(3,minmax(0,1fr))}
+ .h3-project,.h3-xhs,.h3-noteguard{height:100%;margin:0;transform:none;padding:9px 7px 8px;gap:6px;border-radius:12px}
+ .h3-project-name{font-size:clamp(10px,2.8vw,13px);height:auto;min-height:26px;gap:4px;letter-spacing:-.04em;white-space:normal;line-height:1.2}
+ .h3-pangu-icon,.h3-xhs-icon{width:18px;height:18px;flex:none}
+ .h3-xhs-icon{font-size:6px;border-radius:5px}
+ .h3-note-icon{font-size:18px}
+ .h3-project-arrow{width:22px;height:22px;font-size:15px;right:5px;bottom:5px}
+ .h3-project-preview,.h3-xhs-preview{border-radius:6px}
+}
+@media(max-width:380px){.agent-wrap:not(.in-workspace){top:39%;width:54vw}.h3-projects{bottom:3%;height:24%}}
