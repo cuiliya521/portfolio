@@ -100,6 +100,7 @@
     setStep(inPangu ? step : 0);
     $("agent-wrap").classList.toggle("in-workspace",inside);
     $("agent-wrap").classList.toggle("in-project",inPangu);
+    document.dispatchEvent(new CustomEvent('cui:modechange',{detail:{mode}}));
     document.querySelector(".bubble").textContent = inside ? "选一个项目，一起看看。" : "Hi，要进去看看吗？";
     const finish = () => {
       if(ticket !== transitionId) return;

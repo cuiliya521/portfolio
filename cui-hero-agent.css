@@ -1,0 +1,31 @@
+/* Interaction overlays only. The frozen Hero geometry and original PNG stay intact. */
+.cui-agent-trigger{position:absolute;inset:0;border:0;padding:0;background:transparent;cursor:pointer;pointer-events:auto;border-radius:40%;-webkit-tap-highlight-color:transparent}
+.cui-agent-trigger:focus-visible{outline:3px solid #718f65;outline-offset:-12px}
+.agent-wrap:not(.in-workspace) .agent-image{animation:cuiInvitationFloat 5s ease-in-out infinite}
+.agent-wrap:not(.in-workspace).cui-tapped .agent-image{animation:cuiInvitationTap .28s ease-out}
+@keyframes cuiInvitationFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes cuiInvitationTap{0%,100%{transform:translateY(0) scale(1)}45%{transform:translateY(-2px) scale(1.006)}}
+.cui-welcome{position:fixed;left:clamp(24px,16vw,230px);top:55vh;width:340px;max-width:calc(100vw - 48px);box-sizing:border-box;z-index:100;padding:14px 18px;border:1px solid #fffdf0;border-radius:18px 18px 18px 4px;background:rgba(255,253,243,.94);box-shadow:0 8px 28px #25423114;backdrop-filter:blur(14px);color:#284c3d;font:500 15px/1.65 system-ui,sans-serif;pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .45s ease,transform .45s ease}
+.cui-welcome.is-visible{opacity:1;transform:translateY(0)}
+.cui-welcome[hidden]{display:none}
+.cui-agent-panel{position:fixed;inset:auto auto 24px 24px;margin:0;width:394px;max-width:calc(100vw - 48px);max-height:calc(100dvh - 48px);overflow-y:auto;box-sizing:border-box;z-index:120;padding:22px;border:1px solid #fffff5;border-radius:24px;background:linear-gradient(145deg,rgba(255,253,243,.97),rgba(231,239,224,.96));box-shadow:0 16px 48px #29433424;backdrop-filter:blur(20px);color:#234a3b;font:15px/1.6 system-ui,sans-serif}
+.cui-agent-panel:not([open]){display:none;pointer-events:none}
+.cui-panel-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.cui-panel-header h2{margin:0;font-size:19px;font-weight:650}
+.cui-panel-close{flex-shrink:0;width:44px;height:44px;border:1px solid #cdd8c5;border-radius:50%;background:#fffdf580;color:#315541;font-size:26px;cursor:pointer}
+#cui-panel-welcome{margin:10px 0 18px}
+.cui-panel-actions{display:grid;gap:9px}
+.cui-panel-actions button{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:46px;border:1px solid #ccd8c2;border-radius:12px;padding:10px 14px;background:#fffdf8b3;color:#244e3b;font:600 15px/1.5 system-ui,sans-serif;text-align:left;cursor:pointer}
+.cui-panel-actions button:hover{background:#edf3e7}
+.cui-panel-actions button:focus-visible,.cui-panel-close:focus-visible{outline:3px solid #829c6d;outline-offset:3px}
+.cui-liya-intro{margin:16px 0 0;padding:12px 14px;border-radius:12px;background:#fffdf6a6;font-size:14px;line-height:1.75}
+@media(max-width:700px){
+ .cui-welcome{left:20px;top:auto;bottom:24px;width:calc(100vw - 40px);max-width:none;font-size:14px}
+ .cui-agent-panel{inset:auto 12px 12px 12px;width:auto;max-width:none;max-height:36dvh;padding:16px;border-radius:24px 24px 18px 18px;font-size:14px;line-height:1.5}
+ .cui-panel-header h2{font-size:17px}.cui-panel-close{width:36px;height:36px;font-size:24px}
+ #cui-panel-welcome{margin:10px 0 14px}.cui-panel-actions button{min-height:44px;padding:8px 12px;font-size:14px}
+}
+@media(prefers-reduced-motion:reduce){
+ .agent-wrap:not(.in-workspace) .agent-image,.agent-wrap:not(.in-workspace).cui-tapped .agent-image{animation:none!important}
+ .cui-welcome{transition:none;transform:none}
+}

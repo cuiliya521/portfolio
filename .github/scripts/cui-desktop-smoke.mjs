@@ -34,6 +34,50 @@ const shown = async selector => page.locator(selector).evaluate(el => {
 try{
   await page.goto(base+'/',{waitUntil:'networkidle'});
   await page.screenshot({path:path.join(output,'01-hero-1440x900.png')});
+  pass('First-session welcome has exact text',await page.locator('#cui-welcome').isVisible() && (await page.locator('#cui-welcome').innerText())==='你好呀，我是 CUI！欢迎来到丽娅的 AI 工作现场。一起进去看看吗？');
+  const noCopyOverlap = selector => page.locator(selector).evaluate(el=>{
+    const r=el.getBoundingClientRect();
+    return [...document.querySelectorAll('.hero h1,#enter-workspace,#hero-view-projects')].every(other=>{
+      const b=other.getBoundingClientRect();return r.right<=b.left||r.left>=b.right||r.bottom<=b.top||r.top>=b.bottom;
+    });
+  });
+  pass('Welcome does not cover title or entrances',await noCopyOverlap('#cui-welcome'));
+  pass('Welcome never intercepts clicks and no audio exists',await page.locator('#cui-welcome').evaluate(el=>getComputedStyle(el).pointerEvents==='none') && await page.locator('audio,video').count()===0);
+  await page.locator('#cui-welcome').waitFor({state:'hidden',timeout:6500});
+  pass('Welcome fades away after about five seconds',await page.locator('#cui-welcome').evaluate(el=>el.hidden));
+  await page.locator('#cui-agent-trigger').focus();
+  await page.keyboard.press('Enter');
+  pass('Keyboard Enter opens CUI panel',await page.locator('#cui-agent-panel').evaluate(el=>el.open));
+  pass('Desktop panel avoids frozen title and entrances',await noCopyOverlap('#cui-agent-panel'));
+  await page.screenshot({path:path.join(output,'07-cui-panel-1440x900.png')});
+  await page.locator('#cui-meet-liya').click();
+  pass('Meet Liya reveals verified introduction',await page.locator('#cui-liya-intro').isVisible() && (await page.locator('#cui-liya-intro').innerText()).includes('2027 届本科生'));
+  pass('Expanded introduction also avoids title and entrances',await noCopyOverlap('#cui-agent-panel'));
+  await page.screenshot({path:path.join(output,'08-cui-introduction-1440x900.png')});
+  await page.keyboard.press('Escape');
+  pass('Escape closes panel and returns focus to CUI',await page.evaluate(()=>!document.getElementById('cui-agent-panel').open && document.activeElement.id==='cui-agent-trigger'));
+  await page.keyboard.press('Space');
+  pass('Keyboard Space reopens CUI panel',await page.locator('#cui-agent-panel').evaluate(el=>el.open));
+  await page.locator('#cui-agent-trigger').click();
+  pass('Clicking same CUI again closes panel',await page.locator('#cui-agent-panel').evaluate(el=>!el.open));
+  await page.locator('#cui-agent-trigger').click();
+  await page.locator('#cui-panel-close').click();
+  pass('Close button restores focus and removes invisible panel hit area',await page.evaluate(()=>document.activeElement.id==='cui-agent-trigger' && getComputedStyle(document.getElementById('cui-agent-panel')).display==='none'));
+  await page.locator('#cui-agent-trigger').click();
+  await page.locator('#cui-enter-workspace').click();
+  await page.waitForFunction(()=>document.body.dataset.transition==='idle');
+  pass('Agent workspace action uses existing route and dismisses panel',await page.evaluate(()=>location.hash==='#cui-workspace' && !document.getElementById('cui-agent-panel').open && document.getElementById('cui-agent-trigger').hidden));
+  await page.goBack();
+  await page.waitForFunction(()=>document.body.dataset.transition==='idle' && !document.body.classList.contains('cui-test-active'));
+  pass('Browser Back returns to quiet Hero',await page.locator('#cui-welcome').evaluate(el=>el.hidden) && await page.locator('#cui-agent-panel').evaluate(el=>!el.open));
+  await page.locator('#cui-agent-trigger').click();
+  await page.locator('#cui-view-projects').click();
+  await page.waitForFunction(()=>document.body.dataset.transition==='idle');
+  pass('Agent projects action reaches existing project region',await shown('.test-workspace__projects') && await page.locator('#cui-agent-panel').evaluate(el=>!el.open));
+  await page.goBack();
+  await page.waitForFunction(()=>document.body.dataset.transition==='idle' && !document.body.classList.contains('cui-test-active'));
+  await page.reload({waitUntil:'networkidle'});
+  pass('Same-session reload does not repeat welcome',await page.locator('#cui-welcome').evaluate(el=>el.hidden));
   pass('Hero title and enter button visible',await shown('#enter-workspace') && await shown('h1'));
   const cuiLoaded = await page.locator('.agent-image').evaluate(img => img.complete && img.naturalWidth===1211 && img.naturalHeight===1479 && img.currentSrc.includes('/assets/cui-agent-4.png'));
   const transparency = cuiLoaded ? await page.locator('.agent-image').evaluate(img => {
@@ -162,6 +206,26 @@ try{
     return r.top>=c.bottom||r.bottom<=c.top||r.right<=c.left||r.left>=c.right;
   }));
   await page.screenshot({path:path.join(output,'06-mobile-390x844.png')});
+  await page.locator('#cui-agent-trigger').click();
+  pass('Mobile CUI panel fits viewport without overflow',await page.locator('#cui-agent-panel').evaluate(el=>{const r=el.getBoundingClientRect();return el.open && r.left>=0&&r.right<=innerWidth&&r.top>=0&&r.bottom<=innerHeight&&document.documentElement.scrollWidth<=innerWidth}));
+  await page.screenshot({path:path.join(output,'09-cui-panel-390x844.png')});
+  await page.locator('#cui-meet-liya').click();
+  pass('Mobile introduction is readable and internally scrollable',await page.locator('#cui-liya-intro').isVisible() && await page.locator('#cui-agent-panel').evaluate(el=>el.scrollHeight>=el.clientHeight&&el.getBoundingClientRect().bottom<=innerHeight));
+  await page.keyboard.press('Escape');
+  pass('Mobile Escape restores CUI focus',await page.evaluate(()=>!document.getElementById('cui-agent-panel').open&&document.activeElement.id==='cui-agent-trigger'));
+  await page.locator('#cui-agent-trigger').click();
+  await page.locator('#cui-view-projects').click();
+  await page.waitForFunction(()=>document.body.dataset.transition==='idle');
+  pass('Mobile agent project navigation works',await shown('#cui-test-workspace')&&await page.locator('#cui-agent-panel').evaluate(el=>!el.open));
+  await page.goBack();
+  await page.waitForFunction(()=>document.body.dataset.transition==='idle'&&!document.body.classList.contains('cui-test-active'));
+  pass('Mobile browser Back remains quiet',await page.locator('#cui-welcome').evaluate(el=>el.hidden));
+  const freshContext=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:1});
+  const freshPage=await freshContext.newPage();
+  await freshPage.goto(base+'/',{waitUntil:'networkidle'});
+  pass('Fresh mobile session shows welcome',await freshPage.locator('#cui-welcome').isVisible());
+  await freshPage.screenshot({path:path.join(output,'10-cui-welcome-390x844.png')});
+  await freshContext.close();
 
 } catch (e){
   results.push(e.stack||String(e));
