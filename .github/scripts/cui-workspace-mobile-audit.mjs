@@ -18,7 +18,7 @@ const browser=await chromium.launch({headless:true}),context=await browser.newCo
 const page=await context.newPage(),results=[],errors=[];
 page.on('pageerror',e=>errors.push(e.message));
 function check(name,ok,detail){results.push({name,ok,detail});console.log((ok?'PASS ':'ISSUE ')+name+(detail?' '+JSON.stringify(detail):''))}
-const shot=name=>page.screenshot({path:path.join(output,name+'.png')});
+const shot=async name=>{await page.waitForTimeout(950);return page.screenshot({path:path.join(output,name+'.png')})};
 const idle=()=>page.waitForFunction(()=>document.body.dataset.transition==='idle');
 const infoTitle=()=>page.locator('#workspace-info-title').innerText();
 async function geometry(selector){return page.locator(selector).evaluate(el=>{
