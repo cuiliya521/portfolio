@@ -20,6 +20,8 @@ jobs:
           npm install --no-save --no-package-lock playwright@1.56.1
           npx playwright install --with-deps chromium
       - name: Test actual branch in Chromium at 1440x900
+        env:
+          CUI_TEST_URL: https://portfolio-5t30gknay-2597890005-5863s-projects.vercel.app
         run: node .github/scripts/cui-desktop-smoke.mjs
       - name: Save real browser screenshots and results
         if: always()
