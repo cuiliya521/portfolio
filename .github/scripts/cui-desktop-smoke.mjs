@@ -42,7 +42,15 @@ try{
     const corner=(x,y)=>ctx.getImageData(x,y,1,1).data[3];
     const rect=img.getBoundingClientRect(),heading=document.querySelector('h1').getBoundingClientRect();
     const viewOk=rect.left>=0 && rect.right<=innerWidth && rect.top>=0 && rect.bottom<=innerHeight;
-    const noHeadingOverlap=rect.right<=heading.left || rect.left>=heading.right || rect.bottom<=heading.top || rect.top>=heading.bottom;
+    // Compare actual title text ink areas, not the container's empty left margin.
+    const walker=document.createTreeWalker(document.querySelector('h1'),NodeFilter.SHOW_TEXT);
+    const headingTextBounds=[];
+    while(walker.nextNode()){
+      if(!walker.currentNode.textContent.trim())continue;
+      const range=document.createRange();range.selectNodeContents(walker.currentNode);
+      headingTextBounds.push(...range.getClientRects());
+    }
+    const noHeadingOverlap=headingTextBounds.every(h=>rect.right<=h.left || rect.left>=h.right || rect.bottom<=h.top || rect.top>=h.bottom);
     const renderedAspect=rect.width/rect.height;
     const correctAspect=Math.abs(renderedAspect-(1211/1479))<0.02;
     return {size:[c.width,c.height],cornerAlpha:[corner(0,0),corner(c.width-1,0),corner(0,c.height-1),corner(c.width-1,c.height-1)],centerAlpha:corner(Math.round(c.width/2),Math.round(c.height/2)),viewOk,noHeadingOverlap,correctAspect,renderedBounds:{x:rect.x,y:rect.y,width:rect.width,height:rect.height}};
