@@ -154,8 +154,13 @@ try{
   pass('Hero keyboard entry reaches existing Workspace',await shown('#cui-test-workspace'));
   await page.goto(base+'/',{waitUntil:'networkidle'});
   await page.setViewportSize({width:390,height:844});
+  await page.waitForTimeout(1100); // Let the existing CUI position transition settle after resizing.
   pass('Mobile has no horizontal overflow',await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
   pass('Mobile entry controls remain in viewport',await page.locator('#enter-workspace,#hero-view-projects').evaluateAll(nodes=>nodes.every(el=>{const r=el.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth&&r.top>=0&&r.bottom<=innerHeight})));
+  pass('Mobile character does not overlap Hero copy',await page.locator('.agent-image').evaluate(img=>{
+    const r=img.getBoundingClientRect(),c=document.querySelector('.hero .copy').getBoundingClientRect();
+    return r.top>=c.bottom||r.bottom<=c.top||r.right<=c.left||r.left>=c.right;
+  }));
   await page.screenshot({path:path.join(output,'06-mobile-390x844.png')});
 
 } catch (e){
