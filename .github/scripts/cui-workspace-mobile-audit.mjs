@@ -96,5 +96,6 @@ try{
 finally{
  await fs.writeFile(path.join(output,'mobile-audit.json'),JSON.stringify(results,null,2));
  await fs.writeFile(path.join(output,'mobile-audit.txt'),results.map(r=>(r.ok?'PASS ':'ISSUE ')+r.name+(r.detail?' '+JSON.stringify(r.detail):'')).join('\n'));
+ if(results.some(r=>!r.ok)) process.exitCode=1;
  await browser.close();server.close();
 }

@@ -68,5 +68,5 @@ body[data-transition="running"] .agent-wrap.in-workspace .bubble{opacity:0}
 @media(max-width:700px){
  .scene-steps{width:max-content;max-width:calc(100% - 28px);box-sizing:border-box}
  .scene-step{flex-shrink:0;white-space:nowrap}
- .scene-next{bottom:82px}
+ .pangu-scene .scene-next{bottom:64px}
 }
