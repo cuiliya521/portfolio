@@ -13,7 +13,7 @@
 .pangu-r1-window{position:absolute;left:26%;top:8.5%;width:70.5%;height:85%;margin:0;padding:13px;box-sizing:border-box;border:2px solid #fffef6;border-radius:25px;background:#fffff68c;box-shadow:0 15px 35px #4a674329,0 0 16px #f2daa362,inset 0 0 15px #fff9;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .pangu-r1-window img{display:block;width:100%;height:100%;object-fit:contain;border-radius:12px}
 .pangu-r1-window figcaption{position:absolute;bottom:2px;right:20px;color:#69796d;font:10px/1 system-ui,sans-serif;background:#fffc;pointer-events:none}
-.agent-wrap.in-workspace.in-project{visibility:visible;left:.7vw;right:auto;top:41vh;bottom:auto;width:25.2vw;transform:none;z-index:111;pointer-events:none}
+.agent-wrap.in-workspace.in-project{visibility:visible;left:.7vw;right:auto;top:47vh;bottom:auto;width:24vw;transform:none;z-index:111;pointer-events:none}
 .agent-wrap.in-project .agent-image{transform:none;animation:none;filter:drop-shadow(0 8px 12px #8a7c4e22)}
 .agent-wrap.in-project .bubble{display:none}
 @media(max-width:700px){
