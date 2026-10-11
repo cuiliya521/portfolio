@@ -6,3 +6,5 @@
 - background: existing assets/workspace-v6/background.png, byte-identical to CUI_图二_纯背景_轻推进.png.
 - Visual reference: Library 盘古智绘夏日创作工作台.png. Not used as page background or clickable overlay.
 R1 navigation is static; screenshot is an image, not an online image-generation product.
+
+Refinement: brand-mark.png is extracted from the supplied frozen reference blue brand symbol, without redrawing. CUI black-contaminated edge RGB is decontaminated only within 3 pixels of the Alpha boundary; all interior RGB pixels remain unchanged. This does not recreate missing artist Alpha. The original product JPEG remains byte-identical. Original viewer is an image viewer, not R2 product interaction.

@@ -182,6 +182,8 @@ try{
   pass('R1 original complete product screenshot loaded',await page.locator('#pangu-r1-product').evaluate(img=>img.complete&&img.naturalWidth===1536&&getComputedStyle(img).objectFit==='contain'));
   pass('Single CUI uses fixed pointing material',await page.locator('.agent-image').getAttribute('src')==='assets/pangu-r1/cui-pointing.png');
   pass('R1 exploration is static without fake buttons',await page.locator('.pangu-r1-aside button').count()===0);
+  pass('Frozen blue brand mark loads and title uses sans serif',await page.locator('.pangu-brand-mark').evaluate(img=>img.complete&&img.naturalWidth===93)&&await page.locator('.pangu-r1-aside h2').evaluate(el=>!getComputedStyle(el).fontFamily.includes('H3Serif')));
+  pass('Glass window follows screenshot height with no oversized vertical letterbox',await page.locator('.pangu-r1-window').evaluate(el=>{const r=el.getBoundingClientRect(),i=el.querySelector('#pangu-r1-product').getBoundingClientRect();return r.height-i.height<65&&Math.abs(i.width/i.height-1.5)<0.01;}));
   await page.waitForTimeout(950);
   await page.screenshot({path:path.join(output,'03-pangu-window-1440x900.png')});
   await page.locator('#scene-back').click();
@@ -294,6 +296,19 @@ try{
   pass('R1 mobile has no horizontal overflow',await freshPage.evaluate(()=>document.documentElement.scrollWidth<=innerWidth&&document.getElementById('pangu-scene').scrollWidth<=innerWidth));
   pass('R1 mobile contains one locked CUI',await freshPage.locator('.agent-image').count()===1&&await freshPage.locator('.agent-image').getAttribute('src')==='assets/pangu-r1/cui-pointing.png');
   await freshPage.screenshot({path:path.join(output,'12-pangu-r1-390x844.png')});
+  await freshPage.locator('#pangu-original-open').click();
+  pass('Mobile image opens real original viewer',await freshPage.locator('#pangu-original-viewer').evaluate(el=>el.open));
+  pass('Viewer uses the unchanged original at native resolution',await freshPage.locator('.pangu-original-scroll img').evaluate(img=>img.naturalWidth===1536&&img.getBoundingClientRect().width===1536&&img.currentSrc.endsWith('/assets/pangu-r1/product-source.jpg')));
+  await freshPage.locator('.pangu-original-scroll').evaluate(el=>{el.scrollLeft=260;el.scrollTop=80;});
+  pass('Original viewer permits horizontal and vertical inspection',await freshPage.locator('.pangu-original-scroll').evaluate(el=>el.scrollLeft>0&&el.scrollTop>0));
+  await freshPage.screenshot({path:path.join(output,'13-pangu-original-viewer-390x844.png')});
+  await freshPage.locator('#pangu-original-fit').click();
+  pass('Fit view preserves original aspect ratio',await freshPage.locator('.pangu-original-scroll img').evaluate(img=>{const r=img.getBoundingClientRect();return Math.abs(r.width/r.height-1.5)<0.01&&r.width<=390;}));
+  await freshPage.keyboard.press('Escape');
+  pass('Viewer Escape closes only viewer and restores its opener',await freshPage.evaluate(()=>!document.getElementById('pangu-original-viewer').open&&location.hash==='#cui-pangu'&&document.activeElement.id==='pangu-original-open'));
+  await freshPage.locator('#pangu-source-open').click();
+  await freshPage.locator('#pangu-original-close').click();
+  pass('Original viewer close button leaves no overlay and restores focus',await freshPage.evaluate(()=>!document.getElementById('pangu-original-viewer').open&&document.activeElement.id==='pangu-source-open'));
   await freshPage.locator('#scene-back').click();
   pass('R1 mobile return restores Workspace',await freshPage.locator('#cui-test-workspace').isVisible());
   await freshContext.close();
