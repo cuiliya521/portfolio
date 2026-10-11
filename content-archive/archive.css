@@ -87,3 +87,9 @@ button{font:inherit;cursor:pointer;color:inherit}button:focus-visible{outline:2p
 .reader::backdrop{background:transparent}
 .cover-button img,.next-preview img{object-fit:contain}
 @media(max-width:760px){.workspace-back{font-size:10px}.brand{gap:5px;font-size:7px}.brand strong{font-size:14px}.reader{height:100dvh}.reader-view img{margin:0 auto}.reader-footer{padding-bottom:max(16px,env(safe-area-inset-bottom))}}
+
+/* One full original image moves from the cropped archive to the reading surface. */
+.archive-flight{position:fixed;z-index:10;overflow:hidden;pointer-events:none;transform-origin:center;border-radius:4px;box-shadow:0 17px 34px rgba(0,0,0,.18);will-change:left,top,width,height,transform}
+.archive-flight img{display:block;height:100%;width:auto;max-width:none;max-height:none}
+.reader[data-motion] .reader-view{background:transparent}
+.reader[data-motion] .reader-tabs{pointer-events:none}

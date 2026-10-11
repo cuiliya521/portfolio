@@ -35,7 +35,7 @@ try{
     await p.locator('#nextCase').click();await ready(p);
     check(suffix+' green case and folio update',(await p.locator('#metric').innerText())==='最高曝光'&&(await p.locator('.cover-folio').innerText()).includes('02'));
     await p.evaluate(()=>scrollTo(0,0));await shot(p,'03-green-'+suffix,width<761);
-    await p.locator('#mainCoverButton').focus();await p.keyboard.press('Enter');
+    await p.locator('#mainCoverButton').focus();await p.keyboard.press('Enter');await p.waitForFunction(()=>document.getElementById('reader').open&&!document.getElementById('reader').dataset.motion);
     check(suffix+' Enter opens native reader',await p.locator('#reader').evaluate(e=>e.open));
     await p.getByRole('button',{name:'正文与互动',exact:true}).click();
     await shot(p,'04-green-text-'+suffix);
@@ -43,16 +43,16 @@ try{
     await p.locator('#zoomReader').click();
     check(suffix+' zoom enabled',await p.locator('#zoomReader').getAttribute('aria-pressed')==='true');
     if(width<761)check(suffix+' zoom can scroll horizontally',await p.locator('#readerView').evaluate(e=>e.scrollWidth>e.clientWidth));
-    await p.keyboard.press('Escape');
+    await p.keyboard.press('Escape');await p.waitForFunction(()=>!document.getElementById('reader').open);
     check(suffix+' Escape closes reader and restores focus',await p.locator('#reader').evaluate(e=>!e.open)&&await p.locator('#mainCoverButton').evaluate(e=>e===document.activeElement));
     await p.locator('#nextCase').click();
     check(suffix+' switch back restores yellow',await p.locator('#metric').innerText()==='680+');
-    await p.locator('#cuiGuide').click();await p.getByRole('button',{name:'正文与互动',exact:true}).click();
+    await p.locator('#cuiGuide').click();await p.waitForFunction(()=>document.getElementById('reader').open&&!document.getElementById('reader').dataset.motion);await p.getByRole('button',{name:'正文与互动',exact:true}).click();
     await shot(p,'05-yellow-text-'+suffix);
     await p.getByRole('button',{name:'完整原图',exact:true}).click();
     await shot(p,'06-yellow-original-'+suffix);
     check(suffix+' real yellow full source',await p.locator('#readerImage').getAttribute('src')==='assets/yellow_note_redacted.png');
-    await p.locator('#closeReader').click();
+    await p.locator('#closeReader').click();await p.waitForFunction(()=>!document.getElementById('reader').open);
     check(suffix+' close returns focus to guide',await p.locator('#cuiGuide').evaluate(e=>e===document.activeElement));
     await p.locator('#workspaceBack').click();await p.waitForURL('**/#cui-workspace');
     check(suffix+' return to real Workspace',await p.locator('#test-xhs').isVisible());
