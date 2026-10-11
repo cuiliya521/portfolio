@@ -23,6 +23,7 @@ jobs:
         run: |
           node .github/scripts/content-archive-r12.mjs
           node .github/scripts/content-archive-motion.mjs
+          node .github/scripts/content-archive-analysis.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:

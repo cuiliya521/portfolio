@@ -1,4 +1,4 @@
-/* R12 A: two real notes and an accessible image reader. No analysis simulation. */
+/* R12: real notes, continuous reading and optional evidence-based CUI guidance. */
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
@@ -9,6 +9,39 @@
   let current = 0, restoreFocus;
   const reader = $('reader');
   const tabs = [...document.querySelectorAll('.reader-tab')];
+  const cui=document.querySelector('img.cui'),cuiHome=cui.parentElement,cuiSibling=cui.nextSibling;
+  const analysisSteps=[...document.querySelectorAll('[data-step]')];
+  const guidance=[
+    {title:'谁需要这份辅导？',copy:'从封面看，笔记面向数理基础薄弱的学员，用「点对点定制」回应针对性辅导的需求。',boundary:'依据笔记表达拆解，不代替用户调研结论。',view:'cover',evidence:'看真实封面 ↗'},
+    {title:'把服务说具体。',copy:'封面突出「点对点定制」「66元/课时」；正文再补充教学方式，让访客继续了解服务。',boundary:'原始表达保留在截图中，没有改写或补造承诺。',view:'text',evidence:'看真实正文与互动 ↗'},
+    {title:'回到这篇笔记的成果。',copy:'A 态中的 680+，对应的就是当前这篇黄色笔记。它是单篇留资成果，不是截图中的点赞或评论数。',boundary:'采用已确认的业务口径；不能仅凭这张截图认定某句文案带来了留资。',view:'full',evidence:'回看这篇完整笔记 ↗'}
+  ];
+  let analysisStep=0;
+  function selectAnalysis(step){
+    analysisStep=step;const a=guidance[step];
+    $('analysisCount').textContent=`0${step+1} / 03`;
+    $('analysisTitle').textContent=a.title;$('analysisCopy').textContent=a.copy;
+    $('analysisBoundary').textContent=a.boundary;
+    $('analysisResult').hidden=step!==2;
+    $('analysisEvidence').textContent=a.evidence;
+    $('analysisNext').textContent=step===2?'完成 · 继续阅读':'下一步 →';
+    analysisSteps.forEach(el=>el.setAttribute('aria-pressed',String(Number(el.dataset.step)===step)));
+  }
+  function endAnalysis(restore=false){
+    $('noteAnalysis').hidden=true;$('readerBox').classList.remove('guide-active');
+    $('startAnalysis').setAttribute('aria-expanded','false');
+    cuiHome.insertBefore(cui,cuiSibling);cui.classList.remove('reader-cui');
+    if(restore)$('startAnalysis').focus({preventScroll:true});
+  }
+  function startAnalysis(){
+    if(phase!=='open'||current!==0)return;
+    if(!$('noteAnalysis').hidden){endAnalysis(true);return;}
+    selectAnalysis(0);$('noteAnalysis').hidden=false;
+    $('readerBox').classList.add('guide-active');
+    $('startAnalysis').setAttribute('aria-expanded','true');
+    $('analysisCharacter').append(cui);cui.classList.add('reader-cui');
+    analysisSteps[0].focus({preventScroll:true});
+  }
   function paint() {
     const a=cases[current], b=cases[1-current], n=current+1, j=2-current;
     $('mainCover').src='assets/'+a.cover;
@@ -83,6 +116,7 @@
     const initial=coverGeometry();
     try{await decode('assets/'+cases[current].full);}catch{phase='closed';return;}
     $('readerTitle').textContent=`CASE 0${current+1} · ${cases[current].file}`;
+    endAnalysis();$('startAnalysis').hidden=current!==0;
     activeView=innerWidth<=760?'cover':'full';setView(activeView);
     await $('readerImage').decode();
     reader.showModal();document.body.style.overflow='hidden';
@@ -102,16 +136,22 @@
     activeView=innerWidth<=760?'cover':'full';
     setView(activeView);await $('readerImage').decode();
     const start=$('readerImage').getBoundingClientRect(),target=coverGeometry();
+    endAnalysis();
     await fly(start,target,true);
     reader.close();$('mainCover').style.visibility='';phase='closed';
   }
   $('mainCoverButton').addEventListener('click',showReader);
+  $('startAnalysis').addEventListener('click',startAnalysis);
+  analysisSteps.forEach(el=>el.addEventListener('click',()=>{if(phase==='open')selectAnalysis(Number(el.dataset.step))}));
+  $('analysisEvidence').addEventListener('click',()=>{if(phase==='open'){activeView=guidance[analysisStep].view;setView(activeView)}});
+  $('analysisNext').addEventListener('click',()=>{if(phase==='open'){if(analysisStep===2)endAnalysis(true);else selectAnalysis(analysisStep+1)}});
+  $('skipAnalysis').addEventListener('click',()=>endAnalysis(true));
   $('cuiGuide').addEventListener('click',showReader);
   $('nextCase').addEventListener('click',()=>{current=1-current;paint()});
   $('closeReader').addEventListener('click',hideReader);
   reader.addEventListener('cancel',e=>{e.preventDefault();hideReader()});
   reader.addEventListener('click',e=>{if(e.target===reader)hideReader()});
-  reader.addEventListener('close',()=>{document.body.style.overflow='';$('mainCover').style.visibility='';phase='closed';restoreFocus?.focus({preventScroll:true})});
+  reader.addEventListener('close',()=>{endAnalysis();document.body.style.overflow='';$('mainCover').style.visibility='';phase='closed';restoreFocus?.focus({preventScroll:true})});
   window.addEventListener('resize',()=>flightAnimation?.finish());
   tabs.forEach(el=>el.addEventListener('click',()=>{if(phase==='open'){activeView=el.dataset.view;setView(activeView)}}));
   $('zoomReader').addEventListener('click',()=>{
