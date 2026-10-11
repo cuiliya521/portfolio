@@ -288,6 +288,14 @@ try{
   await freshPage.goBack();
   await freshPage.waitForFunction(()=>document.body.dataset.transition==='idle'&&!document.body.classList.contains('cui-test-active'));
   pass('Fast mobile exit and browser return do not replay welcome',await freshPage.locator('#cui-welcome').evaluate(el=>el.hidden));
+  await freshPage.goto(base+'/#cui-pangu',{waitUntil:'networkidle'});
+  await freshPage.waitForTimeout(1100);
+  pass('R1 mobile complete product image loaded',await freshPage.locator('#pangu-r1-product').evaluate(img=>img.complete&&img.naturalWidth===1536&&getComputedStyle(img).objectFit==='contain'));
+  pass('R1 mobile has no horizontal overflow',await freshPage.evaluate(()=>document.documentElement.scrollWidth<=innerWidth&&document.getElementById('pangu-scene').scrollWidth<=innerWidth));
+  pass('R1 mobile contains one locked CUI',await freshPage.locator('.agent-image').count()===1&&await freshPage.locator('.agent-image').getAttribute('src')==='assets/pangu-r1/cui-pointing.png');
+  await freshPage.screenshot({path:path.join(output,'12-pangu-r1-390x844.png')});
+  await freshPage.locator('#scene-back').click();
+  pass('R1 mobile return restores Workspace',await freshPage.locator('#cui-test-workspace').isVisible());
   await freshContext.close();
   pass('No browser JavaScript errors after all simplified interactions',errors.length===0);
 
