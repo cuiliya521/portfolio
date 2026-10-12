@@ -48,7 +48,7 @@ a.crumb{text-decoration:none}
 a.crumb:focus-visible{outline:2px solid var(--gold);outline-offset:5px}
 .mobile-route{display:none}
 @media(min-width:741px) and (max-width:1439px){
- .scene{margin:0;transform:scale(calc(100vw / 1440));transform-origin:top left}
+ .scene{margin:0;zoom:calc(100vw / 1440px)}
  body{height:calc(100vw * 900 / 1440);min-height:100vh}
 }
 @media(max-width:740px){

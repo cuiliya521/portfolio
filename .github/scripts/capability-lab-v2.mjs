@@ -58,6 +58,10 @@ try{
   if(width===1440){await p.goto(base+'/.github/fixtures/fig6-v2-reference.html');await ready(p);await p.screenshot({path:path.join(out,'05-source-V2-1440x900.png')})}
   await c.close();
  }
+ const compact=await browser.newContext({viewport:{width:1363,height:936}}),compactPage=await compact.newPage();
+ await compactPage.goto(base+'/capability-lab/');await ready(compactPage);
+ check('1363px desktop scales full frozen composition into viewport',await compactPage.locator('.scene').evaluate(e=>e.getBoundingClientRect().right<=innerWidth+1)&&await compactPage.locator('.s3').evaluate(e=>e.getBoundingClientRect().right<=innerWidth+1));
+ await compactPage.screenshot({path:path.join(out,'06-lab-1363x936.png')});await compact.close();
  check('No JavaScript errors in navigation',errors.length===0);
  check('No failed local asset or page responses',badResources.length===0);
 }catch(e){results.push(String(e));throw e}finally{
