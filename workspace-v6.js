@@ -37,7 +37,14 @@
   about:['关于我','<p>崔丽娅 · 2027 届本科生 · AI 产品运营方向</p><p>华北理工大学轻工学院，学前教育专业。</p>'],
   contact:['联系我','<p><a href="mailto:3104306958@qq.com">3104306958@qq.com</a></p><p><a href="https://github.com/cuiliya521" target="_blank" rel="noreferrer">GitHub · cuiliya521 ↗</a></p>']
  };
+ // Fig.07 return restores the actual navigation invoker after the existing controller settles.
+ const fig7Return = sessionStorage.getItem('cui-fig7-return');
+ if (fig7Return && location.hash === '#cui-workspace') {
+  sessionStorage.removeItem('cui-fig7-return');
+  setTimeout(() => document.querySelector('[data-workspace-info="'+fig7Return+'"]')?.focus({preventScroll:true}),600);
+ }
  function show(key,button){
+  if(key==='about'||key==='contact'){sessionStorage.setItem('cui-fig7-return',key);location.assign('about-contact/');return;}
   if(key==='xhs'){location.assign('content-archive/');return;}
   if(key==='noteguard'){location.assign('noteguard-case/');return;}
   if(key==='skills'){location.assign('capability-lab/');return;}
