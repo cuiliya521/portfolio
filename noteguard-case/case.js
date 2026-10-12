@@ -14,5 +14,10 @@ tabs.forEach((tab,i)=>{tab.addEventListener('click',()=>select(tab.dataset.stage
 const decisions={edit:['c-edit.png','修改后采用真实确认弹窗','真实产品截图 · 编辑后采用'],adopt:['c-adopt.png','直接采用后保存独立最终稿的真实产品记录','真实产品截图 · 已确认采用记录'],reject:['c-reject.png','拒绝建议后保留原文的真实产品记录','真实产品截图 · 拒绝建议记录']};
 document.querySelectorAll('[data-decision]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-decision]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));const [src,alt,caption]=decisions[b.dataset.decision];const img=document.getElementById('decisionImage');img.src='assets/'+src;img.alt=alt;document.getElementById('decisionCaption').textContent=caption;}));
 const back=document.getElementById('workspaceBack');back.addEventListener('click',e=>{if(document.referrer&&new URL(document.referrer).origin===location.origin&&new URL(document.referrer).pathname==='/'&&history.length>1){e.preventDefault();history.back();}});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();back.click();}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!document.getElementById('evidenceViewer').open){e.preventDefault();back.click();}});
 select(location.hash.slice(1));
+
+const viewer=document.getElementById('evidenceViewer'),expanded=document.getElementById('expandedEvidence');let imageTrigger;
+function openEvidence(img){imageTrigger=img;expanded.src=img.src;expanded.alt=img.alt;viewer.showModal();document.getElementById('closeEvidence').focus();}
+document.querySelectorAll('.image-frame img').forEach(img=>{img.tabIndex=0;img.setAttribute('role','button');img.title='点击或按 Enter 查看原尺寸真实截图';img.addEventListener('click',()=>openEvidence(img));img.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openEvidence(img);}});});
+document.getElementById('closeEvidence').addEventListener('click',()=>viewer.close());viewer.addEventListener('close',()=>imageTrigger?.focus({preventScroll:true}));
