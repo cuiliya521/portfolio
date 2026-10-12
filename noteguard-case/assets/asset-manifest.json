@@ -1,0 +1,128 @@
+{
+  "crops": {
+    "b-draft.png": [
+      "ng-release-draft.jpg",
+      [
+        212,
+        184,
+        936,
+        835
+      ]
+    ],
+    "c-edit.png": [
+      "ng-release-edit.jpg",
+      [
+        347,
+        226,
+        1007,
+        774
+      ]
+    ],
+    "c-adopt.png": [
+      "ng-release-edit-adopted.jpg",
+      [
+        212,
+        184,
+        1327,
+        731
+      ]
+    ],
+    "c-reject.png": [
+      "ng-release-rejected.jpg",
+      [
+        958,
+        122,
+        1327,
+        731
+      ]
+    ],
+    "d-final.png": [
+      "ng-release-final-clean.jpg",
+      [
+        212,
+        184,
+        936,
+        731
+      ]
+    ],
+    "d-result.png": [
+      "ng-release-final-clean.jpg",
+      [
+        958,
+        122,
+        1327,
+        695
+      ]
+    ]
+  },
+  "files": [
+    {
+      "file": "ng-release-edit.jpg",
+      "sha256": "f4296d71cdf26244df423c16548f37d8fb75d103f00909993482da99b08b62bb"
+    },
+    {
+      "file": "ng-release-draft.jpg",
+      "sha256": "e06c4abf96f913d08e624c35d91cc3708dd4543dfc07969f3543338d53a81f0f"
+    },
+    {
+      "file": "CUI_图五_托下巴_分镜B像素提取_非原始.png",
+      "sha256": "dbf491a0f6cf758cece8a3f9cff0f608ff7e4c709bec8596a72c90652ffc146a"
+    },
+    {
+      "file": "d-final.png",
+      "sha256": "08769a7fa8e022d44c6f313637e559c3d2bc5acdb03781af809e17094ddf12a8"
+    },
+    {
+      "file": "NoteGuard_A_审核原文_原像素裁切.png",
+      "sha256": "be09b965b2a3125088787466bec0dac33a2e1d14d7b9e171949e60874a7731ce"
+    },
+    {
+      "file": "c-reject.png",
+      "sha256": "954c2c2deaf87cd8feb57a5d31f7c6e99438ac33718d8fe8271c96b09c883820"
+    },
+    {
+      "file": "b-draft.png",
+      "sha256": "fe6038d3041b83bf998557eeb380e99b22380c1a667e3b7df0c61c7bacdb96d1"
+    },
+    {
+      "file": "ng-release-edit-adopted.jpg",
+      "sha256": "464665899569d50c0142acd1ae618b280056966bc92a39d587bf99cfb72cd648"
+    },
+    {
+      "file": "c-adopt.png",
+      "sha256": "f76491259c2b2640dae19e8c51c13ea41cbfde29f672549ab71a90bddb0844fe"
+    },
+    {
+      "file": "d-result.png",
+      "sha256": "6358ec2ab578215ff655a34b6cec8aee286099479723b14129b966cfc016d73d"
+    },
+    {
+      "file": "NoteGuard-serif.woff",
+      "sha256": "2251ead034a428f16213035d6f1a1554d0b15a6544c5be6a8cf95d6fc7ff2c4e"
+    },
+    {
+      "file": "ng-release-original.jpg",
+      "sha256": "758fe0c74c6a98b8a1569377275c86782278d2fb2126568aef0bfbeed4fdb870"
+    },
+    {
+      "file": "NoteGuard-sans.woff",
+      "sha256": "444503caea7bd0639714144b52a2b85ae51c8c759003b85e7db250c7aee22e0e"
+    },
+    {
+      "file": "NoteGuard_A_风险解释_原像素裁切.png",
+      "sha256": "15d35799fb8b8bbb12673a3d1ceb3622b8960af1af949e8a7116e45d6f630b0e"
+    },
+    {
+      "file": "c-edit.png",
+      "sha256": "8ef0e7f165d5d901ce861e9046f4f4502e6ec7c81715a345fc110ca215381391"
+    },
+    {
+      "file": "ng-release-final-clean.jpg",
+      "sha256": "c8ce065f4b109e00f6bedfb798fd0e272e31042e00dfc5a701dbacc3c869d39d"
+    },
+    {
+      "file": "ng-release-rejected.jpg",
+      "sha256": "d25d45f955a1e4d9d883e5f39e81d07c7b67a9fe566409b43aae8424bd3a7ea7"
+    }
+  ]
+}
