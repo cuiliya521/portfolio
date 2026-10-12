@@ -37,17 +37,52 @@
   about:['关于我','<p>崔丽娅 · 2027 届本科生 · AI 产品运营方向</p><p>华北理工大学轻工学院，学前教育专业。</p>'],
   contact:['联系我','<p><a href="mailto:3104306958@qq.com">3104306958@qq.com</a></p><p><a href="https://github.com/cuiliya521" target="_blank" rel="noreferrer">GitHub · cuiliya521 ↗</a></p>']
  };
- // Fig.07 return restores the actual navigation invoker after the existing controller settles.
- const fig7Return = sessionStorage.getItem('cui-fig7-return');
- if (fig7Return && location.hash === '#cui-workspace') {
-  sessionStorage.removeItem('cui-fig7-return');
-  setTimeout(() => document.querySelector('[data-workspace-info="'+fig7Return+'"]')?.focus({preventScroll:true}),600);
+ // Each real Workspace entry gets a stable, distinct return target (including both Contact buttons).
+ const returnKey = 'cui-workspace-return-v1';
+ const entries = [...workspace.querySelectorAll('#test-xhs,#test-noteguard,[data-workspace-info]')];
+ entries.forEach((entry,index) => { entry.dataset.cuiReturnId = 'workspace-entry-' + index; });
+ function rememberEntry(button){
+  const entry = entries.includes(button) ? button : invoker;
+  const record = {path:location.pathname,id:entry?.dataset.cuiReturnId || '',scrollTop:workspace.scrollTop};
+  // Keep the originating history entry so Back/Forward can restore it even after another visit.
+  try { history.replaceState({...history.state,cuiWorkspaceReturn:record},'',location.href); } catch {}
+  try { sessionStorage.setItem(returnKey,JSON.stringify(record)); } catch {}
  }
+ function readReturn(){
+  if(history.state?.cuiWorkspaceReturn?.path === location.pathname) return history.state.cuiWorkspaceReturn;
+  try { const record = JSON.parse(sessionStorage.getItem(returnKey));return record?.path === location.pathname ? record : null; } catch {return null;}
+ }
+ let returnObserver,returnFrame;
+ function restoreEntry(){
+  returnObserver?.disconnect();cancelAnimationFrame(returnFrame);
+  if(location.hash !== '#cui-workspace') return;
+  const record = readReturn();
+  const finish = () => {
+   if(location.hash !== '#cui-workspace'){returnObserver?.disconnect();return;}
+   if(workspace.hidden || workspace.inert || document.body.dataset.transition === 'running') return;
+   returnObserver?.disconnect();
+   returnFrame = requestAnimationFrame(() => {
+    if(location.hash !== '#cui-workspace' || workspace.inert || document.querySelector('dialog[open]')) return;
+    const visible = el => el && !el.disabled && !el.closest('[inert]') && el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden';
+    const original = entries.find(entry => entry.dataset.cuiReturnId === record?.id);
+    const target = visible(original) ? original : $('open-test-pangu');
+    if(!visible(target)) return;
+    if(Number.isFinite(record?.scrollTop)) workspace.scrollTop = record.scrollTop;
+    target.focus({preventScroll:true});
+    const rect=target.getBoundingClientRect(),bounds=workspace.getBoundingClientRect();
+    if(rect.top<bounds.top || rect.bottom>bounds.bottom) target.scrollIntoView({block:'nearest',behavior:'auto'});
+   });
+  };
+  returnObserver = new MutationObserver(finish);
+  returnObserver.observe(document.body,{attributes:true,attributeFilter:['data-transition','class']});
+  finish();
+ }
+ // Initial loads and bfcache returns share the same restoration; no navigation is triggered here.
+ window.addEventListener('pageshow',restoreEntry);
+ restoreEntry();
+ const projectRoutes = {xhs:'content-archive/',noteguard:'noteguard-case/',skills:'capability-lab/',about:'about-contact/',contact:'about-contact/'};
  function show(key,button){
-  if(key==='about'||key==='contact'){sessionStorage.setItem('cui-fig7-return',key);location.assign('about-contact/');return;}
-  if(key==='xhs'){location.assign('content-archive/');return;}
-  if(key==='noteguard'){location.assign('noteguard-case/');return;}
-  if(key==='skills'){location.assign('capability-lab/');return;}
+  if(projectRoutes[key]){rememberEntry(button);location.assign(projectRoutes[key]);return;}
   if(!$('pangu-scene').classList.contains('open')) {if(!panel.contains(button)) invoker=button}
   else {invoker=$('open-test-pangu');$('scene-back').click()}
   const [title,body]=content[key];

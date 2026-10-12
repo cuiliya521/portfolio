@@ -132,6 +132,6 @@
   });
 
   const startMode = fromHash();
-  history.replaceState({cuiTestMode:startMode,cuiTestDepth:0},'',location.href);
+  history.replaceState({...history.state,cuiTestMode:startMode,cuiTestDepth:0},'',location.href);
   render(startMode,false);
 })();
