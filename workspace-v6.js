@@ -39,6 +39,7 @@
  };
  function show(key,button){
   if(key==='xhs'){location.assign('content-archive/');return;}
+  if(key==='skills'){location.assign('capability-lab/');return;}
   if(!$('pangu-scene').classList.contains('open')) {if(!panel.contains(button)) invoker=button}
   else {invoker=$('open-test-pangu');$('scene-back').click()}
   const [title,body]=content[key];
