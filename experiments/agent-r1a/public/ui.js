@@ -1,7 +1,7 @@
 import { createInteractionCoordinator } from './interaction-compat.js';
 const $=id=>document.getElementById(id),dialog=$('agent-dialog'),reader=$('reader-dialog');
 let bootstrap=null,active=null,epoch=0,proposal=null,lastRequest=null,navBusy=false,hostEsc=0;
-const errorLabels={request_timeout:'请求超时；没有执行导航。',request_cancelled:'请求已取消。',adapter_unavailable:'模拟 API 不可用；冻结页面仍可访问。',invalid_parameters:'参数不合法。',adapter_contract:'适配器响应不符合契约。',untrusted_adapter_output:'响应事实或引用未通过批准校验。',untrusted_navigation:'导航提议未通过校验。',invalid_navigation:'非法导航目标已阻止。',proposal_expired:'提议已过期，未导航。',proposal_used:'提议已使用或拒绝，未重复导航。',request_busy:'已有请求正在执行。',duplicate_request:'重复请求已阻止。'};
+const errorLabels={budget_halted:'预算账本已熔断；无确认用量的请求不得继续。',budget_exhausted:'请求数或预算达到上限，已停止。',usage_unverified:'用量无法验证，已停止后续请求。',provider_unavailable:'模拟供方失败，预算保持保守占用。',provider_contract:'供方响应格式不符合契约。',request_timeout:'请求超时；没有执行导航。',request_cancelled:'请求已取消。',adapter_unavailable:'模拟 API 不可用；冻结页面仍可访问。',invalid_parameters:'参数不合法。',adapter_contract:'适配器响应不符合契约。',untrusted_adapter_output:'响应事实或引用未通过批准校验。',untrusted_navigation:'导航提议未通过校验。',invalid_navigation:'非法导航目标已阻止。',proposal_expired:'提议已过期，未导航。',proposal_used:'提议已使用或拒绝，未重复导航。',request_busy:'已有请求正在执行。',duplicate_request:'重复请求已阻止。'};
 function status(text,error=false){$('request-status').textContent=text;$('request-status').dataset.error=String(error);}
 async function post(path,data,signal){
   const response=await fetch('/__r1a__/'+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...data,csrf:bootstrap.csrf}),signal});
@@ -33,7 +33,7 @@ function render(result){
   if(result.unknown){const p=document.createElement('p');p.textContent=result.message;$('reply').append(p);}
   for(const block of result.blocks){const p=document.createElement('p');p.textContent=block.text;p.dataset.factId=block.factId;$('reply').append(p);}
   for(const source of result.sources){const div=document.createElement('div');div.className='source';div.dataset.sourceId=source.id;const p=document.createElement('p');p.textContent=`${source.id} · ${source.title} · ${source.baseline.slice(0,7)}`;const a=document.createElement('a');a.href=safeSourcePath(source.path);a.textContent='手动查看这份冻结证据';div.append(p,a);$('references').append(div);}
-  $('trace').textContent=JSON.stringify(result.toolTrace,null,2);
+  $('trace').textContent=JSON.stringify({tools:result.toolTrace,budget:result.budget||null},null,2);
   proposal=result.proposal;
   if(proposal){
     const div=document.createElement('div');div.className='proposal';const p=document.createElement('p');p.textContent=`待你确认：${proposal.reason}（${proposal.pageId}${proposal.stage?' / '+proposal.stage:''}）。未确认不会打开。`;
@@ -68,6 +68,7 @@ $('chat-form').addEventListener('submit',async event=>{
 });
 try{
   const response=await fetch('/__r1a__/bootstrap',{cache:'no-store'}),value=await response.json();
-  if(!response.ok||value.mode!=='mock-only'||value.adapter!=='mock-scripted-v1')throw new Error('local_service_required');
+  if(!response.ok||value.mode!=='mock-only'||!['mock-scripted-v1','deepseek-dry-wire-v1'].includes(value.adapter))throw new Error('local_service_required');
   bootstrap=value;$('open-agent').disabled=false;$('boot-status').textContent=`本地 mock 已连接 · ${value.approvedCount}/${value.candidateCount} 候选卡允许检索 · 无模型费用。`;
+  if(value.adapter==='deepseek-dry-wire-v1'){$('boot-status').textContent='B1 DeepSeek 协议模拟已连接，实际模型请求0次；所有费用仅为模拟账本。';$('agent-title').textContent='B1 零费用协议验证';}
 }catch{$('boot-status').textContent='本地实验服务未连接。实验对话保持关闭；未部署后端，也不会调用模型。';}

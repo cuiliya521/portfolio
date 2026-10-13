@@ -6,10 +6,15 @@ import { randomUUID, createHash } from 'node:crypto';
 import { buildKnowledge,createToolbox,exactObject,enumValue,boundedText,issueProposal,decideProposal,ContractError } from './core.mjs';
 import { createAdapter,runAdapter } from './adapters/index.mjs';
 import { FIXTURES } from './adapters/mock.mjs';
+import {createBudget} from './budget.mjs';
+import {createDryWireAdapter} from './adapters/dry-wire.mjs';
+import {tmpdir} from 'node:os';
 
 const here=dirname(fileURLToPath(import.meta.url)),repo=resolve(here,'../..');
 const knowledge=buildKnowledge(JSON.parse(await readFile(resolve(here,'knowledge/candidates.json'),'utf8')),JSON.parse(await readFile(resolve(here,'knowledge/approval-ledger.json'),'utf8')));
-const adapter=createAdapter({mode:process.env.R1A_ADAPTER||'mock'});
+const mode=process.env.R1A_ADAPTER||'mock';
+const dryBudget=mode==='deepseek-dry-wire'?createBudget({path:process.env.R1B_DRY_LEDGER||resolve(tmpdir(),'cui-r1b-dry-'+randomUUID()+'.json')}):null;
+const adapter=dryBudget?createDryWireAdapter({budget:dryBudget}):createAdapter({mode});
 const port=Number(process.env.PORT||4177),origin=`http://127.0.0.1:${port}`;
 const timeoutMs=Number(process.env.R1A_TIMEOUT_MS||5000),ttl=Number(process.env.R1A_PROPOSAL_TTL_MS||60000);
 const sessions=new Map();
@@ -55,7 +60,7 @@ const server=http.createServer(async(req,res)=>{
         session={id:randomUUID(),csrf:randomUUID(),created:Date.now(),requests:new Map(),proposals:new Map(),active:null};sessions.set(session.id,session);
         res.setHeader('Set-Cookie',`r1a_session=${session.id}; HttpOnly; SameSite=Strict; Path=/; Max-Age=3600`);
       }
-      return send(res,200,{mode:'mock-only',adapter:adapter.id,knowledgeVersion:knowledge.version,approvedCount:knowledge.approved.size,candidateCount:knowledge.candidateCount,csrf:session.csrf,timeoutMs});
+      return send(res,200,{mode:'mock-only',adapter:adapter.id,knowledgeVersion:knowledge.version,approvedCount:knowledge.approved.size,candidateCount:knowledge.candidateCount,csrf:session.csrf,timeoutMs,budget:dryBudget?{kind:'simulated',...(await dryBudget.snapshot())}:null});
     }
     if(path.startsWith('/__r1a__/')){
       if(req.method!=='POST')throw new ContractError('method_not_allowed',405);
@@ -78,7 +83,7 @@ const server=http.createServer(async(req,res)=>{
           if(controller.signal.aborted)throw new ContractError('request_cancelled',409);
           const validated=toolbox.validate(reply);
           const proposal=validated.navigation?issueProposal(session,data.requestId,validated.navigation,ttl):null;
-          const response={requestId:data.requestId,mode:'mock-only',adapter:adapter.id,knowledgeVersion:knowledge.version,blocks:validated.blocks,sources:validated.sources,unknown:validated.unknown,message:validated.message,proposal,toolTrace:toolbox.trace};
+          const response={requestId:data.requestId,mode:'mock-only',adapter:adapter.id,knowledgeVersion:knowledge.version,blocks:validated.blocks,sources:validated.sources,unknown:validated.unknown,message:validated.message,proposal,toolTrace:toolbox.trace,budget:dryBudget?{kind:'simulated',...(await dryBudget.snapshot())}:null};
           record.status='done';record.response=response;send(res,200,response);
         }catch(error){record.status=controller.signal.reason==='timeout'?'timeout':controller.signal.aborted?'cancelled':'failed';throw error;}
         finally{clearTimeout(timer);if(session.active?.id===data.requestId)session.active=null;}
