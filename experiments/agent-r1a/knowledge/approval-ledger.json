@@ -1,0 +1,95 @@
+{
+  "baseline": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+  "scope": "冻结公开身份/机制/界面行为，不自动批准业务数字",
+  "approved": {
+    "identity.name": {
+      "digest": "5429ad3b28b7848322fab8918853f0665c4718343a7805ab0021205b70f1ee87",
+      "basis": "accepted_frozen_page_only",
+      "approvalCommit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f"
+    },
+    "identity.role": {
+      "digest": "6baa4298c9f7e0700c0f22352e987f1a97bb95263febec53a1cd8166bd52ba10",
+      "basis": "accepted_frozen_page_only",
+      "approvalCommit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f"
+    },
+    "hero.entry": {
+      "digest": "6fbc313697ac0a80d58513fe0647001df5b2f12b8f1cee8a3591461118fe13b0",
+      "basis": "accepted_frozen_page_only",
+      "approvalCommit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f"
+    },
+    "workspace.routes": {
+      "digest": "f0e26d321aa789b8b2bed6de6e171ee34494b1ceb9591e17dc00e612292cdf94",
+      "basis": "accepted_frozen_page_only",
+      "approvalCommit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f"
+    },
+    "pangu.mechanism": {
+      "digest": "b0fb52322422e9180eaee8d9c814c5e4e5b3e875ca647c15f6f57b301d7fa72d",
+      "basis": "accepted_frozen_page_only",
+      "approvalCommit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f"
+    },
+    "pangu.static": {
+      "digest": "b60fc83c341cd500bd8714e20ed448f4133cf02d2400713a68b08de659ba6926",
+      "basis": "accepted_frozen_page_only",
+      "approvalCommit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f"
+    },
+    "xhs.archives": {
+      "digest": "5846c938f6f95a43bc7c912a21ba30e63d421d77986b71abd44bfd3ebec3b40f",
+      "basis": "accepted_frozen_page_only",
+      "approvalCommit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f"
+    },
+    "ng.workflow": {
+      "digest": "033476540eac1a9e68743cce5982c15866b8f116afcfa277fff502def27876f4",
+      "basis": "accepted_frozen_page_only",
+      "approvalCommit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f"
+    },
+    "ng.independent": {
+      "digest": "c1fef2cea5aebfe63f37346592bdf9cbe62b13560718d0e478729b09690894f0",
+      "basis": "accepted_frozen_page_only",
+      "approvalCommit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f"
+    },
+    "ng.decisions": {
+      "digest": "2079dca8d8b3a1d56026c8553761b2f2f4b6184f40ee10f20b2cc3a0b8d875db",
+      "basis": "accepted_frozen_page_only",
+      "approvalCommit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f"
+    },
+    "ng.boundary": {
+      "digest": "b7c585a4b29f329369e978494c04403c06f69be87d59ea0e6b20324b3abe5818",
+      "basis": "accepted_frozen_page_only",
+      "approvalCommit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f"
+    },
+    "ng.static": {
+      "digest": "17cb86a82879b4b5ad490032fb004c0a55869c82a517888f35bcb42e45e67709",
+      "basis": "accepted_frozen_page_only",
+      "approvalCommit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f"
+    },
+    "capability.path": {
+      "digest": "d067a0245296c884934ba073c773243b73281d9a1c18238df90f0118d3d00d83",
+      "basis": "accepted_frozen_page_only",
+      "approvalCommit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f"
+    },
+    "about.resume": {
+      "digest": "fcc84771f6262cf7f662d475e25399b6edf9305e4c06dc13503b4107a6162e3f",
+      "basis": "accepted_frozen_page_only",
+      "approvalCommit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f"
+    },
+    "about.entries": {
+      "digest": "f8d3f7e83267358a3f0a34f52634924be2a9d94d74eecd40b68a5cfc0c4c994e",
+      "basis": "accepted_frozen_page_only",
+      "approvalCommit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f"
+    },
+    "jiya.scope": {
+      "digest": "39e7f31b75f9ca0e991cdaa74798cff5aee1914cd2595887d9e2d2a26e2aa604",
+      "basis": "accepted_frozen_page_only",
+      "approvalCommit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f"
+    }
+  },
+  "sources": {
+    "SRC-HERO": "aab217172e36f95de2f98c29eb080f42afc587c8c96cde7f82a0a01cff4da45f",
+    "SRC-WORKSPACE": "6c387b634dab899aabfcfa7c18fe5061a3acb3bd54d36e84933c67c69533ecf4",
+    "SRC-PANGU": "174f3ffb3a1698a1d424a4864b5c051ac756cb482bcd1e8a31ed6370613c7d1c",
+    "SRC-XHS": "4347858568d70176d9446db7843db32b78073637931c80d6e619fd1098b436f6",
+    "SRC-NOTEGUARD": "2aea6a8de837183af45389997a0d1f07f6ca06718a2341c67a2e369c0d017ac1",
+    "SRC-CAPABILITY": "9f0c61f890eb28bbbb63d3eb2edbd8975823e8c3a16cc957f7f317dde1dfb115",
+    "SRC-ABOUT": "375edb7aa84650be20fef21aa6c9be7d3f958bb7637a944366293b76710c4cf5"
+  }
+}

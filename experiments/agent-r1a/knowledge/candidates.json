@@ -1,0 +1,479 @@
+{
+  "version": "r1a-knowledge-1",
+  "baseline": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+  "sources": [
+    {
+      "id": "SRC-HERO",
+      "title": "冻结首页进入入口",
+      "path": "/#hero",
+      "baseline": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+      "public": true
+    },
+    {
+      "id": "SRC-WORKSPACE",
+      "title": "冻结工作空间导航",
+      "path": "/#cui-workspace",
+      "baseline": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+      "public": true
+    },
+    {
+      "id": "SRC-PANGU",
+      "title": "盘古真实截图展示",
+      "path": "/#cui-pangu",
+      "baseline": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+      "public": true
+    },
+    {
+      "id": "SRC-XHS",
+      "title": "真实内容档案",
+      "path": "/content-archive/",
+      "baseline": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+      "public": true
+    },
+    {
+      "id": "SRC-NOTEGUARD",
+      "title": "NoteGuard冻结四幕与证据",
+      "path": "/noteguard-case/#c",
+      "baseline": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+      "public": true
+    },
+    {
+      "id": "SRC-CAPABILITY",
+      "title": "冻结能力实验室",
+      "path": "/capability-lab/",
+      "baseline": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+      "public": true
+    },
+    {
+      "id": "SRC-ABOUT",
+      "title": "冻结公开身份与联系界面",
+      "path": "/about-contact/",
+      "baseline": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+      "public": true
+    }
+  ],
+  "facts": [
+    {
+      "id": "identity.name",
+      "projectId": "identity",
+      "topic": "identity",
+      "claim": "作品集主人是崔丽娅。",
+      "sourceId": "SRC-ABOUT",
+      "truthKind": "public_interface_fact",
+      "status": "approved",
+      "public": true,
+      "provenance": {
+        "type": "accepted_frozen_page",
+        "path": "about-contact/index.html",
+        "commit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+        "approvalBasis": "沿用用户已验收冻结页面中的身份、产品机制或界面行为；不批准任何业务指标"
+      },
+      "userConfirmation": "已冻结页面范围内批准；不是对新增业务数字的批准"
+    },
+    {
+      "id": "identity.role",
+      "projectId": "identity",
+      "topic": "identity",
+      "claim": "公开身份是2027届、AI产品运营。",
+      "sourceId": "SRC-ABOUT",
+      "truthKind": "public_interface_fact",
+      "status": "approved",
+      "public": true,
+      "provenance": {
+        "type": "accepted_frozen_page",
+        "path": "about-contact/index.html",
+        "commit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+        "approvalBasis": "沿用用户已验收冻结页面中的身份、产品机制或界面行为；不批准任何业务指标"
+      },
+      "userConfirmation": "已冻结页面范围内批准；不是对新增业务数字的批准"
+    },
+    {
+      "id": "hero.entry",
+      "projectId": "identity",
+      "topic": "status",
+      "claim": "首页提供进入工作空间与直接查看项目的入口。",
+      "sourceId": "SRC-HERO",
+      "truthKind": "public_interface_fact",
+      "status": "approved",
+      "public": true,
+      "provenance": {
+        "type": "accepted_frozen_page",
+        "path": "index.html",
+        "commit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+        "approvalBasis": "沿用用户已验收冻结页面中的身份、产品机制或界面行为；不批准任何业务指标"
+      },
+      "userConfirmation": "已冻结页面范围内批准；不是对新增业务数字的批准"
+    },
+    {
+      "id": "workspace.routes",
+      "projectId": "identity",
+      "topic": "status",
+      "claim": "工作空间可以进入盘古、内容档案、NoteGuard、能力实验室及关于我与联系我。",
+      "sourceId": "SRC-WORKSPACE",
+      "truthKind": "public_interface_fact",
+      "status": "approved",
+      "public": true,
+      "provenance": {
+        "type": "accepted_frozen_page",
+        "path": "workspace-v6.js",
+        "commit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+        "approvalBasis": "沿用用户已验收冻结页面中的身份、产品机制或界面行为；不批准任何业务指标"
+      },
+      "userConfirmation": "已冻结页面范围内批准；不是对新增业务数字的批准"
+    },
+    {
+      "id": "pangu.mechanism",
+      "projectId": "pangu",
+      "topic": "mechanism",
+      "claim": "盘古展示的核心判断是把写Prompt变成选字段。",
+      "sourceId": "SRC-PANGU",
+      "truthKind": "public_interface_fact",
+      "status": "approved",
+      "public": true,
+      "provenance": {
+        "type": "accepted_frozen_page",
+        "path": "index.html",
+        "commit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+        "approvalBasis": "沿用用户已验收冻结页面中的身份、产品机制或界面行为；不批准任何业务指标"
+      },
+      "userConfirmation": "已冻结页面范围内批准；不是对新增业务数字的批准"
+    },
+    {
+      "id": "pangu.static",
+      "projectId": "pangu",
+      "topic": "boundary",
+      "claim": "当前盘古页面提供真实产品截图和原图阅读，不提供在线图片生成。",
+      "sourceId": "SRC-PANGU",
+      "truthKind": "public_interface_fact",
+      "status": "approved",
+      "public": true,
+      "provenance": {
+        "type": "accepted_frozen_page",
+        "path": "pangu-r1.js",
+        "commit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+        "approvalBasis": "沿用用户已验收冻结页面中的身份、产品机制或界面行为；不批准任何业务指标"
+      },
+      "userConfirmation": "已冻结页面范围内批准；不是对新增业务数字的批准"
+    },
+    {
+      "id": "xhs.archives",
+      "projectId": "contentlab",
+      "topic": "mechanism",
+      "claim": "内容档案有黄色和绿色两份真实脱敏案例，可切换并查看原图。",
+      "sourceId": "SRC-XHS",
+      "truthKind": "public_interface_fact",
+      "status": "approved",
+      "public": true,
+      "provenance": {
+        "type": "accepted_frozen_page",
+        "path": "content-archive/archive.js",
+        "commit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+        "approvalBasis": "沿用用户已验收冻结页面中的身份、产品机制或界面行为；不批准任何业务指标"
+      },
+      "userConfirmation": "已冻结页面范围内批准；不是对新增业务数字的批准"
+    },
+    {
+      "id": "ng.workflow",
+      "projectId": "noteguard",
+      "topic": "workflow",
+      "claim": "NoteGuard作品集展示风险识别、独立AI建议、人工决策、采用后复检四阶段。",
+      "sourceId": "SRC-NOTEGUARD",
+      "truthKind": "public_interface_fact",
+      "status": "approved",
+      "public": true,
+      "provenance": {
+        "type": "accepted_frozen_page",
+        "path": "noteguard-case/case.js",
+        "commit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+        "approvalBasis": "沿用用户已验收冻结页面中的身份、产品机制或界面行为；不批准任何业务指标"
+      },
+      "userConfirmation": "已冻结页面范围内批准；不是对新增业务数字的批准"
+    },
+    {
+      "id": "ng.independent",
+      "projectId": "noteguard",
+      "topic": "workflow",
+      "claim": "AI建议稿作为独立候选版本展示，原文不被直接覆盖。",
+      "sourceId": "SRC-NOTEGUARD",
+      "truthKind": "public_interface_fact",
+      "status": "approved",
+      "public": true,
+      "provenance": {
+        "type": "accepted_frozen_page",
+        "path": "noteguard-case/case.js",
+        "commit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+        "approvalBasis": "沿用用户已验收冻结页面中的身份、产品机制或界面行为；不批准任何业务指标"
+      },
+      "userConfirmation": "已冻结页面范围内批准；不是对新增业务数字的批准"
+    },
+    {
+      "id": "ng.decisions",
+      "projectId": "noteguard",
+      "topic": "workflow",
+      "claim": "人工决策包括拒绝建议、直接采用和修改后采用。",
+      "sourceId": "SRC-NOTEGUARD",
+      "truthKind": "public_interface_fact",
+      "status": "approved",
+      "public": true,
+      "provenance": {
+        "type": "accepted_frozen_page",
+        "path": "noteguard-case/case.js",
+        "commit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+        "approvalBasis": "沿用用户已验收冻结页面中的身份、产品机制或界面行为；不批准任何业务指标"
+      },
+      "userConfirmation": "已冻结页面范围内批准；不是对新增业务数字的批准"
+    },
+    {
+      "id": "ng.boundary",
+      "projectId": "noteguard",
+      "topic": "boundary",
+      "claim": "未发现明显风险不等于保证内容绝对合规。",
+      "sourceId": "SRC-NOTEGUARD",
+      "truthKind": "public_interface_fact",
+      "status": "approved",
+      "public": true,
+      "provenance": {
+        "type": "accepted_frozen_page",
+        "path": "noteguard-case/case.js",
+        "commit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+        "approvalBasis": "沿用用户已验收冻结页面中的身份、产品机制或界面行为；不批准任何业务指标"
+      },
+      "userConfirmation": "已冻结页面范围内批准；不是对新增业务数字的批准"
+    },
+    {
+      "id": "ng.static",
+      "projectId": "noteguard",
+      "topic": "status",
+      "claim": "作品集四幕与决策按钮展示已记录证据，不执行正式产品的在线审核或采用。",
+      "sourceId": "SRC-NOTEGUARD",
+      "truthKind": "public_interface_fact",
+      "status": "approved",
+      "public": true,
+      "provenance": {
+        "type": "accepted_frozen_page",
+        "path": "noteguard-case/case.js",
+        "commit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+        "approvalBasis": "沿用用户已验收冻结页面中的身份、产品机制或界面行为；不批准任何业务指标"
+      },
+      "userConfirmation": "已冻结页面范围内批准；不是对新增业务数字的批准"
+    },
+    {
+      "id": "capability.path",
+      "projectId": "capability",
+      "topic": "capability",
+      "claim": "能力路径是发现真实问题、设计可用机制、验证业务价值，分别连接盘古、NoteGuard和小红书。",
+      "sourceId": "SRC-CAPABILITY",
+      "truthKind": "public_interface_fact",
+      "status": "approved",
+      "public": true,
+      "provenance": {
+        "type": "accepted_frozen_page",
+        "path": "capability-lab/index.html",
+        "commit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+        "approvalBasis": "沿用用户已验收冻结页面中的身份、产品机制或界面行为；不批准任何业务指标"
+      },
+      "userConfirmation": "已冻结页面范围内批准；不是对新增业务数字的批准"
+    },
+    {
+      "id": "about.resume",
+      "projectId": "about",
+      "topic": "contact",
+      "claim": "图七最新版简历待补充，暂不提供旧存档版下载。",
+      "sourceId": "SRC-ABOUT",
+      "truthKind": "public_interface_fact",
+      "status": "approved",
+      "public": true,
+      "provenance": {
+        "type": "accepted_frozen_page",
+        "path": "about-contact/index.html",
+        "commit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+        "approvalBasis": "沿用用户已验收冻结页面中的身份、产品机制或界面行为；不批准任何业务指标"
+      },
+      "userConfirmation": "已冻结页面范围内批准；不是对新增业务数字的批准"
+    },
+    {
+      "id": "about.entries",
+      "projectId": "about",
+      "topic": "contact",
+      "claim": "图七有查看简历、GitHub和邮件联系三个入口。",
+      "sourceId": "SRC-ABOUT",
+      "truthKind": "public_interface_fact",
+      "status": "approved",
+      "public": true,
+      "provenance": {
+        "type": "accepted_frozen_page",
+        "path": "about-contact/index.html",
+        "commit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+        "approvalBasis": "沿用用户已验收冻结页面中的身份、产品机制或界面行为；不批准任何业务指标"
+      },
+      "userConfirmation": "已冻结页面范围内批准；不是对新增业务数字的批准"
+    },
+    {
+      "id": "jiya.scope",
+      "projectId": "jiya",
+      "topic": "status",
+      "claim": "冀芽成长当前仅有校园项目说明入口，没有新增独立项目详情页。",
+      "sourceId": "SRC-WORKSPACE",
+      "truthKind": "public_interface_fact",
+      "status": "approved",
+      "public": true,
+      "provenance": {
+        "type": "accepted_frozen_page",
+        "path": "workspace-v6.js",
+        "commit": "3930ed97eaa643bab90baa185e2ce3f60c7ce90f",
+        "approvalBasis": "沿用用户已验收冻结页面中的身份、产品机制或界面行为；不批准任何业务指标"
+      },
+      "userConfirmation": "已冻结页面范围内批准；不是对新增业务数字的批准"
+    },
+    {
+      "id": "pangu.research",
+      "projectId": "pangu",
+      "topic": "mechanism",
+      "claim": "15+深访、200+问卷的业务口径与样本范围。",
+      "sourceId": "SRC-CAPABILITY",
+      "truthKind": "candidate_not_verified",
+      "status": "pending",
+      "public": true,
+      "provenance": {
+        "type": "candidate_reference",
+        "note": "公开页面显示，但未自动批准为业务统计事实"
+      },
+      "userConfirmation": "待用户逐卡确认；不能检索或模拟回答"
+    },
+    {
+      "id": "pangu.efficiency",
+      "projectId": "pangu",
+      "topic": "mechanism",
+      "claim": "单套素材耗时6h到1.2h的统计范围与候选人贡献。",
+      "sourceId": "SRC-PANGU",
+      "truthKind": "candidate_not_verified",
+      "status": "pending",
+      "public": true,
+      "provenance": {
+        "type": "candidate_reference",
+        "note": "历史口径需原始确认材料"
+      },
+      "userConfirmation": "待用户逐卡确认；不能检索或模拟回答"
+    },
+    {
+      "id": "pangu.penetration",
+      "projectId": "pangu",
+      "topic": "mechanism",
+      "claim": "月渗透率提高16个百分点的时间窗和分母。",
+      "sourceId": "SRC-PANGU",
+      "truthKind": "candidate_not_verified",
+      "status": "pending",
+      "public": true,
+      "provenance": {
+        "type": "candidate_reference",
+        "note": "历史口径需原始确认材料"
+      },
+      "userConfirmation": "待用户逐卡确认；不能检索或模拟回答"
+    },
+    {
+      "id": "pangu.revenue",
+      "projectId": "pangu",
+      "topic": "mechanism",
+      "claim": "营收环比增加28%的统计口径与归因。",
+      "sourceId": "SRC-PANGU",
+      "truthKind": "candidate_not_verified",
+      "status": "pending",
+      "public": true,
+      "provenance": {
+        "type": "candidate_reference",
+        "note": "历史口径需原始确认材料"
+      },
+      "userConfirmation": "待用户逐卡确认；不能检索或模拟回答"
+    },
+    {
+      "id": "xhs.leads",
+      "projectId": "contentlab",
+      "topic": "mechanism",
+      "claim": "黄色笔记单篇留资680+的已确认业务口径。",
+      "sourceId": "SRC-XHS",
+      "truthKind": "candidate_not_verified",
+      "status": "pending",
+      "public": true,
+      "provenance": {
+        "type": "candidate_reference",
+        "note": "不能仅凭点赞/评论截图批准统计口径，待逐卡确认"
+      },
+      "userConfirmation": "待用户逐卡确认；不能检索或模拟回答"
+    },
+    {
+      "id": "xhs.dates",
+      "projectId": "contentlab",
+      "topic": "status",
+      "claim": "7月产出、8到9月陆续发布的时间归属。",
+      "sourceId": "SRC-XHS",
+      "truthKind": "candidate_not_verified",
+      "status": "pending",
+      "public": true,
+      "provenance": {
+        "type": "candidate_reference",
+        "note": "来自历史本人确认，待本轮知识卡确认与来源绑定"
+      },
+      "userConfirmation": "待用户逐卡确认；不能检索或模拟回答"
+    },
+    {
+      "id": "xhs.roi",
+      "projectId": "contentlab",
+      "topic": "mechanism",
+      "claim": "ROI1.8的分子、分母、渠道与时间窗。",
+      "sourceId": "SRC-XHS",
+      "truthKind": "candidate_not_verified",
+      "status": "pending",
+      "public": true,
+      "provenance": {
+        "type": "candidate_reference",
+        "note": "未明确，不可用于回答"
+      },
+      "userConfirmation": "待用户逐卡确认；不能检索或模拟回答"
+    },
+    {
+      "id": "ng.pain",
+      "projectId": "noteguard",
+      "topic": "mechanism",
+      "claim": "单篇素材人工通读、多维审核耗时是原始需求。",
+      "sourceId": "SRC-NOTEGUARD",
+      "truthKind": "candidate_not_verified",
+      "status": "pending",
+      "public": true,
+      "provenance": {
+        "type": "candidate_reference",
+        "note": "本人历史确认，待知识卡确认；不推算省时量"
+      },
+      "userConfirmation": "待用户逐卡确认；不能检索或模拟回答"
+    },
+    {
+      "id": "jiya.goals",
+      "projectId": "jiya",
+      "topic": "boundary",
+      "claim": "5万注册、35%渗透与15分钟等属于规划目标，不是实现数据。",
+      "sourceId": "SRC-WORKSPACE",
+      "truthKind": "candidate_not_verified",
+      "status": "pending",
+      "public": true,
+      "provenance": {
+        "type": "candidate_reference",
+        "note": "待明确公开范围与规划来源"
+      },
+      "userConfirmation": "待用户逐卡确认；不能检索或模拟回答"
+    },
+    {
+      "id": "about.release",
+      "projectId": "about",
+      "topic": "contact",
+      "claim": "最新版简历的文件版本和当前邮箱收件有效性。",
+      "sourceId": "SRC-ABOUT",
+      "truthKind": "candidate_not_verified",
+      "status": "pending",
+      "public": true,
+      "provenance": {
+        "type": "candidate_reference",
+        "note": "当前未验证，保持待补充"
+      },
+      "userConfirmation": "待用户逐卡确认；不能检索或模拟回答"
+    }
+  ]
+}

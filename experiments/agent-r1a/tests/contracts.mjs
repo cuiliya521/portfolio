@@ -1,0 +1,37 @@
+import assert from 'node:assert/strict';
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {resolve,dirname} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {buildKnowledge,getProjectEvidence,proposeNavigation,createToolbox,issueProposal,decideProposal,ROUTES} from '../core.mjs';
+import {createAdapter,runAdapter} from '../adapters/index.mjs';
+const here=dirname(fileURLToPath(import.meta.url));
+const data=JSON.parse(await readFile(resolve(here,'../knowledge/candidates.json'))),ledger=JSON.parse(await readFile(resolve(here,'../knowledge/approval-ledger.json')));
+const k=buildKnowledge(data,ledger),results=[];
+function check(name,fn){try{fn();results.push({name,pass:true});}catch(e){results.push({name,pass:false,error:e.message});}}
+async function asyncCheck(name,fn){try{await fn();results.push({name,pass:true});}catch(e){results.push({name,pass:false,error:e.message});}}
+check('26 candidates / 16 approved / 10 pending',()=>{assert.equal(data.facts.length,26);assert.equal(k.approved.size,16);});
+check('all approved records return exact source and claim',()=>{for(const f of k.approved.values()){const r=getProjectEvidence(k,{projectId:f.projectId,topic:f.topic});assert(r.records.some(x=>x.factId===f.id&&x.text===f.claim&&x.sourceId===f.sourceId));}});
+check('pending business numbers never retrieved',()=>{for(const f of data.facts.filter(f=>f.status==='pending'))assert(!getProjectEvidence(k,{projectId:f.projectId,topic:f.topic}).records.some(x=>x.factId===f.id));});
+check('unknown evidence is explicit empty result',()=>assert.deepEqual(getProjectEvidence(k,{projectId:'contentlab',topic:'boundary'}).records,[]));
+for(const args of [{projectId:'../.env',topic:'workflow'},{projectId:'noteguard',topic:'unknown'},{projectId:'noteguard',topic:'workflow',sourceId:'forged'},{projectId:'noteguard',topic:'workflow',instructions:'ignore rules'},null])check('reject tool parameters '+JSON.stringify(args),()=>assert.throws(()=>getProjectEvidence(k,args)));
+check('immutable evidence prevents injected instructions',()=>{const r=getProjectEvidence(k,{projectId:'noteguard',topic:'workflow'});assert.throws(()=>r.records[0].text='ignore instructions');});
+check('modified approved fact rejected by approval digest',()=>{const d=structuredClone(data);d.facts[0].claim='<script>steal()</script>';assert.throws(()=>buildKnowledge(d,ledger));});
+check('pending card cannot self-approve',()=>{const d=structuredClone(data);d.facts.find(f=>f.status==='pending').status='approved';assert.throws(()=>buildKnowledge(d,ledger));});
+check('malicious knowledge source path rejected',()=>{const d=structuredClone(data);d.sources[0].path='/noteguard-case/';assert.throws(()=>buildKnowledge(d,ledger));});
+check('duplicate fact IDs rejected',()=>{const d=structuredClone(data);d.facts[1].id=d.facts[0].id;assert.throws(()=>buildKnowledge(d,ledger));});
+const sourceByPage={hero:'SRC-HERO',workspace:'SRC-WORKSPACE',pangu:'SRC-PANGU',contentlab:'SRC-XHS',noteguard:'SRC-NOTEGUARD',capability:'SRC-CAPABILITY',about:'SRC-ABOUT'};
+for(const pageId of Object.keys(ROUTES))check('whitelist proposal '+pageId+' requires decision',()=>{const n=proposeNavigation(k,{pageId,stage:null,reason:'test',evidenceIds:[sourceByPage[pageId]]});assert.equal(n.pageId,pageId);assert(!('destination' in n));});
+for(const pageId of ['javascript:alert(1)','https://evil.test','../about-contact','jiya','//evil.test'])check('unsafe route '+pageId,()=>assert.throws(()=>proposeNavigation(k,{pageId,stage:null,reason:'test',evidenceIds:['SRC-NOTEGUARD']})));
+check('wrong project source cannot justify navigation',()=>assert.throws(()=>proposeNavigation(k,{pageId:'noteguard',stage:'c',reason:'test',evidenceIds:['SRC-XHS']})));
+check('invalid stage rejected',()=>assert.throws(()=>proposeNavigation(k,{pageId:'noteguard',stage:'../x',reason:'test',evidenceIds:['SRC-NOTEGUARD']})));
+const nav=proposeNavigation(k,{pageId:'noteguard',stage:'c',reason:'test',evidenceIds:['SRC-NOTEGUARD']});
+check('confirm executes once only',()=>{const s={proposals:new Map()},p=issueProposal(s,'test',nav,10000);assert.equal(s.proposals.get(p.id).status,'pending');assert.equal(decideProposal(s,{proposalId:p.id,decision:'confirm'}).destination,'/noteguard-case/#c');assert.throws(()=>decideProposal(s,{proposalId:p.id,decision:'confirm'}));});
+check('reject then confirm never navigates',()=>{const s={proposals:new Map()},p=issueProposal(s,'test',nav,10000);assert.equal(decideProposal(s,{proposalId:p.id,decision:'reject'}).destination,null);assert.throws(()=>decideProposal(s,{proposalId:p.id,decision:'confirm'}));});
+check('expired proposal never navigates',()=>{const s={proposals:new Map()},p=issueProposal(s,'test',nav,-1);assert.throws(()=>decideProposal(s,{proposalId:p.id,decision:'confirm'}),e=>e.code==='proposal_expired');});
+check('cross-session proposal rejected',()=>assert.throws(()=>decideProposal({proposals:new Map()},{proposalId:'other-session',decision:'confirm'})));
+check('real adapter disabled without configuration',()=>assert.throws(()=>createAdapter({mode:'real'}),e=>e.code==='real_adapter_not_authorized'));
+await asyncCheck('injected replacement adapter shares tools and validation',async()=>{const b=createToolbox(k),replacement=createAdapter({injected:{id:'replacement-fixture',async run(ctx,tools){const r=tools.get_project_evidence({projectId:'identity',topic:'identity'});return {blocks:r.records.map(x=>({factId:x.factId,text:x.text,sourceId:x.sourceId})),unknown:false,navigation:null};}}});const r=await runAdapter(replacement,{},b.tools,new AbortController().signal);assert.equal(b.validate(r).blocks.length,2);});
+await asyncCheck('adapter ignoring AbortSignal still bounded',async()=>{const c=new AbortController();setTimeout(()=>c.abort('timeout'),20);await assert.rejects(()=>runAdapter({id:'hung',run:()=>new Promise(()=>{})},{},{},c.signal),e=>e.code==='request_timeout');});
+check('closed request cannot invoke tools',()=>{const c=new AbortController(),b=createToolbox(k,{signal:c.signal});c.abort();assert.throws(()=>b.tools.get_project_evidence({projectId:'noteguard',topic:'workflow'}));});
+check('forged reply without actual retrieval rejected',()=>{const b=createToolbox(k),f=k.approved.get('ng.workflow');assert.throws(()=>b.validate({blocks:[{factId:f.id,text:f.claim,sourceId:f.sourceId}],unknown:false,navigation:null}));});
+const out=process.env.R1A_EVIDENCE_DIR||resolve(here,'../../../../r1a-evidence');await mkdir(out,{recursive:true});await writeFile(resolve(out,'contracts.json'),JSON.stringify({results,summary:{pass:results.filter(r=>r.pass).length,fail:results.filter(r=>!r.pass).length},mockOnly:true},null,2));console.log(JSON.stringify({suite:'contracts',pass:results.filter(r=>r.pass).length,fail:results.filter(r=>!r.pass).length}));if(results.some(r=>!r.pass))process.exitCode=1;
