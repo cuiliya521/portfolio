@@ -18,12 +18,15 @@
  const syncPanguSource = () => { panguEvidence.src = mobilePangu.matches ? 'assets/workspace-v6/pangu-mobile-source.jpg' : 'assets/workspace-v6/pangu.png'; };
  mobilePangu.addEventListener('change', syncPanguSource);
  syncPanguSource();
- document.addEventListener('cui:modechange',e => {
+ const updatePose = e => {
+  if(e.detail.deferPose) return;
   const inHero = e.detail.mode === 'hero';
   agent.src = inHero ? heroSource : e.detail.mode === 'pangu' ? 'assets/pangu-r1/cui-pointing.png' : guideSource;
   agent.alt = inHero ? 'CUI Agent 小精灵' : '冻结 CUI 导览角色';
   if(inHero && $('workspace-info').open) $('workspace-info').close();
- });
+ };
+ document.addEventListener('cui:modechange',updatePose);
+ document.addEventListener('cui:posechange',updatePose);
  // The controller's initial render precedes this script.
  if(document.body.classList.contains('cui-test-active')) agent.src = $('pangu-scene').classList.contains('open') ? 'assets/pangu-r1/cui-pointing.png' : guideSource;
  const panel = $('workspace-info');

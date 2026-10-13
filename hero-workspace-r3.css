@@ -1,0 +1,11 @@
+/* R3 camera only. Idle H0/Workspace/project layouts remain frozen. */
+.r3-skip{position:fixed;right:24px;bottom:24px;z-index:200;border:1px solid #c5ac70;border-radius:30px;padding:12px 22px;background:#fffdf5;color:#143e32;font:16px/1.4 system-ui,sans-serif;cursor:pointer;box-shadow:0 5px 20px #143e3220}
+.r3-skip[hidden]{display:none}
+body[data-transition="running"] .test-workspace{opacity:1!important;transform:none!important;transition:none!important;pointer-events:none!important}
+body[data-transition="running"] .agent-wrap{transition:none!important;transform-origin:top left}
+body[data-transition="running"] .agent-image{animation:none!important;transition:none!important}
+body[data-transition="running"] .hero .copy,body[data-transition="running"] .hero .h3-atmosphere{transition:none!important}
+body[data-transition="running"] .workspace-background{transform-origin:52% 42%;will-change:transform}
+body[data-transition="running"] .workspace-window{backdrop-filter:none}
+body[data-transition="running"] .hero .topbar{transition:opacity 160ms ease}
+@media(max-width:700px){.r3-skip{right:16px;bottom:84px;font-size:14px;padding:11px 18px}}
