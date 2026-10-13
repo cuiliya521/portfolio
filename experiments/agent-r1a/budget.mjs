@@ -6,13 +6,15 @@ import {ContractError} from './core.mjs';
 export function createBudget({path,mode='dry-wire',maxRequests=80,maxUsd=2,reserveUsd=.01,rates={inputPerMillion:.3,outputPerMillion:1.2}}){
   if(!path||!['dry-wire','live'].includes(mode)||!Number.isInteger(maxRequests)||maxRequests<1||maxRequests>80||!Number.isFinite(maxUsd)||maxUsd<=0||maxUsd>2||!Number.isFinite(reserveUsd)||reserveUsd<=0||![rates.inputPerMillion,rates.outputPerMillion].every(x=>Number.isFinite(x)&&x>0))throw new ContractError('budget_configuration',503);
   const cap=Math.floor(maxUsd*1e6),reserve=Math.ceil(reserveUsd*1e6);let queue=Promise.resolve();
+  if(reserve<Math.ceil(6000*rates.inputPerMillion+800*rates.outputPerMillion))throw new ContractError('budget_under_reserved',503);
+  const config=JSON.stringify({maxRequests,cap,reserve,rates});
   async function transaction(fn){
     const work=queue.then(async()=>{
       await mkdir(dirname(path),{recursive:true});let lock;
       try{lock=await open(path+'.lock','wx',0o600);}catch{throw new ContractError('budget_locked',503);}
       try{
-        let state;try{state=JSON.parse(await readFile(path,'utf8'));}catch(e){if(e.code!=='ENOENT')throw new ContractError('budget_corrupt',503);state={version:1,mode,entries:[],halted:false};}
-        if(state.version!==1||state.mode!==mode||!Array.isArray(state.entries)||typeof state.halted!=='boolean'||state.entries.some(e=>!e||typeof e.id!=='string'||!['reserved','settled','uncertain'].includes(e.status)||!Number.isInteger(e.reservedMicros)||e.reservedMicros<=0||e.actualMicros!==null&&(!Number.isInteger(e.actualMicros)||e.actualMicros<0))||new Set(state.entries.map(e=>e.id)).size!==state.entries.length)throw new ContractError('budget_corrupt',503);
+        let state;try{state=JSON.parse(await readFile(path,'utf8'));}catch(e){if(e.code!=='ENOENT')throw new ContractError('budget_corrupt',503);state={version:1,mode,config,entries:[],halted:false};}
+        if(state.version!==1||state.mode!==mode||state.config!==config||!Array.isArray(state.entries)||typeof state.halted!=='boolean'||state.entries.some(e=>!e||typeof e.id!=='string'||!['reserved','settled','uncertain'].includes(e.status)||!Number.isInteger(e.reservedMicros)||e.reservedMicros<=0||e.actualMicros!==null&&(!Number.isInteger(e.actualMicros)||e.actualMicros<0))||new Set(state.entries.map(e=>e.id)).size!==state.entries.length)throw new ContractError('budget_corrupt',503);
         const result=await fn(state),tmp=path+'.'+randomUUID()+'.tmp';await writeFile(tmp,JSON.stringify(state,null,2),{mode:0o600});await rename(tmp,path);return result;
       }finally{await lock.close();await unlink(path+'.lock');}
     });queue=work.catch(()=>{});return work;

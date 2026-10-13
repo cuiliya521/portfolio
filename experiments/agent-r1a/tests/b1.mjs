@@ -14,6 +14,8 @@ const usage={prompt_tokens:400,completion_tokens:120,total_tokens:520,completion
 async function check(name,fn){try{await fn();results.push({name,pass:true});}catch(e){results.push({name,pass:false,error:e.message});}}
 await check('80 persisted model requests; 81st blocked',async()=>{const b=ledger('count');for(let i=0;i<80;i++){const id=await b.reserve('round-'+i,1);await b.settle(id,usage,'SIM-'+i);}await assert.rejects(()=>b.reserve('81',1),e=>e.code==='budget_exhausted');assert.equal((await b.snapshot()).requests,80);});
 await check('restart does not clear count or spend',async()=>{const s=await ledger('count').snapshot();assert.equal(s.requests,80);assert.equal(s.committedUsd,.02112);});
+await check('restart cannot silently change budget or pricing',async()=>await assert.rejects(()=>ledger('count',{maxRequests:79}).snapshot(),e=>e.code==='budget_corrupt'));
+await check('reservation must cover configured token price ceiling',async()=>assert.throws(()=>ledger('too-small',{reserveUsd:.001}),e=>e.code==='budget_under_reserved'));
 await check('dollar cap blocks before transport',async()=>await assert.rejects(()=>ledger('usd',{maxUsd:.005}).reserve('x',1),e=>e.code==='budget_exhausted'));
 await check('reserve is visible before any send',async()=>{const b=ledger('reserve');await b.reserve('x',1);const s=await b.snapshot();assert.equal(s.requests,1);assert.equal(s.committedUsd,.01);assert.equal(s.halted,true);});
 await check('unfinished request persists on restart and halts',async()=>await assert.rejects(()=>ledger('reserve').reserve('y',1),e=>e.code==='budget_halted'));
