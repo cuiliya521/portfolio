@@ -57,6 +57,11 @@
   skip.addEventListener('click',() => completeTransition?.('skip'));
   function render(nextMode, shouldFocus=true){
     const previous = mode;
+    const projectCross = (previous === 'workspace' && nextMode === 'pangu') || (previous === 'pangu' && nextMode === 'workspace');
+    const projectWindow = scene.querySelector('.pangu-r1-window');
+    const card = workspace.querySelector('.workspace-pangu');
+    const oldProjectRect = projectWindow.getBoundingClientRect();
+    const cardRect = card.getBoundingClientRect();
     const crossing = (previous === 'hero') !== (nextMode === 'hero');
     const agent = $('agent-wrap');
     const before = agent.getBoundingClientRect();
@@ -73,7 +78,7 @@
     mode = nextMode;
     const inside = mode !== 'hero';
     const inPangu = mode === 'pangu';
-    const duration = crossing && shouldFocus && !reducedMotion.matches ? (mobileMotion.matches ? 240 : inside ? 900 : 600) : 0;
+    const duration = projectCross && shouldFocus && !reducedMotion.matches ? (mobileMotion.matches ? 220 : 620) : crossing && shouldFocus && !reducedMotion.matches ? (mobileMotion.matches ? 240 : inside ? 900 : 600) : 0;
     const moving = duration > 0;
     const pose = () => document.dispatchEvent(new CustomEvent('cui:posechange',{detail:{mode}}));
     // Only the skip control is interactive during the camera move.
@@ -88,7 +93,9 @@
     scene.classList.toggle('open',inPangu);
     scene.classList.remove('preparing');
     scene.setAttribute('aria-hidden',String(!inPangu));
-    scene.inert = !inPangu;
+    scene.inert = moving || !inPangu;
+    document.body.dataset.r4Camera = projectCross && moving ? 'running' : 'idle';
+    if(projectCross && moving) scene.classList.add('open');
     mountUI(inPangu);
     agent.classList.toggle('in-workspace',inside);
     agent.classList.toggle('in-project',inPangu);
@@ -101,6 +108,9 @@
       activeAnimations = [];
       completeTransition = null;
       pose();
+      scene.classList.toggle('open',inPangu);
+      scene.inert = !inPangu;
+      document.body.dataset.r4Camera = 'idle';
       if(!inside) workspace.hidden = true;
       workspace.inert = !inside || inPangu;
       $('hero').inert = inside;
@@ -121,6 +131,33 @@
       const animation = element.animate(frames,{duration,easing:'cubic-bezier(.22,.7,.2,1)',fill:'both',...options});
       activeAnimations.push(animation);return animation;
     };
+    if(projectCross){
+      // The existing evidence figure is the shared surface, never an interactive clone.
+      const end = projectWindow.getBoundingClientRect();
+      const source = inPangu ? cardRect : oldProjectRect;
+      const destination = inPangu ? end : cardRect;
+      const matrix = rect => `translate(${rect.left-end.left}px,${rect.top-end.top}px) scale(${rect.width/end.width})`;
+      animate(projectWindow,[{transform:matrix(source),borderRadius:'18px'},{transform:matrix(destination),borderRadius:inPangu?'25px':'18px'}]);
+      animate(card,[{opacity:0},{opacity:0}]);
+      const background = scene.querySelector('.pangu-r1-background');
+      animate(background,inPangu ? [{opacity:0},{opacity:1,offset:.32},{opacity:1}] : [{opacity:1},{opacity:0,offset:.72},{opacity:0}],{easing:'linear'});
+      scene.querySelectorAll('.pangu-r1-top,.pangu-r1-aside').forEach(el=>animate(el,inPangu ? [{opacity:0},{opacity:0,offset:.35},{opacity:1}] : [{opacity:1},{opacity:0,offset:.25},{opacity:0}],{easing:'linear'}));
+      workspace.querySelectorAll('.test-workspace__top,.test-workspace__main,.workspace-xhs,.workspace-noteguard,.workspace-jiya,.workspace-dock').forEach(el=>animate(el,inPangu ? [{opacity:1},{opacity:0,offset:.18},{opacity:0}] : [{opacity:0},{opacity:0,offset:.55},{opacity:1}],{easing:'linear'}));
+      const roleEnd = agent.getBoundingClientRect();
+      const roleStart = `translate(${before.left-roleEnd.left}px,${before.top-roleEnd.top}px) scale(${before.width/roleEnd.width})`;
+      const targetTransform = getComputedStyle(image).transform;
+      if(mobileMotion.matches){
+        animate(agent,[{transform:roleStart},{transform:roleStart,offset:.14},{transform:'none',offset:.17},{transform:'none'}],{easing:'linear'});
+      }else animate(agent,[{transform:roleStart},{transform:'none'}]);
+      animate(image,[{opacity:previousOpacity,transform:previousImageTransform},{opacity:0,transform:previousImageTransform,offset:mobileMotion.matches?.14:.36},{opacity:0,transform:targetTransform,offset:mobileMotion.matches?.48:.43},{opacity:1,transform:targetTransform}],{easing:'linear'});
+      const clock = animate(skip,[{opacity:1},{opacity:1}],{easing:'linear'});
+      let swapped=false;
+      const watch=()=>{if(ticket!==transitionId||!completeTransition)return;if(!swapped&&(clock.currentTime||0)>=duration*.39){pose();swapped=true;}if(!swapped)poseFrame=requestAnimationFrame(watch);};
+      poseFrame=requestAnimationFrame(watch);
+      clock.ready.then(()=>{if(ticket!==transitionId||!completeTransition)return;activeAnimations.forEach(a=>a.startTime=clock.startTime);announce({phase:'started',mode,ticket,duration,scene:'pangu'});},()=>{});
+      clock.finished.then(()=>finish(),()=>{});
+      return;
+    }
     const after = agent.getBoundingClientRect();
     const ease = 'cubic-bezier(.22,.7,.2,1)';
     const from = `translate(${before.left-after.left}px,${before.top-after.top}px) scale(${before.width/after.width})`;

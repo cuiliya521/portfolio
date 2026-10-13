@@ -1,0 +1,6 @@
+/* R4-A running-only shared evidence window. Frozen idle layouts stay unchanged. */
+body[data-r4-camera="running"] #pangu-scene{opacity:1;visibility:visible;transition:none;pointer-events:none}
+body[data-r4-camera="running"] .pangu-r1-window{transform-origin:top left;will-change:transform}
+body[data-r4-camera="running"] .agent-wrap{z-index:112;pointer-events:none}
+body[data-r4-camera="running"] .pangu-r1-window *{pointer-events:none}
+#pangu-scene{transition:none}
