@@ -42,6 +42,7 @@
 
   let transitionId = 0;
   let poseFrame;
+  let evidenceProxy;
   let activeAnimations = [];
   let completeTransition;
   let backPending = false;
@@ -62,6 +63,10 @@
     const card = workspace.querySelector('.workspace-pangu');
     const oldProjectRect = projectWindow.getBoundingClientRect();
     const cardRect = card.getBoundingClientRect();
+    const thumbnail = card.querySelector('.window-evidence img');
+    const thumbBox = thumbnail.getBoundingClientRect();
+    const thumbScale = Math.min(thumbBox.width/thumbnail.naturalWidth,thumbBox.height/thumbnail.naturalHeight);
+    const thumbRect = {left:thumbBox.left+(thumbBox.width-thumbnail.naturalWidth*thumbScale)/2,top:thumbBox.top+(thumbBox.height-thumbnail.naturalHeight*thumbScale)/2,width:thumbnail.naturalWidth*thumbScale,height:thumbnail.naturalHeight*thumbScale};
     const crossing = (previous === 'hero') !== (nextMode === 'hero');
     const agent = $('agent-wrap');
     const before = agent.getBoundingClientRect();
@@ -73,6 +78,7 @@
     cancelAnimationFrame(poseFrame);
     activeAnimations.forEach(animation => animation.cancel());
     activeAnimations = [];
+    evidenceProxy?.remove();evidenceProxy = null;
     completeTransition = null;
     backPending = false;
     mode = nextMode;
@@ -106,6 +112,7 @@
       cancelAnimationFrame(poseFrame);
       activeAnimations.forEach(animation => animation.cancel());
       activeAnimations = [];
+      evidenceProxy?.remove();evidenceProxy = null;
       completeTransition = null;
       pose();
       scene.classList.toggle('open',inPangu);
@@ -137,8 +144,42 @@
       const source = inPangu ? cardRect : oldProjectRect;
       const destination = inPangu ? end : cardRect;
       const matrix = rect => `translate(${rect.left-end.left}px,${rect.top-end.top}px) scale(${rect.width/end.width})`;
+      const product = $('pangu-r1-product');
+      const target = product.getBoundingClientRect();
       animate(projectWindow,[{transform:matrix(source),borderRadius:'18px'},{transform:matrix(destination),borderRadius:inPangu?'25px':'18px'}]);
       animate(card,[{opacity:0},{opacity:0}]);
+      // Immutable source registration: thumb = full * .414 + (-66, 35).
+      // Mobile already references the exact full source (no image handoff).
+      const sameSource = thumbnail.naturalWidth === product.naturalWidth && thumbnail.currentSrc.endsWith('pangu-mobile-source.jpg');
+      const registration = sameSource ? {scale:1,x:0,y:0} : {scale:.414,x:-66,y:35};
+      const finalScale = target.width/product.naturalWidth;
+      const initialScale = thumbScale*registration.scale/finalScale;
+      const initialTransform = `translate(${thumbRect.left+registration.x*thumbScale-target.left}px,${thumbRect.top+registration.y*thumbScale-target.top}px) scale(${initialScale})`;
+      const proxy = document.createElement('div');
+      proxy.className='r4-evidence-proxy';proxy.inert=true;proxy.setAttribute('aria-hidden','true');
+      proxy.innerHTML='<div class="r4-evidence-plane"><div class="r4-evidence-content"></div></div>';
+      evidenceProxy=proxy;document.body.append(proxy);
+      const plane=proxy.firstElementChild,content=plane.firstElementChild;
+      Object.assign(content.style,{left:target.left+'px',top:target.top+'px',width:target.width+'px',height:target.height+'px'});
+      const whole=product.cloneNode();whole.removeAttribute('id');whole.alt='';whole.className='r4-evidence-full';
+      Object.assign(whole.style,{width:target.width+'px',height:target.height+'px'});content.append(whole);
+      if(!sameSource){
+        const crop=thumbnail.cloneNode();crop.removeAttribute('id');crop.alt='';crop.className='r4-evidence-thumb';
+        const unit=finalScale/registration.scale;
+        Object.assign(crop.style,{left:-registration.x*unit+'px',top:-registration.y*unit+'px',width:thumbnail.naturalWidth*unit+'px',height:thumbnail.naturalHeight*unit+'px'});content.append(crop);
+        const sharedClip=`inset(${65*unit}px 0 0 ${30*unit}px)`;
+        // Reveal original navigation as the mask grows; keep only the matched fields/poster during handoff.
+        animate(crop,inPangu?[{clipPath:'inset(0px)'},{clipPath:sharedClip,offset:.20},{clipPath:sharedClip}]:[{clipPath:sharedClip},{clipPath:sharedClip,offset:.80},{clipPath:'inset(0px)'}],{easing:'linear'});
+        animate(crop,inPangu?[{opacity:1},{opacity:1,offset:.20},{opacity:0,offset:.48},{opacity:0}]:[{opacity:0},{opacity:0,offset:.52},{opacity:1,offset:.80},{opacity:1}],{easing:'linear'});
+        // Opaque full source beneath the fading crop avoids a white alpha dip.
+      }
+      const maskFrom = inPangu?thumbRect:target,maskTo=inPangu?target:thumbRect;
+      const maskFrame=r=>({left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px'});
+      animate(proxy,[maskFrame(maskFrom),maskFrame(maskTo)]);
+      animate(plane,[{left:-maskFrom.left+'px',top:-maskFrom.top+'px'},{left:-maskTo.left+'px',top:-maskTo.top+'px'}]);
+      animate(content,inPangu?[{transform:initialTransform},{transform:'none'}]:[{transform:'none'},{transform:initialTransform}]);
+      animate(product,[{opacity:0},{opacity:0}]);
+      animate(projectWindow.querySelector('figcaption'),[{opacity:0},{opacity:0}]);
       const background = scene.querySelector('.pangu-r1-background');
       animate(background,inPangu ? [{opacity:0},{opacity:1,offset:.32},{opacity:1}] : [{opacity:1},{opacity:0,offset:.72},{opacity:0}],{easing:'linear'});
       scene.querySelectorAll('.pangu-r1-top,.pangu-r1-aside').forEach(el=>animate(el,inPangu ? [{opacity:0},{opacity:0,offset:.35},{opacity:1}] : [{opacity:1},{opacity:0,offset:.25},{opacity:0}],{easing:'linear'}));
