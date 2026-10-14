@@ -43,3 +43,18 @@
 .pangu-original-scroll img{display:block;width:1536px;height:auto;max-width:none}
 #pangu-original-viewer.is-fit .pangu-original-scroll img{width:100%;height:auto}
 @media(max-width:700px){.pangu-brand-mark{width:40px}.pangu-r1-aside h2{font-size:29px;gap:8px}.pangu-r1-aside p{max-width:260px}.pangu-r1-window figcaption{font-size:8px}#pangu-original-viewer{width:calc(100vw - 16px);height:calc(100dvh - 16px);padding:10px;border-radius:14px}#pangu-original-viewer header{gap:5px}#pangu-original-viewer header strong{font-size:12px}#pangu-original-viewer header button{padding:7px;font-size:12px}}
+
+/* R4-B: one immutable image camera inside the existing evidence window. */
+.pangu-r1-aside li{padding:0;margin:5px 0}
+.pangu-r1-aside li button{display:block;width:100%;border:1px solid transparent;border-radius:20px;padding:11px 14px;background:transparent;color:#58685b;text-align:left;font:600 16px/1.4 system-ui;cursor:pointer}
+.pangu-r1-aside li button[aria-pressed="true"]{background:#fffdf2dc;border-color:#fff;color:#254d36}
+.pangu-r1-aside button:focus-visible{outline:3px solid #51775c;outline-offset:2px}
+.pangu-r1-hint{cursor:pointer}
+#pangu-original-open{position:relative;overflow:hidden;aspect-ratio:3/2}
+#pangu-r1-product{transform-origin:0 0;will-change:transform}
+.pangu-evidence-focus{position:absolute;z-index:1;pointer-events:none;border:1px solid #c5b681;border-radius:8px;box-shadow:0 0 0 2500px #f4f7f04d;opacity:0}
+#pangu-evidence-caption{margin:8px 2px 2px;color:#294936;font:14px/1.6 system-ui}
+@media(max-width:700px){.pangu-r1-aside ol{gap:2px}.pangu-r1-aside li{flex:1;margin:0;min-width:0}.pangu-r1-aside li button{padding:7px 2px;font-size:11px;white-space:nowrap;text-align:center}#pangu-original-open[data-camera-stage]:not([data-camera-stage="0"]){aspect-ratio:auto;height:360px}#pangu-evidence-caption{font-size:13px}}
+@media(min-width:701px){.pangu-r1-aside ol{display:grid;grid-template-columns:1fr 1fr;gap:5px;border:0;margin-top:12px}.pangu-r1-aside li{margin:0}.pangu-r1-aside li button{padding:8px 9px;font-size:14px}}
+/* Pin the evidence origin; native button centering must not offset mobile crops. */
+#pangu-r1-product{position:absolute;left:0;top:0;width:100%;height:auto}

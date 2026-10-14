@@ -57,6 +57,10 @@
   const announce = detail => document.dispatchEvent(new CustomEvent('cui:camera',{detail:{...detail,at:performance.now()}}));
   skip.addEventListener('click',() => completeTransition?.('skip'));
   function render(nextMode, shouldFocus=true){
+    if(mode==='pangu' && nextMode!=='pangu'){
+      const exit = new CustomEvent('cui:pangu-before-exit',{cancelable:true,detail:{resume:()=>render(nextMode,shouldFocus)}});
+      if(!document.dispatchEvent(exit)) return;
+    }
     const previous = mode;
     const projectCross = (previous === 'workspace' && nextMode === 'pangu') || (previous === 'pangu' && nextMode === 'workspace');
     const projectWindow = scene.querySelector('.pangu-r1-window');
