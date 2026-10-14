@@ -5,6 +5,7 @@ export class ContractError extends Error {
 }
 export const BASELINE='3930ed97eaa643bab90baa185e2ce3f60c7ce90f';
 export const ROUTES=Object.freeze({hero:'/#hero',workspace:'/#cui-workspace',pangu:'/#cui-pangu',contentlab:'/content-archive/',noteguard:'/noteguard-case/',capability:'/capability-lab/',about:'/about-contact/'});
+export const PAGE_SOURCES=Object.freeze({hero:Object.freeze(['SRC-HERO']),workspace:Object.freeze(['SRC-WORKSPACE']),pangu:Object.freeze(['SRC-PANGU']),contentlab:Object.freeze(['SRC-XHS']),noteguard:Object.freeze(['SRC-NOTEGUARD']),capability:Object.freeze(['SRC-CAPABILITY']),about:Object.freeze(['SRC-ABOUT'])});
 export const TOPICS=Object.freeze(['identity','mechanism','workflow','boundary','capability','contact','status']);
 export const PROJECTS=Object.freeze(['identity','pangu','noteguard','contentlab','capability','about','jiya']);
 export const hashRecord=r=>createHash('sha256').update(JSON.stringify({id:r.id,projectId:r.projectId,topic:r.topic,claim:r.claim,sourceId:r.sourceId,truthKind:r.truthKind,status:r.status})).digest('hex');
@@ -46,7 +47,7 @@ export function proposeNavigation(knowledge,args) {
   exactObject(args,['pageId','stage','reason','evidenceIds']);enumValue(args.pageId,Object.keys(ROUTES));boundedText(args.reason,120);
   if(args.stage!==null&&(args.pageId!=='noteguard'||!['a','b','c','d'].includes(args.stage))) throw new ContractError('invalid_navigation');
   if(!Array.isArray(args.evidenceIds)||args.evidenceIds.length===0||args.evidenceIds.length>8||new Set(args.evidenceIds).size!==args.evidenceIds.length) throw new ContractError('invalid_navigation');
-  for(const id of args.evidenceIds){const source=knowledge.sourceMap.get(id);if(!source||![...knowledge.approved.values()].some(f=>f.sourceId===id)||!source.path.startsWith(ROUTES[args.pageId].split('#')[0])) throw new ContractError('invalid_navigation');}
+  for(const id of args.evidenceIds){const source=knowledge.sourceMap.get(id);if(!source||!PAGE_SOURCES[args.pageId].includes(id)||![...knowledge.approved.values()].some(f=>f.sourceId===id)) throw new ContractError('invalid_navigation');}
   return freeze({pageId:args.pageId,stage:args.stage,reason:args.reason,evidenceIds:[...args.evidenceIds]});
 }
 export function validateReply(knowledge,result,issuedEvidence,issuedNavigation) {

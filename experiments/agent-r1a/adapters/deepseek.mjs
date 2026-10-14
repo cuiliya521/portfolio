@@ -16,7 +16,8 @@ export function createDeepSeekAdapter({transport,budget,model='deepseek-flash'})
      if(Buffer.byteLength(JSON.stringify(payload),'utf8')+2048>6000)throw new ContractError('input_budget',413);
      const ticket=await budget.reserve(context.requestId,step);let settled=false,response;
      try{
-       response=await transport.send(payload,{signal,requestId:context.requestId,step,fixtureId:context.fixtureId});
+       const permit=await budget.markDispatched(ticket);
+       response=await transport.send(payload,{signal,requestId:context.requestId,step,fixtureId:context.fixtureId,permit});
        const receipt=await budget.settle(ticket,response?.usage,response?.id);settled=true;
        if(receipt.halted)throw new ContractError('usage_unverified',503);
      }catch(e){if(!settled)await budget.uncertain(ticket);throw e instanceof ContractError?e:new ContractError('provider_unavailable',502);}
@@ -42,9 +43,12 @@ export function createDeepSeekAdapter({transport,budget,model='deepseek-flash'})
 }
 // This path is NEVER invoked in B1. It has no default key, no environment lookup,
 // no arbitrary endpoint and no automatic retries. Approval must be supplied outside the model.
-export function createAuthorizedTransport({apiKey,approval,fetchImpl=globalThis.fetch}){
- if(!approval?.confirmed||approval.provider!=='DeepSeek'||approval.model!=='deepseek-flash'||approval.maxRequests!==80||approval.maxUsd!==2||approval.pricingConfirmed!==true||approval.independentKey!==true||typeof apiKey!=='string'||!apiKey)throw new ContractError('live_not_authorized',503);
- return Object.freeze({mode:'live',async send(payload,{signal}){
+export function createAuthorizedTransport({apiKey,approval,budget,fetchImpl=globalThis.fetch}){
+ if(!approval?.confirmed||approval.provider!=='DeepSeek'||approval.model!=='deepseek-flash'||approval.maxRequests!==80||approval.maxUsd!==2||approval.pricingConfirmed!==true||approval.independentKey!==true||typeof approval.batchId!=='string'||!approval.batchId||budget?.mode!=='live'||!budget.hasTrustedControl||typeof budget.consumePermit!=='function'||typeof apiKey!=='string'||!apiKey)throw new ContractError('live_not_authorized',503);
+ return Object.freeze({mode:'live',async send(payload,{signal,permit,requestId,step}){
+   if(signal.aborted||permit?.requestId!==requestId||permit?.step!==step||payload.model!=='deepseek-flash'||payload.thinking?.type!=='disabled'||payload.max_tokens!==800||payload.stream!==false)throw new ContractError('dispatch_not_authorized',503);
+   await budget.consumePermit(permit,approval.batchId);
+   if(signal.aborted)throw new ContractError('request_cancelled',409);
    let response;try{response=await fetchImpl('https://api.deepseek.com/chat/completions',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+apiKey},body:JSON.stringify(payload),signal,redirect:'error'});}catch{throw new ContractError(signal.aborted?'request_cancelled':'provider_unavailable',502);}
    if(!response.ok)throw new ContractError(response.status===429?'provider_rate_limit':response.status===401||response.status===403?'provider_auth':'provider_unavailable',502);
    try{return await response.json();}catch{throw new ContractError('provider_contract',502);}
