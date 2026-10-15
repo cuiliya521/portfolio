@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CUI R1-A · Mock 契约实验</title><link rel="stylesheet" href="style.css"><script type="module" src="ui.js"></script></head>
+<body><main>
+<p class="eyebrow">CUI / R1-A / LOCAL CONTRACT LAB</p><h1>独立技术骨架验证</h1>
+<p class="warning">仅使用可控 mock，没有真实模型、API Key 或最终 Agent 视觉。通过实验不代表模型准确率通过。</p>
+<section class="summary"><h2>隔离与批准范围</h2><p id="boot-status" role="status">正在检查本地实验服务。未连接时不会启用对话。</p><p>业务指标、产出时间和发布材料保留待确认；批准资料仅沿用已验收页面中的公开身份、机制和展示行为。</p></section>
+<div class="actions"><button id="open-agent" disabled>打开 mock 对话</button><button id="open-reader">打开阅读器协调测试</button><a href="/#cui-workspace">手动访问冻结 Workspace</a></div>
+<p id="host-status">宿主 Esc 返回意图：0</p><p id="coordination-status" role="status"></p>
+<details><summary>本地运行与安全契约</summary><p>启动 node experiments/agent-r1a/server.mjs，然后访问本地 127.0.0.1。静态托管没有本地服务时保持关闭。</p><p>确认只执行服务器签发的页面提议；模型与 mock 都不能提供任意 URL。关闭实验服务不影响七页静态文件。</p></details>
+</main>
+<dialog id="agent-dialog" aria-labelledby="agent-title"><header><div><p class="eyebrow">MOCK ONLY · NOT A LIVE AGENT</p><h2 id="agent-title">契约对话实验</h2></div><button id="close-agent" aria-label="关闭实验对话">关闭</button></header>
+<p class="hint">问题内容不会被关键词分类。下方选择的是明确的 mock 测试场景。</p>
+<form id="chat-form"><label for="fixture">测试场景</label><select id="fixture"><option value="noteguard">正常：NoteGuard 证据与导航</option><option value="pangu">正常：盘古证据与导航</option><option value="identity">正常：公开身份</option><option value="unknown">未知：无批准资料</option><option value="delayed">延迟：取消与重复请求</option><option value="timeout">超时：5 秒截止</option><option value="api_failure">API 失败（模拟）</option><option value="malformed">非法适配器响应</option><option value="forged_source">伪造 source ID</option><option value="forged_claim">虚构业务指标</option><option value="pending_fact">未批准事实</option><option value="unsafe_navigation">恶意导航目标</option><option value="html_payload">恶意 HTML 响应</option></select>
+<label for="message">输入问题（仅作为测试上下文）</label><textarea id="message" maxlength="1000" required placeholder="例如：想了解 NoteGuard 的人工决策机制。"></textarea>
+<div class="actions"><button id="send" type="submit">发送 mock 请求</button><button id="cancel" type="button" disabled>取消请求</button></div></form>
+<p id="request-status" role="status" aria-live="polite">等待输入。</p>
+<section id="reply" aria-label="模拟回答"></section><section id="references" aria-label="已验证的证据引用"></section><section id="navigation" aria-label="待确认导航"></section>
+<details id="trace-details"><summary>查看真实程序工具日志</summary><pre id="trace"></pre></details>
+</dialog>
+<dialog id="reader-dialog" aria-labelledby="reader-title"><h2 id="reader-title">阅读器协调测试夹具</h2><p>这不是七页原图阅读器；用于验证顶层 Dialog 的契约。</p><button id="reader-attempt">阅读器打开时尝试唤起 Agent</button><button id="close-reader">关闭阅读器</button><p id="reader-result" role="status"></p></dialog>
+</body></html>

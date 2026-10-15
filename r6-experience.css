@@ -1,0 +1,74 @@
+/* R6: concise recruiting context; frozen product pixels and motion stay intact. */
+.pangu-r1-window .r6-case-context{margin:8px 2px 2px;padding-top:7px;border-top:1px solid #ced9ce;color:#244a3f;font:13px/1.6 system-ui,sans-serif;white-space:normal}
+.pangu-r1-window .r6-case-context strong{font-weight:650}
+.heading .r6-case-context{margin-top:5px;color:#496a58;font:13px/1.5 NGSans,'Noto Sans CJK SC',sans-serif}
+@media(max-width:700px){.pangu-r1-window .r6-case-context{font-size:12px;line-height:1.7}}
+
+/* R6 / 01: a quiet reading field links CUI's invitation to the live title.
+   Background pixels, role silhouette and the R3 camera are unchanged. */
+.hero .hero-main::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 33% 39% at 62% 38%,#fffdf3cc 0%,#fffdf367 64%,transparent 100%)}
+.hero .kicker{border-color:#bca46b;background:#fffdf3ab;color:#264e40}
+.hero .lede{color:#315849;font-weight:600}
+.hero .enter{box-shadow:0 10px 26px #173e3329,inset 0 1px 0 #fff8}
+.hero .enter:active{transform:translateY(0);box-shadow:0 3px 10px #173e3322}
+.hero-project-link{font-size:1.13vw;font-family:system-ui,sans-serif;font-weight:500;border-bottom-color:#b9aa83;color:#426352}
+
+/* R6 / 02: one dominant working window; secondary windows sit a plane behind.
+   No transforms here: FLIP measures the same original geometry. */
+.workspace-window{border-color:#fffffff5;background:linear-gradient(135deg,#fffffff5,#f5f8eff2);box-shadow:0 18px 36px -15px #214b3d52,0 2px 5px #214b3d12,inset 0 1px 0 #fff}
+.workspace-pangu{box-shadow:0 24px 44px -19px #143e3366,0 3px 8px #214b3d1f,inset 0 1px 0 #fff}
+.workspace-xhs,.workspace-noteguard{background:linear-gradient(135deg,#fffefaed,#f5f8efed)}
+.workspace-window:hover,.workspace-window:focus-visible{border-color:#a3baa0;box-shadow:0 20px 40px -13px #173e3366,0 0 0 2px #b8cbb348,inset 0 1px 0 #fff}
+.workspace-window .window-arrow{transition:background-color 180ms,color 180ms,border-color 180ms}
+.workspace-window:is(:hover,:focus-visible) .window-arrow{background:#174e3d;color:#fffdf3;border-color:#174e3d}
+.window-chrome{border-bottom:1px solid #42635212;margin-bottom:7px}
+.window-evidence{box-shadow:inset 0 0 0 1px #42635216}
+.workspace-dock button:hover,.workspace-dock a:hover{background:#e6eee3}
+.workspace-dock button:focus-visible,.workspace-dock a:focus-visible{outline:2px solid #9d7d39;outline-offset:2px;background:#e6eee3}
+
+/* R6 / 03: make the evidence route readable without disguising screenshot pixels. */
+.pangu-r1-aside ol{counter-reset:step;border-left-color:#b4c5b4}
+.pangu-r1-aside li{counter-increment:step}
+.pangu-r1-aside li button::before{content:'0' counter(step);font:11px/1 system-ui,sans-serif;color:#6b8171;margin-right:12px;letter-spacing:.06em}
+.pangu-r1-aside li button[aria-pressed=true]{background:#fcfff5;box-shadow:0 5px 16px #234c3512;border-color:#bdd1b8}
+.pangu-r1-aside li button:hover{color:#174e3d;background:#fffdf3a6}
+#pangu-source-open{min-height:32px;padding:5px 11px;border:1px solid #c4d3bf;border-radius:20px;background:#f8fcf2;color:#244c37;cursor:zoom-in}
+#pangu-evidence-caption{border-left:2px solid #bda267;padding-left:10px}
+.stages button:hover{background:#e3ede1}
+.stages button:focus-visible,.decision-options button:focus-visible{outline:3px solid #9d7d39;outline-offset:2px}
+.review-trace [aria-current=step]{color:#103e30}
+@media(max-width:700px){
+ .hero .hero-main::before{background:radial-gradient(ellipse 85% 35% at 50% 26%,#fffdf3b3,transparent)}
+ .hero-project-link{font-size:13px;margin-top:14px;min-height:32px}
+ .hero .kicker{background:#fffdf3ce}
+ .pangu-r1-aside li button::before{display:none}
+ .window-chrome{margin-bottom:5px}
+ .pangu-r1-window .r6-case-context{margin-top:6px}
+}
+@media(prefers-reduced-motion:reduce){.workspace-window .window-arrow{transition:none}}
+
+/* R6.1: project windows disclose one concise problem-to-evidence route on intent. */
+.project-insight{position:absolute;left:14px;right:14px;bottom:12px;z-index:4;display:grid;gap:7px;padding:13px 15px;border:1px solid #dfe9dc;border-radius:15px;background:linear-gradient(135deg,#123f35f5,#0b342bf2);box-shadow:0 12px 28px #123d3042;color:#fffff4;text-align:left;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity 180ms ease,transform 220ms cubic-bezier(.2,.7,.2,1),visibility 0s linear 220ms;pointer-events:none}
+.project-insight__problem{color:#d8e6db;font:500 11px/1.45 system-ui,sans-serif;letter-spacing:.01em}
+.project-insight strong{font:650 15px/1.42 H3Serif,'Noto Serif CJK SC',serif;letter-spacing:.01em}
+.project-insight__evidence{display:flex;flex-wrap:wrap;gap:6px}
+.project-insight__evidence i{padding:3px 8px;border:1px solid #e8efdf47;border-radius:999px;background:#fffef113;color:#f7f4df;font:normal 10px/1.25 system-ui,sans-serif;white-space:nowrap}
+.workspace-window:is(:hover,:focus-visible) .project-insight{opacity:1;visibility:visible;transform:translateY(0);transition-delay:0s}
+.workspace-window:active .project-insight{transform:translateY(2px)}
+.workspace-pangu .project-insight{left:auto;bottom:58px;width:min(440px,70%)}
+.workspace-noteguard .project-insight{padding-block:10px;gap:5px}
+.workspace-noteguard .project-insight strong{font-size:13px}
+.workspace-noteguard .project-insight__problem{font-size:10px}
+.test-workspace__projects:has(.workspace-window:focus-visible) .workspace-window:not(:focus-visible) .project-insight{opacity:0;visibility:hidden;transform:translateY(8px)}
+
+@media(max-width:700px){
+ .workspace-pangu{height:504px}.workspace-xhs{height:514px}.workspace-noteguard{height:404px}
+ .project-insight,.workspace-pangu .project-insight{position:relative;left:auto;right:auto;bottom:auto;width:auto;margin-top:9px;display:grid;gap:6px;padding:11px 12px;border-color:#c9d9c5;background:linear-gradient(135deg,#edf5e8,#f8f8ed);box-shadow:none;color:#194739;opacity:1;visibility:visible;transform:none;transition:none;order:9}
+ .test-workspace__projects:has(.workspace-window:focus-visible) .workspace-window:not(:focus-visible) .project-insight{opacity:1;visibility:visible;transform:none}
+ .project-insight__problem,.workspace-noteguard .project-insight__problem{color:#577163;font-size:12px;line-height:1.5}
+ .project-insight strong,.workspace-noteguard .project-insight strong{font:650 14px/1.45 H3Serif,'Noto Serif CJK SC',serif}
+ .project-insight__evidence{gap:5px}
+ .project-insight__evidence i{border-color:#b9cdb7;background:#ffffff8c;color:#315848;font-size:11px;line-height:1.35}
+ .workspace-window:active .project-insight{transform:none}
+}
+@media(prefers-reduced-motion:reduce){.project-insight{transition:none}}

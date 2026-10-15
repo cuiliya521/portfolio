@@ -555,6 +555,7 @@ body.entering .agent-wrap{
 <link rel="stylesheet" href="cui-hero-agent.css">
 <link rel="stylesheet" href="workspace-v6.css">
 <link rel="stylesheet" href="pangu-r1.css">
+<link rel="stylesheet" href="r6-experience.css">
 <link rel="stylesheet" href="pangu-expand-r4a.css">
 </head>
 <body>
@@ -637,24 +638,39 @@ body.entering .agent-wrap{
     <p class="test-workspace__intro">选择一个项目，走进真实的工作现场。</p>
   </main>
   <div class="test-workspace__projects" aria-label="项目入口">
-    <button class="workspace-window workspace-pangu" id="open-test-pangu" type="button" aria-label="打开盘古智绘项目窗口">
+    <button class="workspace-window workspace-pangu" id="open-test-pangu" type="button" aria-label="打开盘古智绘项目窗口" aria-describedby="pangu-project-insight">
       <span class="window-chrome" aria-hidden="true"><i></i><i></i><i></i><b>···</b></span>
       <span class="window-title"><strong>01｜盘古智绘</strong><span class="window-arrow" aria-hidden="true">→</span><span class="window-phrase">把灵感，变成产品能力。</span></span>
       <span class="window-subtitle">AIGC 产品运营 · 主项目</span>
       <span class="window-evidence"><img src="assets/workspace-v6/pangu.png" alt="盘古智绘结构化输入与实时预览，作品集 P04 脱敏界面重构"><small>作品集 P04 · 脱敏界面重构</small></span>
       <span class="window-footer"><span class="window-tags"><span>AIGC</span><span>产品运营</span><span>商业增长</span><span>AI 落地</span></span><span class="window-enter">进入项目 →</span></span>
+      <span class="project-insight" id="pangu-project-insight">
+        <span class="project-insight__problem">问题 · 商户缺少专业 Prompt 与素材制作能力</span>
+        <strong>把复杂 Prompt，转成结构化字段选择。</strong>
+        <span class="project-insight__evidence"><i>脱敏界面</i><i>输入机制</i><i>预览与复用</i></span>
+      </span>
     </button>
-    <button class="workspace-window workspace-xhs" id="test-xhs" type="button" aria-label="查看小红书真实内容素材">
+    <button class="workspace-window workspace-xhs" id="test-xhs" type="button" aria-label="打开小红书教育内容运营案例" aria-describedby="xhs-project-insight">
       <span class="window-chrome" aria-hidden="true"><i></i><i></i><i></i><b>···</b></span>
       <span class="window-title"><strong>02｜小红书内容运营</strong><span class="window-arrow" aria-hidden="true">→</span></span>
       <span class="window-subtitle">内容策略 · 数据分析 · 用户洞察</span>
       <span class="xhs-covers"><img src="assets/workspace-v6/xhs-main.png" alt="真实主封面：AI 一对一补初阶数理思维"><img src="assets/workspace-v6/xhs-month.png" alt="真实辅助封面：700 每月"><img src="assets/workspace-v6/xhs-lesson.png" alt="真实辅助封面：66 元每课时"></span>
+      <span class="project-insight" id="xhs-project-insight">
+        <span class="project-insight__problem">问题 · 吸引力、表达准确与转化目标需要兼顾</span>
+        <strong>审核素材，优化内容结构，再用结果复盘。</strong>
+        <span class="project-insight__evidence"><i>真实案例</i><i>内容结构</i><i>核实数据</i></span>
+      </span>
     </button>
-    <button class="workspace-window workspace-noteguard" id="test-noteguard" type="button" aria-label="查看 NoteGuard AI 审核素材">
+    <button class="workspace-window workspace-noteguard" id="test-noteguard" type="button" aria-label="打开 NoteGuard AI 人机协作案例" aria-describedby="noteguard-project-insight">
       <span class="window-chrome" aria-hidden="true"><i></i><i></i><i></i><b>···</b></span>
       <span class="window-title"><strong>03｜NoteGuard AI</strong><span class="window-arrow" aria-hidden="true">→</span></span>
       <span class="window-subtitle">AI 审核 · 产品设计 · 人机协作</span>
       <span class="window-evidence"><img src="assets/workspace-v6/noteguard.png" alt="NoteGuard AI 作品集 P08 审核界面"><small>作品集 P08 · 审核界面展示</small></span>
+      <span class="project-insight" id="noteguard-project-insight">
+        <span class="project-insight__problem">问题 · 人工通读与风险判断成本高</span>
+        <strong>让 AI 发现和建议，把最终决定权留给人。</strong>
+        <span class="project-insight__evidence"><i>真实界面</i><i>人工决策</i><i>采用后复检</i></span>
+      </span>
     </button>
   </div>
   <button class="workspace-jiya" data-workspace-info="jiya" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6h8l2-3h7v5h3v13H2z"/></svg><strong>04　冀芽成长（校园项目）</strong><span class="jiya-description">学前教育数字化赋能 · 用户调研 · 需求设计</span><span aria-hidden="true">↗</span></button>
@@ -663,7 +679,7 @@ body.entering .agent-wrap{
     <button data-workspace-info="skills" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg>我的能力</button>
     <button data-workspace-info="about" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M3 22v-3a9 9 0 0 1 18 0v3"/></svg>关于我</button>
     <button data-workspace-info="contact" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m3 5 9 8 9-8"/></svg>联系我</button>
-    <a href="assets/workspace-v6/resume.pdf" download="崔丽娅27届-本科-产品运营.pdf" title="Library 存档简历（2026-08-14），原文件未修改"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v14m-5-5 5 5 5-5M3 17v5h18v-5"/></svg>下载简历</a>
+    <button type="button" data-workspace-info="about" id="workspace-resume-status" title="最新版待确认；查看简历说明与联系方式"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6M9 16h6"/></svg>简历待更新</button>
   </nav>
   <p class="test-workspace__status" id="cui-test-status" role="status" aria-live="polite"></p>
 </section>
@@ -676,7 +692,7 @@ body.entering .agent-wrap{
  <img class="pangu-r1-background" src="assets/workspace-v6/background.png" alt="">
  <header class="pangu-r1-top"><span>CUI / Workspace / Pangu</span><button class="scene-back" id="scene-back" type="button">返回工作台 ↗</button></header>
  <aside class="pangu-r1-aside"><h2><img class="pangu-brand-mark" src="assets/pangu-r1/brand-mark.png" alt="">盘古智绘</h2><p>把写 Prompt 变成选字段。</p><button class="pangu-r1-hint" id="pangu-explore-start" type="button">探索产品机制 →</button><ol aria-label="盘古证据探索"><li><button type="button" data-pangu-stage="0" aria-pressed="true">产品全貌</button></li><li><button type="button" data-pangu-stage="1" aria-pressed="false">结构化输入</button></li><li><button type="button" data-pangu-stage="2" aria-pressed="false">结果预览</button></li><li><button type="button" data-pangu-stage="3" aria-pressed="false">素材复用</button></li></ol></aside>
- <figure class="pangu-r1-window"><button class="pangu-original-open" id="pangu-original-open" type="button" aria-label="放大查看盘古原始截图"><span class="pangu-evidence-focus" aria-hidden="true"></span><img id="pangu-r1-product" src="assets/pangu-r1/product-source.jpg" alt="用户提供的盘古智绘完整生成界面：原始导航、六字段、实时预览及底部我的素材"></button><figcaption><span>提供的产品界面素材 · 非在线生成</span><button id="pangu-source-open" type="button">查看原图 ↗</button></figcaption><p id="pangu-evidence-caption" aria-live="polite">真实产品全貌：选择字段、查看结果与素材入口。</p></figure>
+ <figure class="pangu-r1-window"><button class="pangu-original-open" id="pangu-original-open" type="button" aria-label="放大查看盘古原始截图"><span class="pangu-evidence-focus" aria-hidden="true"></span><img id="pangu-r1-product" src="assets/pangu-r1/product-source.jpg" alt="用户提供的盘古智绘完整生成界面：原始导航、六字段、实时预览及底部我的素材"></button><figcaption><span>提供的产品界面素材 · 非在线生成</span><button id="pangu-source-open" type="button">查看原图 ↗</button></figcaption><p id="pangu-evidence-caption" aria-live="polite">真实产品全貌：选择字段、查看结果与素材入口。</p><p class="r6-case-context"><strong>我的产品运营工作</strong> · 调研商户需求，把不会写 Prompt 的表达难题转成字段选择、结果判断与素材复用。</p></figure>
  <dialog id="pangu-original-viewer" aria-labelledby="pangu-original-title"><header><strong id="pangu-original-title">盘古原始产品截图</strong><button id="pangu-original-fit" type="button">适应屏幕</button><button id="pangu-original-close" type="button" aria-label="关闭原图">关闭 ×</button></header><p>原尺寸显示，可上下及左右滚动查看。</p><div class="pangu-original-scroll" tabindex="0" role="region" aria-label="原始截图滚动区域"><img src="assets/pangu-r1/product-source.jpg" width="1536" height="1024" alt="完整盘古原始截图，未修改产品字段或界面"></div></dialog>
 </section>
 <script src="pangu-r1.js" defer></script>
