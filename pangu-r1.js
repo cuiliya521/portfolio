@@ -15,7 +15,7 @@
   materialImage.src=materialsSource;
   const guide=document.getElementById('pangu-shot-guide');
   const guides=['先看整体，再靠近关键机制。','六个字段，把需求变成可选择的输入。','看清结果，再判断下载、收藏或复用。','这是另一张真实素材页，仅展示可见管理入口。'];
-  const descriptions=['真实产品全貌：选择字段、查看结果与素材入口。','把写 Prompt，变成选字段。六个真实字段帮助商户表达需求。','真实结果预览：青提柠檬海报，以及下载、收藏、复用入口。','独立归档页面 · 我的素材：分类、筛选、搜索与素材卡片。截图不等于已验证再次复用流程。'];
+  const descriptions=['真实产品全貌：选择字段、查看结果与素材入口。','把写 Prompt，变成选字段。六个真实字段帮助商户表达需求。','归档案例结果：青提柠檬海报与可见操作入口；不是本次选择实时生成的结果。','独立归档页面 · 我的素材：分类、筛选、搜索与素材卡片。截图不等于已验证再次复用流程。'];
   let activeArea=null;
   let stage=0,animations=[],serial=0,pendingExit=null,settled=Promise.resolve();
   const rectFrames=r=>({left:r[0]+'px',top:r[1]+'px',width:r[2]+'px',height:r[3]+'px'});
