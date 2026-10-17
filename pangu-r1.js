@@ -16,9 +16,10 @@
   const guide=document.getElementById('pangu-shot-guide');
   const guides=['先看整体，再靠近关键机制。','六个字段，把需求变成可选择的输入。','看清结果，再判断下载、收藏或复用。','这是另一张真实素材页，仅展示可见管理入口。'];
   const descriptions=['真实产品全貌：选择字段、查看结果与素材入口。','把写 Prompt，变成选字段。六个真实字段帮助商户表达需求。','真实结果预览：青提柠檬海报，以及下载、收藏、复用入口。','独立归档页面 · 我的素材：分类、筛选、搜索与素材卡片。截图不等于已验证再次复用流程。'];
+  let activeArea=null;
   let stage=0,animations=[],serial=0,pendingExit=null,settled=Promise.resolve();
   const rectFrames=r=>({left:r[0]+'px',top:r[1]+'px',width:r[2]+'px',height:r[3]+'px'});
-  async function select(next,duration=mobile.matches?180:320){
+  async function select(next,duration=mobile.matches?180:320,area=null){
     if(!Number.isInteger(next)||next<0||next>3)return;
     const ticket=++serial;
     if(next===3 && !await materialsReady){
@@ -28,12 +29,12 @@
     if(ticket!==serial)return;
     const before=getComputedStyle(image).transform,previous=focus.getBoundingClientRect(),viewBefore=viewport.getBoundingClientRect(),opacity=getComputedStyle(focus).opacity;
     const pageChanged=(stage===3)!==(next===3);
-    animations.forEach(a=>a.cancel());animations=[];stage=next;viewport.dataset.cameraStage=String(next);scene.dataset.shot=String(next);
+    animations.forEach(a=>a.cancel());animations=[];stage=next;activeArea=area;viewport.dataset.cameraStage=String(next);scene.dataset.shot=String(next);
     image.src=next===3?materialsSource:productSource;
     image.alt=next===3?'独立归档的盘古「我的素材」页面：分类、筛选、搜索及三张素材卡片':'用户提供的盘古完整生成界面：六字段、实时预览及素材入口';
     buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===next)));caption.textContent=descriptions[next];guide.textContent=guides[next];
     const w=viewport.clientWidth,h=viewport.clientHeight,base=w/1536;
-    const [x,y,rw,rh]=areas[next],scale=Math.min(w/rw,h/rh);
+    const [x,y,rw,rh]=activeArea||areas[next],scale=Math.min(w/rw,h/rh);
     const tx=(w-rw*scale)/2-x*scale,ty=(h-rh*scale)/2-y*scale;
     const transform=`translate(${tx}px,${ty}px) scale(${scale/base})`,region=[tx+x*scale,ty+y*scale,rw*scale,rh*scale];
     image.style.transform=transform;Object.assign(focus.style,rectFrames(region));focus.style.opacity=(next===1||next===2)?'1':'0';
@@ -46,6 +47,13 @@
     animations.push(focus.animate([{...rectFrames([previous.left-viewBefore.left,previous.top-viewBefore.top,previous.width,previous.height]),opacity},{...rectFrames(region),opacity:(next===1||next===2)?1:0}],opts));
     settled=Promise.all(animations.map(a=>a.finished.catch(()=>{}))).then(()=>{if(ticket!==serial)return;animations=[];document.dispatchEvent(new CustomEvent('cui:pangu-camera',{detail:{phase:'settled',stage:next}}));});return settled;
   }
+  // R7.2 keeps camera ownership here; only bounded archived regions are accepted.
+  document.addEventListener('cui:pangu-evidence',e=>{
+    const d=e.detail||{},a=d.area;
+    if(pendingExit)return;
+    if(a&&(!Array.isArray(a)||a.length!==4||!a.every(Number.isFinite)||a[0]<0||a[1]<0||a[2]<=0||a[3]<=0||a[0]+a[2]>1536||a[1]+a[3]>1024))return;
+    select(d.stage,undefined,a||null);
+  });
   buttons.forEach((button,i)=>button.addEventListener('click',()=>{if(!pendingExit)select(i)}));
   document.getElementById('pangu-explore-start').addEventListener('click',()=>{if(pendingExit)return;select(1);buttons[1].focus({preventScroll:true})});
   scene.querySelector('ol').addEventListener('keydown',e=>{if(!['ArrowRight','ArrowDown','ArrowLeft','ArrowUp','Home','End'].includes(e.key))return;e.preventDefault();let i=buttons.indexOf(document.activeElement);if(i<0)i=stage;i=e.key==='Home'?0:e.key==='End'?3:(i+(['ArrowRight','ArrowDown'].includes(e.key)?1:3))%4;buttons[i].focus({preventScroll:true});if(!pendingExit)select(i)});
@@ -54,9 +62,9 @@
     if(already)return;document.getElementById('scene-back').focus({preventScroll:true});document.getElementById('pangu-explore-start').disabled=true;viewport.inert=true;buttons.forEach(b=>b.disabled=true);document.getElementById('pangu-source-open').disabled=true;document.body.dataset.panguExit='pending';select(0,mobile.matches?140:180).then(()=>{const resume=pendingExit;pendingExit=null;document.getElementById('pangu-explore-start').disabled=false;viewport.inert=false;buttons.forEach(b=>b.disabled=false);document.getElementById('pangu-source-open').disabled=false;document.body.dataset.panguExit='idle';resume?.()});
   });
   document.addEventListener('cui:modechange',e=>{if(e.detail.mode==='pangu')select(0,0)});
-  reduced.addEventListener('change',()=>{if(reduced.matches)select(stage,0)});
-  mobile.addEventListener('change',()=>select(stage,0));
-  window.addEventListener('resize',()=>{if(scene.classList.contains('open')&&!pendingExit&&document.body.dataset.transition==='idle')select(stage,0)});
+  reduced.addEventListener('change',()=>{if(reduced.matches)select(stage,0,activeArea)});
+  mobile.addEventListener('change',()=>select(stage,0,activeArea));
+  window.addEventListener('resize',()=>{if(scene.classList.contains('open')&&!pendingExit&&document.body.dataset.transition==='idle')select(stage,0,activeArea)});
   const open = event => {
     opener = event.currentTarget;
     const original=viewer.querySelector('.pangu-original-scroll img');
