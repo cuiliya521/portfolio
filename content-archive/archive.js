@@ -184,6 +184,8 @@
     }
   });
   $('workspaceBack').addEventListener('click',e=>{
+    // Explicit Workspace exit is distinct from browser Back to the originating Pangu case.
+    if(new URL(location.href).searchParams.get('entry')==='pangu')return;
     const ref=document.referrer?new URL(document.referrer):null;
     if(ref?.origin===location.origin && ref.pathname===new URL('../',location.href).pathname && history.length>1){e.preventDefault();history.back()}
   });

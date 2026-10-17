@@ -34,5 +34,7 @@ test('time and attribution boundary visible',()=>{assert.match(html,/7 月制作
 test('one existing CUI image retained',()=>assert.equal((html.match(/class="cui"/g)||[]).length,1));
 test('existing return receipt script retained',()=>assert.match(html,/cui-project-visit.js/));
 test('no model or navigation added to analysis',()=>assert.doesNotMatch(source.slice(source.indexOf('const guidance='),source.indexOf('function paint()')),/fetch\(|location\.|history\./));
+test('Pangu continuation explicit return uses the existing Workspace href',()=>{context.location.href='https://example.test/content-archive/?entry=pangu';context.location.origin='https://example.test';context.document.referrer='https://example.test/';context.history.length=3;context.history.back=()=>{throw Error('must not history-back to Pangu')};get('workspaceBack').events.click({preventDefault(){throw Error('default Workspace link must remain')}})});
+test('ordinary Workspace entry retains history return',()=>{context.location.href='https://example.test/content-archive/';let back=0,prevented=0;context.history.back=()=>back++;get('workspaceBack').events.click({preventDefault(){prevented++}});assert.equal(back,1);assert.equal(prevented,1)});
 console.log(JSON.stringify({kind:'synthetic DOM + source assertions; not browser',total:results.length,pass:results.filter(x=>x.status==='PASS').length,results},null,2));
 if(results.some(x=>x.status==='FAIL'))process.exitCode=1;
