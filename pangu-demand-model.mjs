@@ -25,7 +25,7 @@ export function reduceDemand(s,a){
 }
 export function explorationOrder(s){return [...s.order,...Object.keys(fragments).filter(k=>!s.order.includes(k))];}
 export function feedback(s){
- if(s.phase==='result')return '这是归档海报，不是刚才选择实时生成的结果。';
+ if(s.phase==='result')return '这是归档案例，不是刚才选择实时生成的结果。';
  const id=s.phase==='evidence'?explorationOrder(s)[s.cursor]:s.selected;
  if(!id)return '这家饮品商户想做新品海报。你会先从哪个角度整理？';
  const f=fragments[id],choice=s.assignments[id];
