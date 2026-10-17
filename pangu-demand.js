@@ -21,7 +21,7 @@ function render(move=true){
  $('demand-empty').hidden=!!state.order.length;
  $('demand-undo').disabled=!state.history.length;$('demand-clear').disabled=!state.order.length;
  $('demand-evidence').disabled=!state.order.length;$('demand-evidence').hidden=state.phase!=='arrange';
- $('demand-result').hidden=state.phase==='result';
+ $('demand-result').hidden=state.phase!=='evidence';
  $('demand-next-project').hidden=state.phase!=='result';
  $('demand-trail').hidden=state.phase!=='evidence';
  $('demand-feedback').textContent=state.quiet?'':feedback(state);
@@ -38,7 +38,12 @@ function render(move=true){
   else if(state.phase==='evidence')camera(1,fragments[current].area);
   else if(state.selected&&state.assignments[state.selected])camera(1,fragments[state.selected].area);
   else camera(0);
+  if(state.phase==='evidence'||state.phase==='arrange'&&state.selected&&state.assignments[state.selected]){
+   const f=fragments[current];
+   $('pangu-evidence-caption').textContent='归档字段对照 · '+f.fields+'：'+f.values;
+  }
  }
+
 }
 function send(action,move=true){state=reduceDemand(state,action);render(move);}
 root.addEventListener('click',e=>{

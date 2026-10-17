@@ -61,3 +61,10 @@ body:has(#pangu-scene[data-demand-focus="style"]) .agent-wrap.in-project{left:26
  .pangu-scene[data-demand-phase="result"] .demand-sentence,.pangu-scene[data-demand-phase="result"] .demand-structure{display:none}
 }
 @media(prefers-reduced-motion:reduce){.agent-wrap.in-project .agent-image{transition:none}}
+
+/* Browser correction: reserve the floor below the evidence, never the live controls. */
+.agent-wrap.in-workspace.in-project{left:35%;top:calc(100dvh - 132px);width:88px;max-height:120px}
+.agent-wrap.in-project .agent-image{max-height:120px}
+body:has(#pangu-scene[data-demand-focus="format"]) .agent-wrap.in-project{top:calc(100dvh - 132px)}
+body:has(#pangu-scene[data-demand-focus="style"]) .agent-wrap.in-project{left:36%}
+#demand-structure-list li button::before,#demand-structure-list li button::after{content:none!important;counter-increment:none}
