@@ -95,6 +95,10 @@ button{font:inherit;cursor:pointer;color:inherit}button:focus-visible{outline:2p
 .reader[data-motion] .reader-tabs{pointer-events:none}
 
 /* Optional B guidance: the existing CUI node joins the real note, never covers it. */
+.story .hint{max-width:220px;line-height:1.8}
+.analysis-steps button:focus-visible,.analysis-evidence:focus-visible{outline:2px solid #b99b56;outline-offset:3px}
+.reader-box[data-exploration] .reader-view{border-left:2px solid #b2c7aa}
+@media(max-width:760px){.story .hint{display:block;grid-column:1 / -1;max-width:none;font-size:12px;margin-bottom:0}.note-analysis .analysis-boundary{font-size:12px;line-height:1.7}.note-analysis .analysis-steps button{font-size:12px;min-height:36px}.reader-box[data-exploration] .reader-view{border-left:0;border-top:2px solid #b2c7aa}}
 [hidden]{display:none!important}
 .reader-actions{display:flex;align-items:center;gap:14px}
 .analysis-launch{border:0;background:transparent;color:#e2eedc;padding:8px 0;font-size:12px}

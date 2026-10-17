@@ -94,7 +94,16 @@
   if(!panel.open) panel.showModal();
  }
  $('test-xhs').addEventListener('click',e=>show('xhs',e.currentTarget));
- $('test-noteguard').addEventListener('click',e=>show('noteguard',e.currentTarget));
+ let noteGuardDeparting=false,noteGuardDepartingAt=0;
+ const resetNoteGuardDeparture=()=>{noteGuardDeparting=false;};
+ window.addEventListener('pageshow',resetNoteGuardDeparture);
+ window.navigation?.addEventListener('navigateerror',resetNoteGuardDeparture);
+ $('test-noteguard').addEventListener('click',e=>{
+  const now=performance.now();
+  if(noteGuardDeparting&&now-noteGuardDepartingAt<800)return;
+  noteGuardDeparting=true;noteGuardDepartingAt=now;
+  try{show('noteguard',e.currentTarget);}catch(error){resetNoteGuardDeparture();throw error;}
+ });
  document.querySelectorAll('[data-workspace-info]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.workspaceInfo,b)));
  $('workspace-info-close').addEventListener('click',()=>panel.close());
  panel.addEventListener('close',()=>{if(invoker?.isConnected&&document.body.classList.contains('cui-test-active')) invoker.focus({preventScroll:true})});

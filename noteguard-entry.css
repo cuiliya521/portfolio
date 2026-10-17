@@ -1,0 +1,26 @@
+/* Two independent documents opt in; only the actual card/window is paired. */
+@view-transition{navigation:auto}
+:root{view-transition-name:none}
+html[data-ng-entry="departing"] #test-noteguard{view-transition-name:ng-review-window}
+html[data-ng-entry="arriving"] .product-window{view-transition-name:ng-review-window}
+/* Different names intentionally avoid pretending these are the same CUI DOM/pose. */
+html[data-ng-entry="departing"] #agent-wrap{view-transition-name:ng-cui-departure}
+html[data-ng-entry="arriving"] .guide{view-transition-name:ng-cui-arrival}
+::view-transition{pointer-events:none}
+::view-transition-group(ng-review-window){animation-duration:260ms;animation-timing-function:cubic-bezier(.22,.7,.2,1)}
+::view-transition-image-pair(ng-review-window){isolation:isolate}
+::view-transition-old(ng-review-window){animation:ngEvidenceOut 150ms ease-out both;mix-blend-mode:normal}
+::view-transition-new(ng-review-window){animation:ngEvidenceIn 200ms ease-out both;mix-blend-mode:normal}
+::view-transition-old(ng-cui-departure){animation:ngGuideLeave 140ms ease-out both}
+::view-transition-new(ng-cui-arrival){animation:ngGuideArrive 180ms ease-out both}
+@keyframes ngEvidenceOut{to{opacity:0}}
+@keyframes ngEvidenceIn{from{opacity:.35}to{opacity:1}}
+@keyframes ngGuideLeave{to{translate:8px -2px;opacity:0}}
+@keyframes ngGuideArrive{from{translate:0 3px;opacity:.55}to{translate:0 0;opacity:1}}
+@media(max-width:740px){
+ @view-transition{navigation:none}
+ ::view-transition-group(ng-review-window){animation-duration:160ms}
+ ::view-transition-old(ng-review-window),::view-transition-new(ng-review-window){animation-duration:140ms}
+ html[data-ng-entry] #agent-wrap,html[data-ng-entry] .guide{view-transition-name:none}
+}
+@media(prefers-reduced-motion:reduce){@view-transition{navigation:none}::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}

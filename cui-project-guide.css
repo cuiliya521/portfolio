@@ -1,0 +1,21 @@
+/* Individual transform properties leave the existing FLIP transform untouched. */
+.agent-wrap.in-workspace:not(.in-project) .agent-image{translate:0 0;rotate:0deg;transition:translate 180ms ease-out,rotate 180ms ease-out;transform-origin:50% 78%}
+.agent-wrap.in-workspace[data-project-guide="pangu"] .agent-image{translate:3px -2px;rotate:.45deg}
+.agent-wrap.in-workspace[data-project-guide="xhs"] .agent-image{translate:5px -1px;rotate:.7deg}
+.agent-wrap.in-workspace[data-project-guide="noteguard"] .agent-image{translate:3px 1px;rotate:.35deg}
+body[data-transition="running"] .agent-wrap .agent-image,.agent-wrap.in-project .agent-image{translate:0 0;rotate:0deg;transition:none}
+.workspace-window[data-cui-selected]{outline:1px solid #7f967b;outline-offset:3px}
+@media(max-width:700px){
+ .test-workspace__intro{min-height:3.4em;max-width:calc(100% - 88px);font-size:13px;line-height:1.7}
+ .agent-wrap.in-workspace[data-project-guide] .agent-image{translate:0 -1px;rotate:0deg}
+}
+@media(prefers-reduced-motion:reduce){
+ .agent-wrap.in-workspace .agent-image{translate:0 0!important;rotate:0deg!important;transition:none!important}
+}
+.agent-wrap[data-guide-committed="true"] .agent-image{translate:0 0!important;rotate:0deg!important;transition:none!important}
+/* Once per verified return; animation affects individual properties, not FLIP transform. */
+.agent-wrap.in-workspace[data-return-companion] .agent-image{animation:cuiReturnWelcome 360ms ease-out 1}
+@keyframes cuiReturnWelcome{0%,100%{translate:0 0;rotate:0deg}45%{translate:0 -3px;rotate:-.6deg}}
+@media(max-width:700px){.agent-wrap.in-workspace[data-return-companion] .agent-image{animation-duration:180ms}}
+@media(prefers-reduced-motion:reduce){.agent-wrap.in-workspace[data-return-companion] .agent-image{animation:none!important}}
+body[data-transition="running"] .agent-wrap[data-return-companion] .agent-image{animation:none}

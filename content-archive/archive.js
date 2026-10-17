@@ -12,12 +12,13 @@
   const cui=document.querySelector('img.cui'),cuiHome=cui.parentElement,cuiSibling=cui.nextSibling;
   const analysisSteps=[...document.querySelectorAll('[data-step]')];
   const guidance=[
-    {title:'谁需要这份辅导？',copy:'从封面看，笔记面向数理基础薄弱的学员，用「点对点定制」回应针对性辅导的需求。',boundary:'依据笔记表达拆解，不代替用户调研结论。',view:'cover',evidence:'看真实封面 ↗'},
-    {title:'把服务说具体。',copy:'封面突出「点对点定制」「66元/课时」；正文再补充教学方式，让访客继续了解服务。',boundary:'原始表达保留在截图中，没有改写或补造承诺。',view:'text',evidence:'看真实正文与互动 ↗'},
-    {title:'回到这篇笔记的成果。',copy:'A 态中的 680+，对应的就是当前这篇黄色笔记。它是单篇留资成果，不是截图中的点赞或评论数。',boundary:'采用已确认的业务口径；不能仅凭这张截图认定某句文案带来了留资。',view:'full',evidence:'回看这篇完整笔记 ↗'}
+    {title:'先看内容承诺。',copy:'「点对点定制」「66元/课时」：先在真实封面中看见服务对象与价格表达。',boundary:'内容原图 · 当前黄色笔记；不把截图解读当作用户调研结论。',view:'cover',evidence:'自由查看封面 ↗'},
+    {title:'把抽象卖点，说成具体服务。',copy:'从针对性辅导需求切入，再交代教学方式与价格，降低继续了解服务的门槛。',boundary:'运营分析 · 基于现有表达的案例拆解；不证明该策略由个人独立制定，也不证明转化因果。',view:'text',evidence:'自由查看正文 ↗'},
+    {title:'指标与原图，分开核实。',copy:'680+ 是已确认的该篇留资口径。当前原图可核实内容表达，不能单独核实后台留资。',boundary:'结果边界 · 单篇，不是平均值；缺对应后台指标截图。不采用 ROI、留资总和或增长归因。',view:'full',evidence:'查看完整内容原图 ↗'}
   ];
   let analysisStep=0;
   function selectAnalysis(step){
+    if(!Number.isInteger(step)||step<0||step>=guidance.length)return;
     analysisStep=step;const a=guidance[step];
     $('analysisCount').textContent=`0${step+1} / 03`;
     $('analysisTitle').textContent=a.title;$('analysisCopy').textContent=a.copy;
@@ -26,8 +27,17 @@
     $('analysisEvidence').textContent=a.evidence;
     $('analysisNext').textContent=step===2?'完成 · 继续阅读':'下一步 →';
     analysisSteps.forEach(el=>el.setAttribute('aria-pressed',String(Number(el.dataset.step)===step)));
+    // Reuse the existing reader and its original crops: one live evidence surface.
+    activeView=a.view;setView(activeView);
+    $('readerBox').dataset.exploration=String(step);
+    if(!reducedMotion.matches&&typeof $('analysisContent').animate==='function'){
+      evidenceMotion?.cancel();
+      try{evidenceMotion=$('analysisContent').animate([{opacity:.65,transform:'translateY(4px)'},{opacity:1,transform:'translateY(0)'}],{duration:200,easing:'ease-out'});}catch{ /* Reading never depends on enhancement support. */ }
+    }
   }
+  let evidenceMotion;
   function endAnalysis(restore=false){
+    evidenceMotion?.cancel();delete $('readerBox').dataset.exploration;
     $('noteAnalysis').hidden=true;$('readerBox').classList.remove('guide-active');
     $('startAnalysis').setAttribute('aria-expanded','false');
     cuiHome.insertBefore(cui,cuiSibling);cui.classList.remove('reader-cui');
@@ -143,6 +153,11 @@
   $('mainCoverButton').addEventListener('click',showReader);
   $('startAnalysis').addEventListener('click',startAnalysis);
   analysisSteps.forEach(el=>el.addEventListener('click',()=>{if(phase==='open')selectAnalysis(Number(el.dataset.step))}));
+  document.querySelector('.analysis-steps').addEventListener('keydown',e=>{
+    if(phase!=='open'||$('noteAnalysis').hidden||!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;
+    e.preventDefault();const next=e.key==='Home'?0:e.key==='End'?2:(analysisStep+(e.key==='ArrowRight'?1:2))%3;
+    selectAnalysis(next);analysisSteps[next].focus({preventScroll:true});
+  });
   $('analysisEvidence').addEventListener('click',()=>{if(phase==='open'){activeView=guidance[analysisStep].view;setView(activeView)}});
   $('analysisNext').addEventListener('click',()=>{if(phase==='open'){if(analysisStep===2)endAnalysis(true);else selectAnalysis(analysisStep+1)}});
   $('skipAnalysis').addEventListener('click',()=>endAnalysis(true));
