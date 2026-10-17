@@ -1,4 +1,4 @@
-/* Original reader + R4-B single-image evidence camera. No product simulation. */
+/* R7: one evidence surface. Three continuous focuses, then a separate archived page. */
 (() => {
   const viewer = document.getElementById('pangu-original-viewer');
   const scroll = viewer.querySelector('.pangu-original-scroll');
@@ -8,23 +8,42 @@
   const focus=viewport.querySelector('.pangu-evidence-focus'),caption=document.getElementById('pangu-evidence-caption');
   const buttons=[...scene.querySelectorAll('[data-pangu-stage]')];
   const reduced=matchMedia('(prefers-reduced-motion: reduce)'),mobile=matchMedia('(max-width:700px)');
-  const areas=[null,[265,142,570,432],[930,110,515,785],[250,680,1190,344]];
-  const descriptions=['真实产品全貌：选择字段、查看结果与素材入口。','把写 Prompt，变成选字段。六个真实字段帮助商户表达需求。','真实结果预览：青提柠檬海报，以及下载、收藏、复用入口。','素材区只保留截图底部的部分卡片，未展示完整管理流程；上方「复用」入口提供辅助证据。'];
+  const areas=[[0,0,1536,1024],[245,80,610,500],[880,80,650,815],[0,0,1536,1024]];
+  const productSource=image.getAttribute('src'),materialsSource='assets/pangu-r1/materials-source.jpg';
+  const materialImage=new Image();
+  const materialsReady=new Promise(resolve=>{materialImage.onload=()=>resolve(true);materialImage.onerror=()=>resolve(false);});
+  materialImage.src=materialsSource;
+  const guide=document.getElementById('pangu-shot-guide');
+  const guides=['先看整体，再靠近关键机制。','六个字段，把需求变成可选择的输入。','看清结果，再判断下载、收藏或复用。','这是另一张真实素材页，仅展示可见管理入口。'];
+  const descriptions=['真实产品全貌：选择字段、查看结果与素材入口。','把写 Prompt，变成选字段。六个真实字段帮助商户表达需求。','真实结果预览：青提柠檬海报，以及下载、收藏、复用入口。','独立归档页面 · 我的素材：分类、筛选、搜索与素材卡片。截图不等于已验证再次复用流程。'];
   let stage=0,animations=[],serial=0,pendingExit=null,settled=Promise.resolve();
   const rectFrames=r=>({left:r[0]+'px',top:r[1]+'px',width:r[2]+'px',height:r[3]+'px'});
-  function select(next,duration=mobile.matches?180:280){
-    const ticket=++serial,before=getComputedStyle(image).transform,previous=focus.getBoundingClientRect(),viewBefore=viewport.getBoundingClientRect(),opacity=getComputedStyle(focus).opacity;
-    animations.forEach(a=>a.cancel());animations=[];stage=next;viewport.dataset.cameraStage=String(next);
-    buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===next)));caption.textContent=descriptions[next];
-    const w=viewport.clientWidth,h=viewport.clientHeight,base=w/1536,area=mobile.matches&&next===3?[245,885,800,139]:areas[next];let transform='none',region=[0,0,w,h];
-    if(area){const [x,y,rw,rh]=area,scale=Math.min(w/rw,h/rh);const tx=Math.min(0,Math.max(w-1536*scale,(w-rw*scale)/2-x*scale)),ty=Math.min(0,Math.max(h-1024*scale,(h-rh*scale)/2-y*scale));transform=`translate(${tx}px,${ty}px) scale(${scale/base})`;region=[tx+x*scale,ty+y*scale,rw*scale,rh*scale];}
-    image.style.transform=transform;Object.assign(focus.style,rectFrames(region));focus.style.opacity=next?'1':'0';
+  async function select(next,duration=mobile.matches?180:320){
+    if(!Number.isInteger(next)||next<0||next>3)return;
+    const ticket=++serial;
+    if(next===3 && !await materialsReady){
+      if(ticket===serial)caption.textContent='素材原图加载失败，请稍后重试；当前保留上一镜头。';
+      return;
+    }
+    if(ticket!==serial)return;
+    const before=getComputedStyle(image).transform,previous=focus.getBoundingClientRect(),viewBefore=viewport.getBoundingClientRect(),opacity=getComputedStyle(focus).opacity;
+    const pageChanged=(stage===3)!==(next===3);
+    animations.forEach(a=>a.cancel());animations=[];stage=next;viewport.dataset.cameraStage=String(next);scene.dataset.shot=String(next);
+    image.src=next===3?materialsSource:productSource;
+    image.alt=next===3?'独立归档的盘古「我的素材」页面：分类、筛选、搜索及三张素材卡片':'用户提供的盘古完整生成界面：六字段、实时预览及素材入口';
+    buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===next)));caption.textContent=descriptions[next];guide.textContent=guides[next];
+    const w=viewport.clientWidth,h=viewport.clientHeight,base=w/1536;
+    const [x,y,rw,rh]=areas[next],scale=Math.min(w/rw,h/rh);
+    const tx=(w-rw*scale)/2-x*scale,ty=(h-rh*scale)/2-y*scale;
+    const transform=`translate(${tx}px,${ty}px) scale(${scale/base})`,region=[tx+x*scale,ty+y*scale,rw*scale,rh*scale];
+    image.style.transform=transform;Object.assign(focus.style,rectFrames(region));focus.style.opacity=(next===1||next===2)?'1':'0';
     document.dispatchEvent(new CustomEvent('cui:pangu-camera',{detail:{phase:'started',stage:next,duration:reduced.matches?0:duration}}));
     if(reduced.matches||!duration){settled=Promise.resolve();document.dispatchEvent(new CustomEvent('cui:pangu-camera',{detail:{phase:'settled',stage:next}}));return settled;}
     const opts={duration,easing:'cubic-bezier(.22,.7,.2,1)'};
     if(mobile.matches&&Math.abs(viewBefore.height-h)>1)animations.push(viewport.animate([{height:viewBefore.height+'px'},{height:h+'px'}],opts));
-    animations.push(image.animate([{transform:before},{transform}],opts));
-    animations.push(focus.animate([{...rectFrames([previous.left-viewBefore.left,previous.top-viewBefore.top,previous.width,previous.height]),opacity},{...rectFrames(region),opacity:next?1:0}],opts));
+    // A single decoded image node: no clone, no blank frame or fake continuous pan between pages.
+    animations.push(image.animate(pageChanged?[{opacity:.72,transform},{opacity:1,transform}]:[{transform:before},{transform}],opts));
+    animations.push(focus.animate([{...rectFrames([previous.left-viewBefore.left,previous.top-viewBefore.top,previous.width,previous.height]),opacity},{...rectFrames(region),opacity:(next===1||next===2)?1:0}],opts));
     settled=Promise.all(animations.map(a=>a.finished.catch(()=>{}))).then(()=>{if(ticket!==serial)return;animations=[];document.dispatchEvent(new CustomEvent('cui:pangu-camera',{detail:{phase:'settled',stage:next}}));});return settled;
   }
   buttons.forEach((button,i)=>button.addEventListener('click',()=>{if(!pendingExit)select(i)}));
@@ -40,6 +59,9 @@
   window.addEventListener('resize',()=>{if(scene.classList.contains('open')&&!pendingExit&&document.body.dataset.transition==='idle')select(stage,0)});
   const open = event => {
     opener = event.currentTarget;
+    const original=viewer.querySelector('.pangu-original-scroll img');
+    original.src=image.src;original.alt=image.alt;
+    document.getElementById('pangu-original-title').textContent=stage===3?'盘古 · 我的素材原始截图':'盘古 · 生成工作台原始截图';
     viewer.classList.remove('is-fit');
     fit.textContent = '适应屏幕';
     viewer.showModal();
