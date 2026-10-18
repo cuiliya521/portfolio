@@ -58,29 +58,3 @@
 @media(min-width:701px){.pangu-r1-aside ol{display:grid;grid-template-columns:1fr 1fr;gap:5px;border:0;margin-top:12px}.pangu-r1-aside li{margin:0}.pangu-r1-aside li button{padding:8px 9px;font-size:14px}}
 /* Pin the evidence origin; native button centering must not offset mobile crops. */
 #pangu-r1-product{position:absolute;left:0;top:0;width:100%;height:auto}
-
-/* R7: keep the existing space and window. Only the evidence camera/readability changes. */
-.pangu-r1-window{max-height:calc(100dvh - 120px);overflow:auto}
-#pangu-original-open{height:min(61vh,650px);aspect-ratio:auto;background:#edf2ef}
-#pangu-r1-product{border-radius:0;max-width:none}
-.pangu-evidence-focus{border-color:#bda871;box-shadow:0 0 0 2500px #edf2efd9;border-radius:3px}
-.pangu-r1-aside .pangu-shot-guide{white-space:normal;font:13px/1.8 system-ui,sans-serif;color:#3b6047;max-width:245px;margin:18px 0 0;padding-left:12px;border-left:2px solid #bda871}
-.agent-wrap.in-workspace.in-project{left:2%;top:58vh;width:19vw;max-height:28vh}
-.agent-wrap.in-project .agent-image{max-height:28vh;object-fit:contain;animation:none!important;translate:0 0!important;rotate:0deg!important}
-@media(max-width:700px){
- .pangu-scene.pangu-r1{padding:70px 14px 24px;overflow-y:auto}
- .pangu-r1-top{top:15px}
- .pangu-r1-aside{position:relative;left:auto;top:auto;width:100%}
- .pangu-r1-aside p{white-space:normal;margin-bottom:12px}
- .pangu-r1-aside ol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
- .pangu-r1-aside li button{padding:11px 6px;min-height:44px;font-size:13px}
- .pangu-r1-aside .pangu-shot-guide{max-width:none;min-height:46px;margin:14px 0}
- .pangu-r1-window{position:relative;left:auto;top:auto;width:100%;max-height:none;margin:0;padding:7px;overflow:hidden}
- #pangu-original-open[data-camera-stage],#pangu-original-open{height:235px;aspect-ratio:auto}
- #pangu-original-open[data-camera-stage="1"]{height:300px}
- #pangu-original-open[data-camera-stage="2"]{height:390px}
- #pangu-original-open[data-camera-stage="3"]{height:250px}
- .agent-wrap.in-workspace.in-project{opacity:0;pointer-events:none;left:auto;right:12px;top:74px;width:65px}
- .pangu-r1-window .r6-case-context{font-size:12px;line-height:1.7}
-}
-@media(prefers-reduced-motion:reduce){.agent-wrap.in-project .agent-image{transition:none!important}}
