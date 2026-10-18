@@ -88,3 +88,8 @@ body:has(#pangu-scene[data-cui-pose="yielding"].open) .agent-wrap.in-project{lef
 
 #pangu-scene[data-demand-phase="evidence"] .demand-cui{top:81%}
 @media(max-width:700px){#pangu-scene[data-demand-phase="evidence"] .demand-cui,#pangu-scene[data-demand-phase="result"] .demand-cui{top:auto;width:100%}}
+
+@media(max-width:700px){
+ #pangu-scene .pangu-r1-aside>h2,#pangu-scene .pangu-r1-aside>p:not(.pangu-shot-guide){max-width:calc(100% - 84px)}
+ body:has(#pangu-scene[data-demand-scrolled="true"].open) .agent-wrap.in-project{opacity:0}
+}

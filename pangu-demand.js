@@ -54,7 +54,11 @@ function render(move=true){
  }
 
 }
-function send(action,move=true){manualStage=null;state=reduceDemand(state,action);render(move);}
+function send(action,move=true){
+ manualStage=null;state=reduceDemand(state,action);render(move);
+ if(['edit','clear'].includes(action.type)&&matchMedia('(max-width:700px)').matches)root.scrollIntoView({block:'start',behavior:'instant'});
+}
+scene.addEventListener('scroll',()=>{scene.dataset.demandScrolled=String(scene.scrollTop>32)},{passive:true});
 root.addEventListener('click',e=>{
  const fragment=e.target.closest('[data-fragment],[data-edit-fragment]');
  if(fragment){send({type:'select',id:fragment.dataset.fragment||fragment.dataset.editFragment});root.querySelector('[data-dimension]').focus({preventScroll:true});return;}
@@ -81,6 +85,6 @@ scene.querySelectorAll('[data-pangu-stage]').forEach(b=>b.addEventListener('clic
  manualStage=Number(b.dataset.panguStage);state={...state,phase:manualStage>=2?'result':'evidence',cursor:0};render(false);
 }));
 document.addEventListener('cui:modechange',e=>{
- if(e.detail.mode==='pangu'){state=createDemand();render(false);}else delete role.dataset.demandFocus;
+ if(e.detail.mode==='pangu'){state=createDemand();scene.scrollTop=0;scene.dataset.demandScrolled='false';render(false);}else delete role.dataset.demandFocus;
 });
 render(false);
