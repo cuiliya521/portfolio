@@ -16,10 +16,10 @@
   const guide=document.getElementById('pangu-shot-guide');
   const guides=['先看整体，再靠近关键机制。','六个字段，把需求变成可选择的输入。','看清结果，再判断下载、收藏或复用。','这是另一张真实素材页，仅展示可见管理入口。'];
   const descriptions=['真实产品全貌：选择字段、查看结果与素材入口。','把写 Prompt，变成选字段。六个真实字段帮助商户表达需求。','归档案例结果：青提柠檬海报与可见操作入口；不是本次选择实时生成的结果。','独立归档页面 · 我的素材：分类、筛选、搜索与素材卡片。截图不等于已验证再次复用流程。'];
-  let activeArea=null;
+  let activeArea=null,activeFrame=null;
   let stage=0,animations=[],serial=0,pendingExit=null,settled=Promise.resolve();
   const rectFrames=r=>({left:r[0]+'px',top:r[1]+'px',width:r[2]+'px',height:r[3]+'px'});
-  async function select(next,duration=mobile.matches?180:320,area=null){
+  async function select(next,duration=mobile.matches?180:320,area=null,frame=null){
     if(!Number.isInteger(next)||next<0||next>3)return;
     const ticket=++serial;
     if(next===3 && !await materialsReady){
@@ -29,16 +29,18 @@
     if(ticket!==serial)return;
     const beforeClip=image.style.clipPath||'inset(0% 0% 0% 0%)',before=getComputedStyle(image).transform,previous=focus.getBoundingClientRect(),viewBefore=viewport.getBoundingClientRect(),opacity=getComputedStyle(focus).opacity;
     const pageChanged=(stage===3)!==(next===3);
-    animations.forEach(a=>a.cancel());animations=[];stage=next;activeArea=area;viewport.dataset.cameraStage=String(next);scene.dataset.shot=String(next);
+    animations.forEach(a=>a.cancel());animations=[];stage=next;activeArea=area;activeFrame=frame;viewport.dataset.cameraStage=String(next);scene.dataset.shot=String(next);
     image.src=next===3?materialsSource:productSource;
     image.alt=next===3?'独立归档的盘古「我的素材」页面：分类、筛选、搜索及三张素材卡片':'用户提供的盘古完整生成界面：六字段、实时预览及素材入口';
     buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===next)));caption.textContent=descriptions[next];guide.textContent=guides[next];
-    // Fit short field groups without leaving a tall empty evidence surface.
-    viewport.style.height=next===1&&activeArea&&!mobile.matches?Math.min(viewport.clientWidth*activeArea[3]/activeArea[2],scene.clientHeight*.61,650)+'px':'';
+    // Keep the real input and preview columns together; focus can move independently.
+    const framing=activeFrame||activeArea;
+    viewport.style.height=next===1&&framing&&!mobile.matches?Math.min(viewport.clientWidth*framing[3]/framing[2],scene.clientHeight*.68,650)+'px':'';
     const w=viewport.clientWidth,h=viewport.clientHeight,base=w/1536;
-    const [x,y,rw,rh]=activeArea||areas[next],scale=Math.min(w/rw,h/rh);
+    const [x,y,rw,rh]=activeFrame||activeArea||areas[next],scale=Math.min(w/rw,h/rh);
     const tx=(w-rw*scale)/2-x*scale,ty=(h-rh*scale)/2-y*scale;
-    const transform=`translate(${tx}px,${ty}px) scale(${scale/base})`,region=[tx+x*scale,ty+y*scale,rw*scale,rh*scale];
+    const [fx,fy,fw,fh]=activeArea||[x,y,rw,rh];
+    const transform=`translate(${tx}px,${ty}px) scale(${scale/base})`,region=[tx+fx*scale,ty+fy*scale,fw*scale,fh*scale];
     image.style.transform=transform;
     // Crop only outside the measured evidence rectangle. No wash over source text.
     image.style.clipPath=(next===1||next===2)?`inset(${y/1024*100}% ${(1536-x-rw)/1536*100}% ${(1024-y-rh)/1024*100}% ${x/1536*100}%)`:'inset(0% 0% 0% 0%)';
@@ -54,10 +56,12 @@
   }
   // R7.2 keeps camera ownership here; only bounded archived regions are accepted.
   document.addEventListener('cui:pangu-evidence',e=>{
-    const d=e.detail||{},a=d.area;
+    const d=e.detail||{},a=d.area,f=d.frame;
     if(pendingExit)return;
     if(a&&(!Array.isArray(a)||a.length!==4||!a.every(Number.isFinite)||a[0]<0||a[1]<0||a[2]<=0||a[3]<=0||a[0]+a[2]>1536||a[1]+a[3]>1024))return;
-    select(d.stage,undefined,a||null);
+    if(f&&(!Array.isArray(f)||f.length!==4||!f.every(Number.isFinite)||f[0]<0||f[1]<0||f[2]<=0||f[3]<=0||f[0]+f[2]>1536||f[1]+f[3]>1024))return;
+    if(a&&f&&(a[0]<f[0]||a[1]<f[1]||a[0]+a[2]>f[0]+f[2]||a[1]+a[3]>f[1]+f[3]))return;
+    select(d.stage,undefined,a||null,mobile.matches?null:f||null);
   });
   buttons.forEach((button,i)=>button.addEventListener('click',()=>{if(!pendingExit)select(i)}));
   document.getElementById('pangu-explore-start').addEventListener('click',()=>{if(scene.hasAttribute('data-g1')||pendingExit)return;select(1);buttons[1].focus({preventScroll:true})});
@@ -67,9 +71,9 @@
     if(already)return;document.getElementById('scene-back').focus({preventScroll:true});document.getElementById('pangu-explore-start').disabled=true;viewport.inert=true;buttons.forEach(b=>b.disabled=true);document.getElementById('pangu-source-open').disabled=true;document.body.dataset.panguExit='pending';select(0,mobile.matches?140:180).then(()=>{const resume=pendingExit;pendingExit=null;document.getElementById('pangu-explore-start').disabled=false;viewport.inert=false;buttons.forEach(b=>b.disabled=false);document.getElementById('pangu-source-open').disabled=false;document.body.dataset.panguExit='idle';resume?.()});
   });
   document.addEventListener('cui:modechange',e=>{if(e.detail.mode==='pangu')select(0,0)});
-  reduced.addEventListener('change',()=>{if(reduced.matches)select(stage,0,activeArea)});
-  mobile.addEventListener('change',()=>select(stage,0,activeArea));
-  window.addEventListener('resize',()=>{if(scene.classList.contains('open')&&!pendingExit&&document.body.dataset.transition==='idle')select(stage,0,activeArea)});
+  reduced.addEventListener('change',()=>{if(reduced.matches)select(stage,0,activeArea,mobile.matches?null:activeFrame)});
+  mobile.addEventListener('change',()=>select(stage,0,activeArea,mobile.matches?null:activeFrame));
+  window.addEventListener('resize',()=>{if(scene.classList.contains('open')&&!pendingExit&&document.body.dataset.transition==='idle')select(stage,0,activeArea,mobile.matches?null:activeFrame)});
   const open = event => {
     opener = event.currentTarget;
     const original=viewer.querySelector('.pangu-original-scroll img');

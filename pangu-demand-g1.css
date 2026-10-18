@@ -1,7 +1,7 @@
-/* G1 is opt-in. No idle-scene, background, window or title overrides. */
+/* G1.1 is opt-in. No idle-scene, background, window or title overrides. */
 #pangu-demand[hidden],#pangu-demand [hidden],#pangu-contribution[hidden]{display:none!important}
 #pangu-scene[data-demand-active] .pangu-r1-aside>ol{display:none}
-#pangu-scene[data-demand-active] #pangu-demand{margin-top:14px;max-height:calc(100dvh - 455px);overflow:auto;scrollbar-width:thin;color:#244a3f;font:14px/1.5 system-ui;overscroll-behavior:contain;padding:0 5px 6px 0}
+#pangu-scene[data-demand-active] #pangu-demand{margin-top:14px;max-height:calc(100dvh - 580px);overflow:auto;scrollbar-width:thin;color:#244a3f;font:14px/1.5 system-ui;overscroll-behavior:contain;padding:0 5px 6px 0}
 #pangu-demand .demand-chapter{font:600 12px/1.5 system-ui;letter-spacing:.05em;margin:0 0 5px;white-space:normal}
 #pangu-demand .demand-boundary{font:11px/1.5 system-ui;color:#567062}
 #pangu-demand .demand-invitation{display:none}
@@ -19,24 +19,29 @@
 #demand-structure-list li{margin:0;padding:0}
 #demand-structure-list button{font:13px/1.5 system-ui;border:0;border-bottom:1px solid #9bb294;background:none;color:#244a3f;padding:5px 0;min-height:32px;text-align:left}
 #demand-structure-list button::before{content:none}
-#demand-evidence:disabled{display:none}
+#pangu-demand #demand-evidence:disabled{display:none}
+#pangu-demand[data-has-assignments=false] .demand-structure{display:none}
 #pangu-scene[data-demand-phase=evidence] .demand-sentence,#pangu-scene[data-demand-phase=result] .demand-sentence,#pangu-scene[data-demand-phase=evidence] .demand-boundary,#pangu-scene[data-demand-phase=result] .demand-boundary,#pangu-scene[data-demand-phase=evidence] .demand-structure,#pangu-scene[data-demand-phase=result] .demand-structure,#pangu-scene[data-demand-phase=evidence] .demand-tools,#pangu-scene[data-demand-phase=result] .demand-tools{display:none}
 #demand-empty{font:12px/1.5 system-ui;margin:4px 0;white-space:normal}
 #pangu-demand .demand-tools{display:flex;gap:12px;flex-wrap:wrap;margin:5px 0}
 #pangu-demand .demand-tools button,#demand-quiet,#demand-edit,#demand-next,#demand-revisit,#demand-back{font:12px/1.5 system-ui;color:#31523d;border:0;background:none;padding:5px 0;min-height:32px;text-align:left;cursor:pointer}
+#demand-undo:disabled,#demand-clear:disabled{display:none}
 #pangu-demand button:disabled{opacity:.4;cursor:default}
 #pangu-demand .demand-cui{border-left:2px solid #ad9c68;padding-left:8px;margin:8px 0}
 #pangu-demand .demand-cui>span{font-size:11px}
 #pangu-demand .demand-cui p{font:13px/1.55 system-ui;white-space:normal;margin:0}
 #pangu-demand .demand-primary{display:block;font:600 13px/1.4 system-ui;min-height:40px;padding:9px 12px;width:100%;border:1px solid #28533d;border-radius:5px;background:#28533d;color:#fffdf3;margin:8px 0}
+#pangu-scene[data-demand-active] .pangu-evidence-focus{box-shadow:none;border:2px solid #a58a40;border-radius:4px}
 #pangu-demand .demand-trail{font:13px/1.6 system-ui;margin:8px 0}
 #pangu-demand .demand-trail>div{display:flex;gap:12px;flex-wrap:wrap}
 #demand-revisit,#demand-back,#demand-next-project{display:block}
 #demand-next-project{font:600 14px/1.5 system-ui;color:#244a3f;padding:8px 0}
-body:has(#pangu-scene.open[data-demand-active]) .agent-wrap.in-project{top:auto;bottom:16px;left:3.5%;width:84px;max-height:112px}
-body:has(#pangu-scene.open[data-demand-active]) .agent-wrap.in-project .agent-image{max-height:112px;object-fit:contain;animation:none}
-body:has(#pangu-scene.open[data-demand-phase=result]) .agent-wrap.in-project{width:64px;max-height:86px}
-body:has(#pangu-scene.open[data-demand-phase=result]) .agent-wrap.in-project .agent-image{max-height:86px}
+body:has(#pangu-scene.open[data-demand-active]) .agent-wrap.in-project{top:auto;bottom:16px;left:3.5%;width:145px;max-height:194px}
+body:has(#pangu-scene.open[data-demand-active]) .agent-wrap.in-project .agent-image{max-height:194px;object-fit:contain;animation:none}
+body:has(#pangu-scene.open[data-demand-phase=evidence]) .agent-wrap.in-project{top:60vh;bottom:auto;width:170px;max-height:227px}
+body:has(#pangu-scene.open[data-demand-phase=evidence]) .agent-wrap.in-project .agent-image{max-height:227px}
+body:has(#pangu-scene.open[data-demand-phase=result]) .agent-wrap.in-project{top:60vh;bottom:auto;width:160px;max-height:214px}
+body:has(#pangu-scene.open[data-demand-phase=result]) .agent-wrap.in-project .agent-image{max-height:214px}
 #pangu-scene[data-demand-phase=result] #pangu-original-open{height:min(50dvh,480px);aspect-ratio:auto}
 #pangu-scene[data-demand-phase=result] #pangu-contribution{font:13px/1.6 system-ui}
 #pangu-contribution h3{font:650 17px/1.4 system-ui;margin:3px 0 8px}

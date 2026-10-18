@@ -4,12 +4,13 @@ const $=id=>document.getElementById(id),scene=$('pangu-scene'),root=$('pangu-dem
 let state=createDemand();
 let manualStage=null;
 let active=false;
-const camera=(stage,area)=>document.dispatchEvent(new CustomEvent('cui:pangu-evidence',{detail:{stage,area}}));
+const camera=(stage,area)=>document.dispatchEvent(new CustomEvent('cui:pangu-evidence',{detail:{stage,area,frame:stage===1?[245,80,1273,815]:undefined}}));
 function render(move=true){
  if(!active)return;
  scene.dataset.demandPhase=state.phase;
  const view=presentationFor(state),current=view.current;
- $('demand-chapter').textContent=view.chapter;
+ $('demand-chapter').textContent={arrange:'整理商户需求',evidence:'对照真实字段',result:'查看归档结果'}[state.phase];
+ root.dataset.hasAssignments=String(state.order.length>0);
  scene.dataset.cuiPose=view.pose;
  $('pangu-contribution').hidden=state.phase!=='result';
  const evidence=scene.querySelector('.pangu-r1-window');
@@ -37,13 +38,13 @@ function render(move=true){
  $('demand-next-project').hidden=state.phase!=='result';
  $('demand-trail').hidden=state.phase!=='evidence'||manualStage!==null;
  $('demand-feedback').textContent=state.quiet?'':manualStage===null?view.message:['这是完整归档工作台，可以放大查看。','六个主要选择行之外，还有图片比例与生成数量。','这是归档海报，不是现场生成。','这是另一张归档素材页，仅展示可见管理入口。'][manualStage];
- $('demand-feedback').textContent=$('demand-feedback').textContent.replace('先点带下划线的需求','先点一个需求关键词');
+ if(state.phase==='arrange'&&!state.quiet)$('demand-feedback').textContent=!state.selected?'点一条需求，从你的判断开始。':state.assignments[state.selected]?`已记下：${dimensions[state.assignments[state.selected]]}。还可以修改。`:'这条需求，你会先从哪个角度整理？';
  $('demand-feedback').hidden=state.quiet;
  $('demand-quiet').textContent=state.quiet?'开启引导':'收起引导';$('demand-quiet').setAttribute('aria-pressed',String(state.quiet));
  $('demand-quiet').setAttribute('aria-label',state.quiet?'开启 CUI 引导':'关闭 CUI 引导');
  if(state.phase==='evidence'){
   const f=fragments[current];
-  $('demand-map').textContent=`${f.label} → ${f.fields} · ${f.values}`;
+  $('demand-map').textContent=`${f.label} → ${f.fields}`;
   $('demand-next').textContent='再看：'+fragments[explorationOrder(state)[(state.cursor+1)%3]].label+' ↗';
  }
  if(move){
@@ -53,7 +54,7 @@ function render(move=true){
   else camera(0);
   if((state.phase==='evidence'||state.phase==='arrange')&&current){
    const f=fragments[current];
-   $('pangu-evidence-caption').textContent='归档字段对照 · '+f.fields+'：'+f.values;
+   $('pangu-evidence-caption').textContent='归档字段对照 · '+f.fields;
   }
  }
 

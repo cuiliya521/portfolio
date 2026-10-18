@@ -24,4 +24,13 @@ const bad=harness({fail:true});bad.click(1);bad.click(3);await bad.flush();await
 const normal=harness({reduced:false});normal.click(1);normal.click(2);await normal.flush();await check('first three shots animate transforms in same node',()=>assert.ok(normal.ids['pangu-r1-product'].anim.every(f=>f[0].transform&&f[1].transform)));
 normal.click(3);await normal.flush();await check('page change is opacity transition, not fake camera pan',()=>{const frames=normal.ids['pangu-r1-product'].anim.at(-1);assert.equal(frames[0].transform,frames[1].transform);assert.equal(frames[0].opacity,.72)});
 await check('reduced motion starts no image animations',()=>assert.equal(race.ids['pangu-r1-product'].anim.length,0));
+const context=harness(),frame=[245,80,1273,815];
+context.events['cui:pangu-evidence']({detail:{stage:1,area:[245,80,610,260],frame}});await context.flush();
+const sharedTransform=context.ids['pangu-r1-product'].style.transform,businessTop=context.focus.style.top;
+context.events['cui:pangu-evidence']({detail:{stage:1,area:[245,340,610,140],frame}});await context.flush();
+await check('context remains fixed while field focus moves',()=>{assert.equal(context.ids['pangu-r1-product'].style.transform,sharedTransform);assert.notEqual(context.focus.style.top,businessTop);assert.ok(parseFloat(context.focus.style.width)<context.ids['pangu-original-open'].clientWidth)});
+context.events['cui:pangu-evidence']({detail:{stage:3,area:[245,80,610,260],frame:[0,0,9999,815]}});await context.flush();
+await check('out of archive context frame is rejected',()=>assert.equal(context.ids['pangu-original-open'].dataset.cameraStage,'1'));
+context.events['cui:pangu-evidence']({detail:{stage:3,area:[0,0,610,260],frame}});await context.flush();
+await check('field outside its context frame is rejected',()=>assert.equal(context.ids['pangu-original-open'].dataset.cameraStage,'1'));
 console.log(JSON.stringify({classification:'Synthetic DOM contracts, not browser visual acceptance',total:results.length,pass:results.filter(x=>x.status==='PASS').length,fail:results.filter(x=>x.status==='FAIL').length,results},null,2));if(results.some(x=>x.status==='FAIL'))process.exitCode=1;
