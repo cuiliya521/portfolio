@@ -3,18 +3,20 @@ import {dimensions,fragments,createDemand,reduceDemand,explorationOrder,feedback
 const $=id=>document.getElementById(id),scene=$('pangu-scene'),root=$('pangu-demand'),role=$('agent-wrap');
 let state=createDemand();
 let manualStage=null;
+let active=false;
 const camera=(stage,area)=>document.dispatchEvent(new CustomEvent('cui:pangu-evidence',{detail:{stage,area}}));
 function render(move=true){
+ if(!active)return;
  scene.dataset.demandPhase=state.phase;
  const view=presentationFor(state),current=view.current;
  $('demand-chapter').textContent=view.chapter;
  scene.dataset.cuiPose=view.pose;
  $('pangu-contribution').hidden=state.phase!=='result';
  const evidence=scene.querySelector('.pangu-r1-window');
- evidence.inert=!view.foreground;evidence.setAttribute('aria-hidden',String(!view.foreground));
- $('pangu-evidence-nav').hidden=!view.foreground;
+ evidence.inert=false;evidence.setAttribute('aria-hidden','false');
+ $('pangu-g0-contribution').hidden=state.phase==='result';
  $('demand-revisit').hidden=state.phase!=='result'&&manualStage===null;$('demand-back').hidden=state.phase!=='result';
- if(state.phase==='arrange')$('pangu-evidence-nav').open=false;
+
  scene.dataset.demandFocus=current||'intro';
  role.dataset.demandFocus=current||'intro';
  root.querySelectorAll('[data-fragment]').forEach(b=>{
@@ -45,10 +47,10 @@ function render(move=true){
  }
  if(move){
   if(state.phase==='result')camera(2);
-  else if(state.phase==='evidence')camera(1,view.area);
-  // A judgment changes the visible demand structure, not the archived product behind it.
+  else if(state.phase==='evidence'||state.selected)camera(1,view.area);
+  // A selection also points to its bounded real fields; the archive remains visible.
   else camera(0);
-  if(state.phase==='evidence'){
+  if((state.phase==='evidence'||state.phase==='arrange')&&current){
    const f=fragments[current];
    $('pangu-evidence-caption').textContent='归档字段对照 · '+f.fields+'：'+f.values;
   }
@@ -83,9 +85,17 @@ root.addEventListener('click',e=>{
 });
 // Existing evidence shortcuts remain available, without modifying the visitor's interpretation.
 scene.querySelectorAll('[data-pangu-stage]').forEach(b=>b.addEventListener('click',()=>{
- manualStage=Number(b.dataset.panguStage);state={...state,phase:manualStage>=2?'result':'evidence',cursor:0};render(false);
+ if(!active)return;manualStage=Number(b.dataset.panguStage);state={...state,phase:manualStage>=2?'result':'evidence',cursor:0};render(false);
 }));
-document.addEventListener('cui:modechange',e=>{
- if(e.detail.mode==='pangu'){state=createDemand();scene.scrollTop=0;scene.dataset.demandScrolled='false';render(false);}else delete role.dataset.demandFocus;
+function closeDemand(reset=false){
+ active=false;root.hidden=true;root.inert=true;delete scene.dataset.demandActive;delete scene.dataset.demandPhase;delete scene.dataset.cuiPose;delete role.dataset.demandFocus;
+ $('pangu-explore-start').textContent='探索产品机制 →';$('pangu-explore-start').setAttribute('aria-expanded','false');
+ $('pangu-contribution').hidden=true;$('pangu-g0-contribution').hidden=false;
+ if(reset){state=createDemand();manualStage=null;}
+}
+$('pangu-explore-start').addEventListener('click',()=>{
+ if(active){closeDemand();camera(0);return;}
+ active=true;scene.dataset.demandActive='true';root.hidden=false;root.inert=false;
+ $('pangu-explore-start').textContent='收起需求整理';$('pangu-explore-start').setAttribute('aria-expanded','true');render();root.querySelector('[data-fragment]').focus({preventScroll:true});
 });
-render(false);
+document.addEventListener('cui:modechange',e=>{closeDemand(true);if(e.detail.mode==='pangu')scene.scrollTop=0;});

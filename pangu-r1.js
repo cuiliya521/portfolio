@@ -60,7 +60,7 @@
     select(d.stage,undefined,a||null);
   });
   buttons.forEach((button,i)=>button.addEventListener('click',()=>{if(!pendingExit)select(i)}));
-  document.getElementById('pangu-explore-start').addEventListener('click',()=>{if(pendingExit)return;select(1);buttons[1].focus({preventScroll:true})});
+  document.getElementById('pangu-explore-start').addEventListener('click',()=>{if(scene.hasAttribute('data-g1')||pendingExit)return;select(1);buttons[1].focus({preventScroll:true})});
   scene.querySelector('ol').addEventListener('keydown',e=>{if(!['ArrowRight','ArrowDown','ArrowLeft','ArrowUp','Home','End'].includes(e.key))return;e.preventDefault();let i=buttons.indexOf(document.activeElement);if(i<0)i=stage;i=e.key==='Home'?0:e.key==='End'?3:(i+(['ArrowRight','ArrowDown'].includes(e.key)?1:3))%4;buttons[i].focus({preventScroll:true});if(!pendingExit)select(i)});
   document.addEventListener('cui:pangu-before-exit',e=>{
     if(!stage&&!pendingExit&&!animations.length)return;e.preventDefault();const already=!!pendingExit;pendingExit=e.detail.resume;
