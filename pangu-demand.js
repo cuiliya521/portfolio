@@ -37,6 +37,7 @@ function render(move=true){
  $('demand-next-project').hidden=state.phase!=='result';
  $('demand-trail').hidden=state.phase!=='evidence'||manualStage!==null;
  $('demand-feedback').textContent=state.quiet?'':manualStage===null?view.message:['这是完整归档工作台，可以放大查看。','六个主要选择行之外，还有图片比例与生成数量。','这是归档海报，不是现场生成。','这是另一张归档素材页，仅展示可见管理入口。'][manualStage];
+ $('demand-feedback').textContent=$('demand-feedback').textContent.replace('先点带下划线的需求','先点一个需求关键词');
  $('demand-feedback').hidden=state.quiet;
  $('demand-quiet').textContent=state.quiet?'开启引导':'收起引导';$('demand-quiet').setAttribute('aria-pressed',String(state.quiet));
  $('demand-quiet').setAttribute('aria-label',state.quiet?'开启 CUI 引导':'关闭 CUI 引导');
