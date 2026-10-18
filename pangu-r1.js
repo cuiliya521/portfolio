@@ -33,6 +33,8 @@
     image.src=next===3?materialsSource:productSource;
     image.alt=next===3?'独立归档的盘古「我的素材」页面：分类、筛选、搜索及三张素材卡片':'用户提供的盘古完整生成界面：六字段、实时预览及素材入口';
     buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===next)));caption.textContent=descriptions[next];guide.textContent=guides[next];
+    // Fit short field groups without leaving a tall empty evidence surface.
+    viewport.style.height=next===1&&activeArea&&!mobile.matches?Math.min(viewport.clientWidth*activeArea[3]/activeArea[2],scene.clientHeight*.61,650)+'px':'';
     const w=viewport.clientWidth,h=viewport.clientHeight,base=w/1536;
     const [x,y,rw,rh]=activeArea||areas[next],scale=Math.min(w/rw,h/rh);
     const tx=(w-rw*scale)/2-x*scale,ty=(h-rh*scale)/2-y*scale;
@@ -44,7 +46,7 @@
     document.dispatchEvent(new CustomEvent('cui:pangu-camera',{detail:{phase:'started',stage:next,duration:reduced.matches?0:duration}}));
     if(reduced.matches||!duration){settled=Promise.resolve();document.dispatchEvent(new CustomEvent('cui:pangu-camera',{detail:{phase:'settled',stage:next}}));return settled;}
     const opts={duration,easing:'cubic-bezier(.22,.7,.2,1)'};
-    if(mobile.matches&&Math.abs(viewBefore.height-h)>1)animations.push(viewport.animate([{height:viewBefore.height+'px'},{height:h+'px'}],opts));
+    if(Math.abs(viewBefore.height-h)>1)animations.push(viewport.animate([{height:viewBefore.height+'px'},{height:h+'px'}],opts));
     // A single decoded image node: no clone, no blank frame or fake continuous pan between pages.
     animations.push(image.animate(pageChanged?[{opacity:.72,transform},{opacity:1,transform}]:[{transform:before,clipPath:beforeClip},{transform,clipPath:image.style.clipPath}],opts));
     animations.push(focus.animate([{...rectFrames([previous.left-viewBefore.left,previous.top-viewBefore.top,previous.width,previous.height]),opacity},{...rectFrames(region),opacity:(next===1||next===2)?1:0}],opts));

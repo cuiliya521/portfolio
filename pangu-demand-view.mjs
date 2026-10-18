@@ -1,7 +1,7 @@
 /* Presentation only. R1 demand reducer and archive mappings remain unchanged. */
 import {dimensions,fragments,explorationOrder,feedback} from './pangu-demand-model.mjs';
 // Natural-image coordinates; business includes the complete source title.
-export const evidenceAreas={product:[245,80,610,280],style:[245,340,610,140],format:[245,480,610,410]};
+export const evidenceAreas={product:[245,80,610,260],style:[245,340,610,140],format:[245,480,610,410]};
 export function presentationFor(s){
  const current=s.phase==='evidence'?explorationOrder(s)[s.cursor]:s.selected;
  const foreground=s.phase!=='arrange';
