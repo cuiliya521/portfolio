@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {presentationFor} from '../pangu-demand-view.mjs';
+import {createDemand,reduceDemand,explorationOrder} from '../pangu-demand-model.mjs';
+const results=[];function test(name,fn){try{fn();results.push({name,status:'PASS'})}catch(e){results.push({name,status:'FAIL',error:e.message})}}
+const act=(s,...a)=>a.reduce(reduceDemand,s);
+test('entry keeps archive backstage',()=>{const v=presentationFor(createDemand());assert.equal(v.foreground,false);assert.equal(v.pose,'welcome')});
+for(const fragment of ['product','style','format'])for(const dimension of ['business','visual','delivery'])test(`${fragment}/${dimension} forms demand without revealing product`,()=>{const s=act(createDemand(),{type:'select',id:fragment},{type:'assign',dimension});const v=presentationFor(s);assert.equal(v.foreground,false);assert.equal(v.pose,'organizing');assert.equal(s.assignments[fragment],dimension);assert.doesNotMatch(v.message,/答错|正确率|1080|餐饮美食|清爽明亮/)});
+test('explicit evidence alone brings archive to foreground',()=>{const s=act(createDemand(),{type:'select',id:'style'},{type:'assign',dimension:'visual'},{type:'evidence'});assert.equal(presentationFor(s).foreground,true);assert.equal(presentationFor(s).current,'style');assert.equal(presentationFor(s).pose,'pointing')});
+test('skip opens evidence without fabricated judgments',()=>{const s=reduceDemand(createDemand(),{type:'skip'});assert.equal(presentationFor(s).foreground,true);assert.deepEqual(s.assignments,{})});
+test('edit returns demand to foreground with interpretations preserved',()=>{const s=act(createDemand(),{type:'select',id:'format'},{type:'assign',dimension:'visual'},{type:'evidence'},{type:'edit'});assert.equal(presentationFor(s).foreground,false);assert.equal(s.assignments.format,'visual')});
+test('undo and clear retain original reversible behavior',()=>{let s=act(createDemand(),{type:'select',id:'format'},{type:'assign',dimension:'delivery'},{type:'assign',dimension:'visual'},{type:'undo'});assert.equal(s.assignments.format,'delivery');s=reduceDemand(s,{type:'clear'});assert.deepEqual(s.assignments,{});assert.equal(presentationFor(s).pose,'welcome')});
+test('different first choices retain different evidence order',()=>{const a=act(createDemand(),{type:'select',id:'format'},{type:'assign',dimension:'visual'}),b=act(createDemand(),{type:'select',id:'product'},{type:'assign',dimension:'business'});assert.notEqual(explorationOrder(a)[0],explorationOrder(b)[0])});
+test('results yield to archive rather than claim generation',()=>{const v=presentationFor(reduceDemand(createDemand(),{type:'result'}));assert.equal(v.pose,'yielding');assert.match(v.message,/不是.*实时生成/)});
+test('quiet guidance leaves foreground rules unchanged',()=>{const a=createDemand(),v=presentationFor(reduceDemand(a,{type:'quiet'}));assert.equal(v.message,'');assert.equal(v.foreground,false)});
+test('legacy camera remains a secondary native details control',()=>{const html=fs.readFileSync('index.html','utf8');assert.match(html,/<details[^>]*id="pangu-evidence-nav"/);assert.match(html,/原版|盘古/)});
+console.log(JSON.stringify({classification:'state and presentation contracts; not visual/touch tests',total:results.length,pass:results.filter(r=>r.status==='PASS').length,fail:results.filter(r=>r.status==='FAIL').length,results},null,2));if(results.some(r=>r.status==='FAIL'))process.exitCode=1;
