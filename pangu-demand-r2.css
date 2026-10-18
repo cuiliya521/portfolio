@@ -4,7 +4,7 @@
 #pangu-scene .pangu-r1-top{z-index:6;color:#385344}
 #pangu-demand .demand-invitation{font:600 17px/1.6 system-ui;color:#244935;margin:18px 0 6px}
 #pangu-demand .demand-invitation span{margin-left:8px;color:#766737}
-#pangu-scene .pangu-evidence-focus{box-shadow:0 0 0 2500px #edf2ef55;border-color:#a78e4b}
+#pangu-scene .pangu-evidence-focus{box-shadow:none;border-color:#a78e4b}
 #pangu-scene .pangu-r1-window [hidden]{display:none!important}
 #pangu-scene .pangu-r1-aside{inset:0;width:100%;height:100%;max-height:none;padding:0;overflow:visible;pointer-events:none;z-index:3}
 #pangu-scene .pangu-r1-aside>h2{position:absolute;top:11%;left:4%;margin:0;font-size:30px;pointer-events:auto}
@@ -59,7 +59,6 @@
 #pangu-scene .pangu-evidence-nav ol{position:absolute;right:0;bottom:100%;width:300px;padding:12px;margin:0;background:#faf9ef;border:1px solid #a5b399;box-shadow:0 8px 25px #24493518;border-radius:4px}
 body:has(#pangu-scene.open) .agent-wrap.in-project{left:4%;top:41%;width:180px;max-height:240px;opacity:1;transition:left .55s,top .55s,width .55s;pointer-events:none}
 body:has(#pangu-scene.open) .agent-wrap.in-project .agent-image{max-height:240px;animation:none!important;rotate:0deg!important;translate:0 0!important}
-body:has(#pangu-scene[data-cui-pose="organizing"].open) .agent-wrap.in-project{left:5%;top:43%;width:170px}
 body:has(#pangu-scene[data-cui-pose="pointing"].open) .agent-wrap.in-project{left:4%;top:61%;width:130px}
 body:has(#pangu-scene[data-cui-pose="yielding"].open) .agent-wrap.in-project{left:5%;top:60%;width:120px}
 #pangu-scene[data-demand-phase="evidence"] .demand-cui{top:81%;width:240px}

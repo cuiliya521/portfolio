@@ -27,7 +27,7 @@
       return;
     }
     if(ticket!==serial)return;
-    const before=getComputedStyle(image).transform,previous=focus.getBoundingClientRect(),viewBefore=viewport.getBoundingClientRect(),opacity=getComputedStyle(focus).opacity;
+    const beforeClip=image.style.clipPath||'inset(0% 0% 0% 0%)',before=getComputedStyle(image).transform,previous=focus.getBoundingClientRect(),viewBefore=viewport.getBoundingClientRect(),opacity=getComputedStyle(focus).opacity;
     const pageChanged=(stage===3)!==(next===3);
     animations.forEach(a=>a.cancel());animations=[];stage=next;activeArea=area;viewport.dataset.cameraStage=String(next);scene.dataset.shot=String(next);
     image.src=next===3?materialsSource:productSource;
@@ -37,13 +37,16 @@
     const [x,y,rw,rh]=activeArea||areas[next],scale=Math.min(w/rw,h/rh);
     const tx=(w-rw*scale)/2-x*scale,ty=(h-rh*scale)/2-y*scale;
     const transform=`translate(${tx}px,${ty}px) scale(${scale/base})`,region=[tx+x*scale,ty+y*scale,rw*scale,rh*scale];
-    image.style.transform=transform;Object.assign(focus.style,rectFrames(region));focus.style.opacity=(next===1||next===2)?'1':'0';
+    image.style.transform=transform;
+    // Crop only outside the measured evidence rectangle. No wash over source text.
+    image.style.clipPath=(next===1||next===2)?`inset(${y/1024*100}% ${(1536-x-rw)/1536*100}% ${(1024-y-rh)/1024*100}% ${x/1536*100}%)`:'inset(0% 0% 0% 0%)';
+    Object.assign(focus.style,rectFrames(region));focus.style.opacity=(next===1||next===2)?'1':'0';
     document.dispatchEvent(new CustomEvent('cui:pangu-camera',{detail:{phase:'started',stage:next,duration:reduced.matches?0:duration}}));
     if(reduced.matches||!duration){settled=Promise.resolve();document.dispatchEvent(new CustomEvent('cui:pangu-camera',{detail:{phase:'settled',stage:next}}));return settled;}
     const opts={duration,easing:'cubic-bezier(.22,.7,.2,1)'};
     if(mobile.matches&&Math.abs(viewBefore.height-h)>1)animations.push(viewport.animate([{height:viewBefore.height+'px'},{height:h+'px'}],opts));
     // A single decoded image node: no clone, no blank frame or fake continuous pan between pages.
-    animations.push(image.animate(pageChanged?[{opacity:.72,transform},{opacity:1,transform}]:[{transform:before},{transform}],opts));
+    animations.push(image.animate(pageChanged?[{opacity:.72,transform},{opacity:1,transform}]:[{transform:before,clipPath:beforeClip},{transform,clipPath:image.style.clipPath}],opts));
     animations.push(focus.animate([{...rectFrames([previous.left-viewBefore.left,previous.top-viewBefore.top,previous.width,previous.height]),opacity},{...rectFrames(region),opacity:(next===1||next===2)?1:0}],opts));
     settled=Promise.all(animations.map(a=>a.finished.catch(()=>{}))).then(()=>{if(ticket!==serial)return;animations=[];document.dispatchEvent(new CustomEvent('cui:pangu-camera',{detail:{phase:'settled',stage:next}}));});return settled;
   }
