@@ -1,5 +1,4 @@
 /* R2: one retained space, three hierarchies. Overrides are scoped to Pangu. */
-#pangu-scene::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#f8f7ebd9 0%,#f8f7ebc2 38%,#eff4e786 100%);pointer-events:none;z-index:0}
 #pangu-scene .pangu-r1-aside{inset:0;width:100%;height:100%;max-height:none;padding:0;overflow:visible;pointer-events:none;z-index:3}
 #pangu-scene .pangu-r1-aside>h2{position:absolute;top:11%;left:4%;margin:0;font-size:30px;pointer-events:auto}
 #pangu-scene .pangu-r1-aside>p:not(.pangu-shot-guide){position:absolute;top:17%;left:4%;font-size:18px;margin:0;max-width:none}
@@ -88,4 +87,4 @@ body:has(#pangu-scene[data-cui-pose="yielding"].open) .agent-wrap.in-project{lef
 @media(prefers-reduced-motion:reduce){#pangu-scene .pangu-r1-window,#pangu-demand,#pangu-demand button,body:has(#pangu-scene.open) .agent-wrap.in-project{transition:none!important}}
 
 #pangu-scene[data-demand-phase="evidence"] .demand-cui{top:81%}
-@media(max-width:700px){#pangu-scene[data-demand-phase="evidence"] .demand-cui{top:auto}}
+@media(max-width:700px){#pangu-scene[data-demand-phase="evidence"] .demand-cui,#pangu-scene[data-demand-phase="result"] .demand-cui{top:auto;width:100%}}

@@ -44,7 +44,7 @@ function render(move=true){
  }
  if(move){
   if(state.phase==='result')camera(2);
-  else if(state.phase==='evidence')camera(1,fragments[current].area);
+  else if(state.phase==='evidence')camera(1,view.area);
   // A judgment changes the visible demand structure, not the archived product behind it.
   else camera(0);
   if(state.phase==='evidence'){
