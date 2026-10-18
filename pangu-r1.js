@@ -7,6 +7,8 @@
   const scene=document.getElementById('pangu-scene'),image=document.getElementById('pangu-r1-product'),viewport=document.getElementById('pangu-original-open');
   const focus=viewport.querySelector('.pangu-evidence-focus'),caption=document.getElementById('pangu-evidence-caption');
   const buttons=[...scene.querySelectorAll('[data-pangu-stage]')];
+  let motionDisabled=false;
+  document.addEventListener("cui:pangu-motion",e=>{motionDisabled=!!e.detail.disabled;if(motionDisabled)select(stage,0,activeArea,activeFrame);});
   const reduced=matchMedia('(prefers-reduced-motion: reduce)'),mobile=matchMedia('(max-width:700px)');
   const areas=[[0,0,1536,1024],[245,80,610,500],[880,80,650,815],[0,0,1536,1024]];
   const productSource=image.getAttribute('src'),materialsSource='assets/pangu-r1/materials-source.jpg';
@@ -46,7 +48,7 @@
     image.style.clipPath=(next===1||next===2)?`inset(${y/1024*100}% ${(1536-x-rw)/1536*100}% ${(1024-y-rh)/1024*100}% ${x/1536*100}%)`:'inset(0% 0% 0% 0%)';
     Object.assign(focus.style,rectFrames(region));focus.style.opacity=(next===1||next===2)?'1':'0';
     document.dispatchEvent(new CustomEvent('cui:pangu-camera',{detail:{phase:'started',stage:next,duration:reduced.matches?0:duration}}));
-    if(reduced.matches||!duration){settled=Promise.resolve();document.dispatchEvent(new CustomEvent('cui:pangu-camera',{detail:{phase:'settled',stage:next}}));return settled;}
+    if(reduced.matches||motionDisabled||!duration){settled=Promise.resolve();document.dispatchEvent(new CustomEvent('cui:pangu-camera',{detail:{phase:'settled',stage:next}}));return settled;}
     const opts={duration,easing:'cubic-bezier(.22,.7,.2,1)'};
     if(Math.abs(viewBefore.height-h)>1)animations.push(viewport.animate([{height:viewBefore.height+'px'},{height:h+'px'}],opts));
     // A single decoded image node: no clone, no blank frame or fake continuous pan between pages.
@@ -61,7 +63,7 @@
     if(a&&(!Array.isArray(a)||a.length!==4||!a.every(Number.isFinite)||a[0]<0||a[1]<0||a[2]<=0||a[3]<=0||a[0]+a[2]>1536||a[1]+a[3]>1024))return;
     if(f&&(!Array.isArray(f)||f.length!==4||!f.every(Number.isFinite)||f[0]<0||f[1]<0||f[2]<=0||f[3]<=0||f[0]+f[2]>1536||f[1]+f[3]>1024))return;
     if(a&&f&&(a[0]<f[0]||a[1]<f[1]||a[0]+a[2]>f[0]+f[2]||a[1]+a[3]>f[1]+f[3]))return;
-    select(d.stage,undefined,a||null,mobile.matches?null:f||null);
+    select(d.stage,undefined,a||null,mobile.matches&&!scene.dataset.fieldExplore?null:f||null);
   });
   buttons.forEach((button,i)=>button.addEventListener('click',()=>{if(!pendingExit)select(i)}));
   document.getElementById('pangu-explore-start').addEventListener('click',()=>{if(scene.hasAttribute('data-g1')||pendingExit)return;select(1);buttons[1].focus({preventScroll:true})});
@@ -71,9 +73,9 @@
     if(already)return;document.getElementById('scene-back').focus({preventScroll:true});document.getElementById('pangu-explore-start').disabled=true;viewport.inert=true;buttons.forEach(b=>b.disabled=true);document.getElementById('pangu-source-open').disabled=true;document.body.dataset.panguExit='pending';select(0,mobile.matches?140:180).then(()=>{const resume=pendingExit;pendingExit=null;document.getElementById('pangu-explore-start').disabled=false;viewport.inert=false;buttons.forEach(b=>b.disabled=false);document.getElementById('pangu-source-open').disabled=false;document.body.dataset.panguExit='idle';resume?.()});
   });
   document.addEventListener('cui:modechange',e=>{if(e.detail.mode==='pangu')select(0,0)});
-  reduced.addEventListener('change',()=>{if(reduced.matches)select(stage,0,activeArea,mobile.matches?null:activeFrame)});
-  mobile.addEventListener('change',()=>select(stage,0,activeArea,mobile.matches?null:activeFrame));
-  window.addEventListener('resize',()=>{if(scene.classList.contains('open')&&!pendingExit&&document.body.dataset.transition==='idle')select(stage,0,activeArea,mobile.matches?null:activeFrame)});
+  reduced.addEventListener('change',()=>{if(reduced.matches)select(stage,0,activeArea,mobile.matches&&!scene.dataset.fieldExplore?null:activeFrame)});
+  mobile.addEventListener('change',()=>select(stage,0,activeArea,mobile.matches&&!scene.dataset.fieldExplore?null:activeFrame));
+  window.addEventListener('resize',()=>{if(scene.classList.contains('open')&&!pendingExit&&document.body.dataset.transition==='idle')select(stage,0,activeArea,mobile.matches&&!scene.dataset.fieldExplore?null:activeFrame)});
   const open = event => {
     opener = event.currentTarget;
     const original=viewer.querySelector('.pangu-original-scroll img');

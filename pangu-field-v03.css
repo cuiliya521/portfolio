@@ -1,0 +1,20 @@
+/* Only exploration state changes; the R6 after idle composition stays intact. */
+#field-hotspot[hidden],#field-semantic[hidden],#pangu-demand [hidden]{display:none!important}
+#pangu-scene[data-field-explore] .pangu-r1-aside>ol{display:none}
+#pangu-scene[data-field-explore] #pangu-demand{display:block;margin-top:16px;color:#244a3f;max-height:calc(100dvh - 340px);overflow:auto;font:14px/1.6 system-ui}
+#pangu-demand .field-request{white-space:normal;font:500 19px/1.65 system-ui;margin:8px 0 10px;max-width:100%}
+#pangu-demand .field-invite{white-space:normal;font:13px/1.6 system-ui;margin:0 0 10px}
+#pangu-demand small{font:11px/1.5 system-ui;color:#5f7268}
+#field-word{border-radius:3px;transition:background .15s,color .15s}#field-word.mapped{background:#dfebd5;color:#234d33;box-shadow:0 2px #9caf76}
+#field-hotspot{position:absolute;z-index:4;background:transparent;border:1px solid #8fa37b;border-radius:4px;cursor:pointer;padding:0;box-shadow:inset 0 0 0 1px #fff8;transition:border-color .08s,background .08s}
+#field-hotspot span{position:absolute;left:0;bottom:calc(100% + 4px);font:11px/1.4 system-ui;color:#264a37;background:#f7f6eafa;padding:2px 6px;border-radius:3px;white-space:nowrap}
+#field-hotspot[aria-pressed=true]{border:2px solid #48734f;background:#b5cf9b18}#field-hotspot[aria-pressed=true] span{display:none}
+#field-hotspot:focus-visible{outline:3px solid #285fce;outline-offset:3px}
+#field-semantic{position:fixed;z-index:150;pointer-events:none;background:#edf2e4;color:#234d33;padding:2px 7px;border-radius:4px;font:14px/1.5 system-ui}
+#pangu-demand #field-mapping{white-space:normal;font:600 15px/1.7 system-ui;margin:12px 0;border-left:2px solid #91a37c;padding-left:10px}
+#pangu-demand #field-cui{white-space:normal;font:13px/1.65 system-ui;margin:10px 0}
+.field-tools{display:flex;flex-wrap:wrap;gap:4px 12px;margin:12px 0}#pangu-demand .field-tools button,#field-mobile{border:0;border-bottom:1px solid #a6b49c;background:none;color:#31523d;font:12px/1.5 system-ui;padding:5px 0;cursor:pointer}
+#field-mobile{display:none}#pangu-scene[data-field-explore] .pangu-evidence-focus{display:none}
+#pangu-scene[data-field-explore] #pangu-original-open{cursor:default}
+@media(max-width:700px){#pangu-scene[data-field-explore] .pangu-r1-window{top:480px}#pangu-scene[data-field-explore] #pangu-demand{max-height:none;width:calc(100% - 90px)}#field-mobile{display:block;min-height:44px}#pangu-demand .field-tools button{min-height:44px}#field-hotspot span{font-size:10px}#pangu-demand .field-request{font-size:17px}#pangu-scene[data-field-explore]{min-height:100dvh}#pangu-scene[data-field-explore] .agent-wrap{pointer-events:none}}
+@media(prefers-reduced-motion:reduce){#field-word,#field-hotspot{transition:none}}
