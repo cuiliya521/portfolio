@@ -84,6 +84,7 @@ function render(move=true){
   else if(state.phase==='evidence'||state.selected)camera(1,view.area,summer);
   // A selection also points to its bounded real fields; the archive remains visible.
   else camera(0);
+  if(state.phase==='arrange'&&!current)$('pangu-evidence-caption').textContent='真实产品全貌：选择字段、查看结果与素材入口。';
   if((state.phase==='evidence'||state.phase==='arrange')&&current){
    const f=fragments[current];
    $('pangu-evidence-caption').textContent=summer?summer.caption:'归档字段对照 · '+f.fields;
