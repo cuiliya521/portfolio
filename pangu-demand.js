@@ -90,6 +90,7 @@ function render(move=true){
   }
  }
 
+ if(summer){const bottom=root.getBoundingClientRect().bottom;role.style.setProperty('--summer-rest-y',Math.min(scene.clientHeight-243,Math.max(bottom+18,scene.clientHeight*.61))+'px');}
  settleRole(beforeRole,!!summer);
 }
 function send(action,move=true){
