@@ -60,6 +60,7 @@ body:has(#pangu-scene.open[data-demand-phase=result]) .agent-wrap.in-project .ag
 #pangu-scene[data-summer-response=discover] .demand-sentence{display:block;margin:0 0 8px}
 #pangu-scene[data-summer-response=discover] .demand-sentence button:not([data-fragment=style]){display:none}
 #pangu-scene[data-summer-response=discover] .demand-sentence [data-fragment=style]{cursor:pointer}
+#pangu-scene[data-summer-response] #pangu-demand .demand-primary:hover{background:#1f4434;color:#fffdf3}
 #pangu-scene[data-summer-response] .demand-cui p{font-size:14px;line-height:1.6}
 #pangu-scene[data-summer-response] #demand-map{display:block;font-size:13px;line-height:1.7}
 #pangu-scene[data-summer-response] #pangu-evidence-caption{font-size:13px;line-height:1.6}
