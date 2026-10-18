@@ -1,4 +1,11 @@
-/* R2: one retained space, three hierarchies. Overrides are scoped to Pangu. */
+/* One retained space. Pangu presentation rules, consolidated for final review. */
+#pangu-scene .pangu-r1-background{filter:brightness(.94) saturate(.72)}
+#pangu-scene::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(100deg,#f7f5e8d9 0%,#f7f5e8c9 62%,#f7f5e855 100%)}
+#pangu-scene .pangu-r1-top{z-index:6;color:#385344}
+#pangu-demand .demand-invitation{font:600 17px/1.6 system-ui;color:#244935;margin:18px 0 6px}
+#pangu-demand .demand-invitation span{margin-left:8px;color:#766737}
+#pangu-scene .pangu-evidence-focus{box-shadow:0 0 0 2500px #edf2ef55;border-color:#a78e4b}
+#pangu-scene .pangu-r1-window [hidden]{display:none!important}
 #pangu-scene .pangu-r1-aside{inset:0;width:100%;height:100%;max-height:none;padding:0;overflow:visible;pointer-events:none;z-index:3}
 #pangu-scene .pangu-r1-aside>h2{position:absolute;top:11%;left:4%;margin:0;font-size:30px;pointer-events:auto}
 #pangu-scene .pangu-r1-aside>p:not(.pangu-shot-guide){position:absolute;top:17%;left:4%;font-size:18px;margin:0;max-width:none}
@@ -6,9 +13,9 @@
 #pangu-demand{position:absolute;left:24%;top:27%;width:65%;max-height:68%;overflow:auto;pointer-events:auto;color:#173f30;scrollbar-width:thin;transition:transform .55s cubic-bezier(.22,.7,.2,1),opacity .3s}
 #pangu-demand .demand-chapter{font:600 13px/1.5 system-ui;letter-spacing:.12em;white-space:normal;margin:0 0 12px;color:#56715a}
 #pangu-demand .demand-boundary{font:12px/1.6 system-ui;color:#46604f}
-#pangu-demand .demand-sentence{font:500 clamp(30px,3.25vw,48px)/1.7 system-ui;letter-spacing:-.03em;margin:22px 0 24px;white-space:normal;max-width:none}
-#pangu-demand .demand-sentence button{font:inherit;font-weight:650;border:0;border-bottom:2px solid #7d956f;background:none;border-radius:0;padding:0 3px;min-height:52px;transition:background .2s,border-color .2s}
-#pangu-demand .demand-sentence button:hover{background:#dce7cf96}
+#pangu-demand .demand-sentence{font:500 clamp(30px,3.25vw,48px)/1.7 system-ui;letter-spacing:-.03em;margin:8px 0 24px;white-space:normal;max-width:none}
+#pangu-demand .demand-sentence button{font:inherit;font-weight:650;border:0;border-bottom:2px solid #416348;background:#e1e9d3b8;border-radius:3px 3px 0 0;padding:0 5px;min-height:52px;transition:background .2s,border-color .2s}
+#pangu-demand .demand-sentence button:hover{background:#cbdabc}
 #pangu-demand .demand-sentence button[aria-pressed="true"]{background:#e4ebd3;border-color:#234c35}
 #pangu-demand .demand-sentence button[data-assigned]:not([data-assigned=""]){border-bottom-color:#234c35}
 #demand-choices{margin:0 0 14px;padding:0}
@@ -34,15 +41,18 @@
 #pangu-scene .pangu-r1-window{left:27%;top:14%;width:70%;max-height:calc(100dvh - 180px);z-index:2;transform-origin:65% 50%;transition:transform .65s cubic-bezier(.22,.7,.2,1),opacity .5s,filter .5s;box-shadow:0 16px 40px #284f3320;border-radius:14px}
 #pangu-scene[data-demand-phase="arrange"] .pangu-r1-window{transform:translate(10%,10%) scale(.78);opacity:.13;filter:blur(14px);pointer-events:none}
 #pangu-scene[data-demand-phase="arrange"] .pangu-r1-window figcaption,#pangu-scene[data-demand-phase="arrange"] .pangu-r1-window>p{visibility:hidden}
-#pangu-scene[data-demand-phase="evidence"] #pangu-demand,#pangu-scene[data-demand-phase="result"] #pangu-demand{left:4%;top:29%;width:20.5%;max-height:30%;overflow:auto}
-#pangu-scene[data-demand-phase="evidence"] .demand-sentence,#pangu-scene[data-demand-phase="result"] .demand-sentence,#pangu-scene[data-demand-phase="evidence"] .demand-boundary,#pangu-scene[data-demand-phase="result"] .demand-boundary,#pangu-scene[data-demand-phase="evidence"] .demand-structure,#pangu-scene[data-demand-phase="result"] .demand-structure,#pangu-scene[data-demand-phase="evidence"] .demand-tools,#pangu-scene[data-demand-phase="result"] .demand-tools{display:none}
+#pangu-scene[data-demand-phase="evidence"] #pangu-demand,#pangu-scene[data-demand-phase="result"] #pangu-demand{left:4%;top:29%;width:20.5%;max-height:31%;overflow:auto}
+#pangu-scene[data-demand-phase="evidence"] .demand-invitation,#pangu-scene[data-demand-phase="result"] .demand-invitation,#pangu-scene[data-demand-phase="evidence"] .demand-sentence,#pangu-scene[data-demand-phase="result"] .demand-sentence,#pangu-scene[data-demand-phase="evidence"] .demand-boundary,#pangu-scene[data-demand-phase="result"] .demand-boundary,#pangu-scene[data-demand-phase="evidence"] .demand-structure,#pangu-scene[data-demand-phase="result"] .demand-structure,#pangu-scene[data-demand-phase="evidence"] .demand-tools,#pangu-scene[data-demand-phase="result"] .demand-tools{display:none}
 #pangu-demand .demand-trail{font:16px/1.7 system-ui;margin:14px 0}
 #pangu-demand .demand-trail>div{gap:16px;flex-wrap:wrap;margin-top:8px}
 #pangu-demand .demand-trail button{font-size:13px;color:#244935}
 #pangu-demand #demand-result{min-width:0;width:100%;font-size:15px}
 #pangu-demand #demand-back,#pangu-demand #demand-revisit{border:0;background:none;text-align:left;min-height:44px;padding:7px 0;color:#2a503a;font-size:14px;display:block}
 #pangu-demand .demand-next-project{font-size:17px;font-weight:650;min-height:48px;color:#244935}
-#pangu-scene .pangu-r1-window .r6-case-context{font-size:14px;line-height:1.65;color:#254934;margin:12px 0 0;padding-top:10px;border-top:1px solid #9eaf9550}
+#pangu-scene .pangu-r1-window .r6-case-context{font:14px/1.65 system-ui;color:#254934;margin:12px 0 0;padding:14px 4px 6px;border-top:1px solid #9eaf9570}
+#pangu-scene .r6-case-context h3{font:650 20px/1.4 system-ui;margin:0 0 10px}
+#pangu-scene .r6-case-context p{margin:6px 0;white-space:normal;max-width:none}
+#pangu-scene[data-demand-phase="result"] #pangu-original-open{height:min(53vh,510px)}
 #pangu-scene .pangu-evidence-nav{position:fixed;right:3%;bottom:3%;width:auto;pointer-events:auto;color:#34593e;font:12px/1.5 system-ui;z-index:5}
 #pangu-scene .pangu-evidence-nav[hidden]{display:none}
 #pangu-scene .pangu-evidence-nav summary{min-height:44px;display:flex;align-items:center;cursor:pointer;list-style:none}
@@ -52,7 +62,8 @@ body:has(#pangu-scene.open) .agent-wrap.in-project .agent-image{max-height:240px
 body:has(#pangu-scene[data-cui-pose="organizing"].open) .agent-wrap.in-project{left:5%;top:43%;width:170px}
 body:has(#pangu-scene[data-cui-pose="pointing"].open) .agent-wrap.in-project{left:4%;top:61%;width:130px}
 body:has(#pangu-scene[data-cui-pose="yielding"].open) .agent-wrap.in-project{left:5%;top:60%;width:120px}
-#pangu-scene[data-demand-phase="evidence"] .demand-cui,#pangu-scene[data-demand-phase="result"] .demand-cui{top:78%;width:240px}
+#pangu-scene[data-demand-phase="evidence"] .demand-cui{top:81%;width:240px}
+#pangu-scene[data-demand-phase="result"] .demand-cui{top:78%;width:240px}
 @media(max-width:700px){
  #pangu-scene.pangu-r1{padding:90px 20px 36px;overflow-y:auto}
  #pangu-scene .pangu-r1-aside{position:static;height:auto;pointer-events:auto}
@@ -61,6 +72,7 @@ body:has(#pangu-scene[data-cui-pose="yielding"].open) .agent-wrap.in-project{lef
  #pangu-scene #pangu-demand{position:relative;left:auto;top:auto;width:100%;max-height:none;overflow:visible;transform:none}
  #pangu-demand .demand-chapter{font-size:12px;margin-bottom:8px}
  #pangu-demand .demand-boundary{font-size:11px}
+ #pangu-demand .demand-invitation{font-size:16px}
  #pangu-demand .demand-sentence{font-size:28px;line-height:1.8;margin:18px 0}
  #pangu-demand .demand-sentence button{min-height:48px}
  #demand-choices>div{gap:7px}
@@ -79,6 +91,8 @@ body:has(#pangu-scene[data-cui-pose="yielding"].open) .agent-wrap.in-project{lef
  #pangu-scene .pangu-evidence-nav ol{position:static;width:auto;box-sizing:border-box;box-shadow:none;margin-top:6px}
  #pangu-scene #pangu-original-open[data-camera-stage="1"]{height:320px}
  #pangu-scene #pangu-original-open[data-camera-stage="2"]{height:390px}
+ #pangu-scene[data-demand-phase="result"] #pangu-original-open{height:390px}
+ #pangu-scene .r6-case-context h3{font-size:19px}
  #pangu-scene #pangu-original-open[data-camera-stage="3"]{height:250px}
  body:has(#pangu-scene.open) .agent-wrap.in-project{left:auto;right:20px;top:82px;width:66px;max-height:88px;opacity:1}
  body:has(#pangu-scene.open) .agent-wrap.in-project .agent-image{max-height:88px}
@@ -86,7 +100,6 @@ body:has(#pangu-scene[data-cui-pose="yielding"].open) .agent-wrap.in-project{lef
 }
 @media(prefers-reduced-motion:reduce){#pangu-scene .pangu-r1-window,#pangu-demand,#pangu-demand button,body:has(#pangu-scene.open) .agent-wrap.in-project{transition:none!important}}
 
-#pangu-scene[data-demand-phase="evidence"] .demand-cui{top:81%}
 @media(max-width:700px){#pangu-scene[data-demand-phase="evidence"] .demand-cui,#pangu-scene[data-demand-phase="result"] .demand-cui{top:auto;width:100%}}
 
 @media(max-width:700px){

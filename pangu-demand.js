@@ -9,6 +9,7 @@ function render(move=true){
  const view=presentationFor(state),current=view.current;
  $('demand-chapter').textContent=view.chapter;
  scene.dataset.cuiPose=view.pose;
+ $('pangu-contribution').hidden=state.phase!=='result';
  const evidence=scene.querySelector('.pangu-r1-window');
  evidence.inert=!view.foreground;evidence.setAttribute('aria-hidden',String(!view.foreground));
  $('pangu-evidence-nav').hidden=!view.foreground;
