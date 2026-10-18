@@ -27,7 +27,7 @@
       return;
     }
     if(ticket!==serial)return;
-    const beforeClip=image.style.clipPath||'inset(0% 0% 0% 0%)',before=getComputedStyle(image).transform,previous=focus.getBoundingClientRect(),viewBefore=viewport.getBoundingClientRect(),opacity=getComputedStyle(focus).opacity;
+    const beforeClip=getComputedStyle(image).clipPath||image.style.clipPath||'inset(0% 0% 0% 0%)',before=getComputedStyle(image).transform,previous=focus.getBoundingClientRect(),viewBefore=viewport.getBoundingClientRect(),opacity=getComputedStyle(focus).opacity;
     const pageChanged=(stage===3)!==(next===3);
     animations.forEach(a=>a.cancel());animations=[];stage=next;activeArea=area;activeFrame=frame;viewport.dataset.cameraStage=String(next);scene.dataset.shot=String(next);
     image.src=next===3?materialsSource:productSource;
@@ -57,11 +57,12 @@
   // R7.2 keeps camera ownership here; only bounded archived regions are accepted.
   document.addEventListener('cui:pangu-evidence',e=>{
     const d=e.detail||{},a=d.area,f=d.frame;
+    if(d.duration!==undefined&&(!Number.isFinite(d.duration)||d.duration<0||d.duration>320))return;
     if(pendingExit)return;
     if(a&&(!Array.isArray(a)||a.length!==4||!a.every(Number.isFinite)||a[0]<0||a[1]<0||a[2]<=0||a[3]<=0||a[0]+a[2]>1536||a[1]+a[3]>1024))return;
     if(f&&(!Array.isArray(f)||f.length!==4||!f.every(Number.isFinite)||f[0]<0||f[1]<0||f[2]<=0||f[3]<=0||f[0]+f[2]>1536||f[1]+f[3]>1024))return;
     if(a&&f&&(a[0]<f[0]||a[1]<f[1]||a[0]+a[2]>f[0]+f[2]||a[1]+a[3]>f[1]+f[3]))return;
-    select(d.stage,undefined,a||null,mobile.matches?null:f||null);
+    select(d.stage,d.duration,a||null,mobile.matches&&!d.keepMobileFrame?null:f||null);
   });
   buttons.forEach((button,i)=>button.addEventListener('click',()=>{if(!pendingExit)select(i)}));
   document.getElementById('pangu-explore-start').addEventListener('click',()=>{if(scene.hasAttribute('data-g1')||pendingExit)return;select(1);buttons[1].focus({preventScroll:true})});

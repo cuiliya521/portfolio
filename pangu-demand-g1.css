@@ -54,3 +54,18 @@ body:has(#pangu-scene.open[data-demand-phase=result]) .agent-wrap.in-project .ag
  #pangu-scene[data-demand-active] .pangu-r1-window{position:relative;left:auto;top:auto;width:100%;margin-top:16px}
 }
 @media(prefers-reduced-motion:reduce){#pangu-demand *,body:has(#pangu-scene[data-demand-active]) .agent-wrap{transition:none!important;animation:none!important}}
+
+/* Single summer-demand experiment, opt-in only after choosing that keyword. */
+#pangu-scene[data-summer-response] #pangu-demand{scrollbar-gutter:stable}
+#pangu-scene[data-summer-response=discover] .demand-sentence{display:block;margin:0 0 8px}
+#pangu-scene[data-summer-response=discover] .demand-sentence button:not([data-fragment=style]){display:none}
+#pangu-scene[data-summer-response=discover] .demand-sentence [data-fragment=style]{cursor:default}
+#pangu-scene[data-summer-response] .demand-cui p{font-size:14px;line-height:1.6}
+#pangu-scene[data-summer-response] #demand-map{display:block;font-size:13px;line-height:1.7}
+#pangu-scene[data-summer-response] #pangu-evidence-caption{font-size:13px;line-height:1.6}
+body:has(#pangu-scene.open[data-summer-response]) .agent-wrap.in-project{width:170px;max-height:227px}
+body:has(#pangu-scene.open[data-summer-response]) .agent-wrap.in-project .agent-image{max-height:227px}
+@media(max-width:700px){
+ #pangu-scene[data-summer-response] .demand-cui{margin-bottom:12px}
+ #pangu-scene[data-summer-response=discover] #pangu-original-open{height:210px}
+}
