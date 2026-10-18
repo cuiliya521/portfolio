@@ -18,3 +18,7 @@
 #pangu-scene[data-field-explore] #pangu-original-open{cursor:default}
 @media(max-width:700px){#pangu-scene[data-field-explore] .pangu-r1-window{top:480px}#pangu-scene[data-field-explore] #pangu-demand{max-height:none;width:calc(100% - 90px)}#field-mobile{display:block;min-height:44px}#pangu-demand .field-tools button{min-height:44px}#field-hotspot span{font-size:10px}#pangu-demand .field-request{font-size:17px}#pangu-scene[data-field-explore]{min-height:100dvh}#pangu-scene[data-field-explore] .agent-wrap{pointer-events:none}}
 @media(prefers-reduced-motion:reduce){#field-word,#field-hotspot{transition:none}}
+/* Yield the reading area only after entering exploration; retain the original CUI asset. */
+body:has(#pangu-scene.open[data-field-explore]) .agent-wrap.in-project{top:auto;bottom:16px;left:3.5%;width:120px;max-height:160px;animation:none}
+body:has(#pangu-scene.open[data-field-explore]) .agent-wrap.in-project .agent-image{width:120px;max-height:160px;object-fit:contain}
+@media(max-width:700px){body:has(#pangu-scene.open[data-field-explore]) .agent-wrap.in-project{top:78px;bottom:auto;left:auto;right:12px;width:70px;max-height:95px}body:has(#pangu-scene.open[data-field-explore]) .agent-wrap.in-project .agent-image{width:70px;max-height:95px}}
