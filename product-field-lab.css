@@ -65,3 +65,11 @@ body[data-product-lab="active"] #pangu-scene[data-field-lab="result"] .field-lab
  .field-lab-controls button{flex:1;font-size:12px}
 }
 @media(prefers-reduced-motion:reduce){body[data-product-lab="active"] #pangu-scene .pangu-r1-window,.field-lab-hotspot{transition:none!important}}
+
+/* Mobile focus must preserve the readable single column rather than inherit desktop retreat. */
+@media(max-width:700px){
+ body[data-product-lab="active"] #pangu-scene[data-field-lab="focused"] .field-lab-cue,
+ body[data-product-lab="active"] #pangu-scene[data-field-lab="result"] .field-lab-cue{position:relative;inset:auto;width:100%;max-width:none}
+ body[data-product-lab="active"]:has(#pangu-scene[data-field-lab="focused"].open) .agent-wrap.in-project,
+ body[data-product-lab="active"]:has(#pangu-scene[data-field-lab="result"].open) .agent-wrap.in-project{left:auto;right:20px;top:82px;width:66px;opacity:0}
+}
