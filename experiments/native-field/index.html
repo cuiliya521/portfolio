@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f3eb">
+<meta name="description" content="CUI × 盘古智绘：基于真实归档界面的可交互字段演示，不是生产系统。">
+<title>CUI × 盘古智绘｜真实字段探索（隔离接入）</title>
+<link rel="stylesheet" href="style.css"><script defer src="interaction.js"></script>
+</head>
+<body data-phase="intro">
+<div class="ambient" aria-hidden="true"></div>
+<header class="topbar"><a class="logo" href="../../?native-field=1#cui-workspace"><span>✧</span><strong>CUI</strong><small>AI WORKSPACE</small></a><div class="toplinks"><span class="sandbox-label">隔离实验 · 原版视觉</span><a class="back" href="../../?native-field=1#cui-workspace">↖ 返回 Workspace</a></div></header>
+<main class="main">
+  <div class="headline"><div><p class="kicker">01 / PANGU ZHIHUI · PRODUCT DECISIONS</p><h1>把复杂的 Prompt，<em>变成可以理解的选择。</em></h1></div><p class="deck">从商户的模糊需求，到产品里的具体字段。<br>体验一个有事实依据的 AI 产品设计瞬间。</p></div>
+  <div class="lab">
+   <aside class="guide" aria-label="CUI 引导"><div class="guide-mark">01 — 03 <span>WITH CUI</span></div>
+    <div class="merchant"><small>商户需求 · 情境概括</small><p>“青提柠檬新品，<br>想做得清爽一点。”</p></div>
+    <div class="cui-message" aria-live="polite" aria-atomic="true"><small class="cui-label">● CUI 导览</small><h2 id="guide-title">从一句模糊的需求开始。</h2><p id="guide-text">打开中间的「画面风格」，看看产品怎样把“清爽”变成可选择的字段。</p></div>
+    <img class="cui-art" src="../../assets/pangu-r1/cui-pointing.png" alt="原版 CUI 角色正在指向盘古工作台" draggable="false">
+    <div class="progress"><span id="step-value">01</span><div class="progress-rail"><i id="step-fill"></i></div><span>03</span></div>
+   </aside>
+   <section class="workbench" aria-label="盘古字段工作台"><div class="windowbar"><div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div><div class="brand"><img src="../../assets/pangu-r1/brand-mark.png" alt=""><b>盘古智绘</b><span>／ 素材生成</span></div><small>归档字段重构</small></div>
+    <div class="editor"><div class="editor-head"><div><span class="kicker">PRODUCT WORKBENCH</span><h2>新建素材生成</h2></div><small>6 个真实字段</small></div>
+     <p class="editor-desc">其余字段为归档数值，仅演示「画面风格」的交互。</p>
+     <div class="fields">
+      <div class="field"><span>行业</span><b>餐饮美食</b><i>⌄</i></div>
+      <div class="field"><span>营销场景</span><b>夏季新品上市</b><i>⌄</i></div>
+      <div class="field"><span>产品／主题</span><b>青提柠檬饮品</b><i>⌄</i></div>
+      <div class="field active" id="style-field"><span>画面风格</span><div class="selector"><button id="style-trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="style-options" aria-describedby="field-hint" type="button"><b id="style-value">点击选择风格</b><i aria-hidden="true">⌄</i></button><div id="style-options" class="choices" role="listbox" aria-label="已核实画面风格" hidden><button type="button" role="option" aria-selected="false" id="style-option"><span>◈ 清爽明亮</span><small>原图所示值 ✓</small></button></div></div></div>
+      <div class="field"><span>构图建议</span><b>主体突出 / 预留文案区</b><i>⌄</i></div>
+      <div class="field"><span>平台规格</span><b>竖版海报（1080 × 1920）</b><i>⌄</i></div>
+     </div>
+     <p class="hint" id="field-hint">✳ 点开绿色描边字段，体验一次真实的选择。</p>
+     <div class="actions"><button id="reset" type="button" disabled>↺ 撤销选择</button><button id="to-evidence" type="button" disabled>查看归档结果 ↗</button></div>
+    </div>
+   </section>
+   <aside class="evidence" aria-label="原始海报证据"><div class="evidence-top"><b>EVIDENCE / 02</b><span>● 原始归档素材</span></div>
+    <div class="poster-shell" id="poster-shell"><div class="poster-crop" role="img" aria-label="从真实盘古工作台截图中裁切的青提柠檬海报，未重绘"><img src="../../assets/pangu-r1/product-source.jpg" alt="" draggable="false"></div></div>
+    <div class="poster-title"><b>青提柠檬 · 清爽一夏</b><small>ARCHIVED</small></div>
+    <p class="poster-note">真实截图中的结果，<strong>不会因本页选择而重新生成。</strong></p>
+    <div class="insight"><small>FROM NEED TO FIELD</small><p id="result-message">先完成左侧字段选择，再看这项设计判断。</p></div>
+    <button id="open-original" class="source-open" type="button">核对原始产品截图 ↗</button>
+   </aside>
+  </div>
+  <footer class="bottom"><p>01 · 商户需求为调研场景概括，不是逐字原话。</p><div><button type="button" id="replay">重新体验 ↺</button><a href="../../?native-field=1#cui-workspace">返回三个项目 →</a><a href="../../content-archive/?entry=pangu">下一项目 · 小红书 →</a></div></footer>
+</main>
+<dialog id="original-dialog" aria-labelledby="original-title"><div class="dialog-head"><h2 id="original-title">盘古智绘 · 未改动的归档截图</h2><button type="button" id="close-original">关闭 ×</button></div><div class="original-scroll" tabindex="0"><img src="../../assets/pangu-r1/product-source.jpg" width="1536" height="1024" alt="盘古原始工作台截图，包含完整字段及归档海报"></div><p>展示的是原始产品截图。当前页面为作品集交互重构，不代表实时 AI 生图。</p></dialog>
+</body></html>
