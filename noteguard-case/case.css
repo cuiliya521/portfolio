@@ -48,3 +48,8 @@
 }
 @media(prefers-reduced-motion:reduce){.scene *{scroll-behavior:auto!important}}
 .scene[data-stage] .window-bar h3{font-family:NGSans,sans-serif;font-weight:700}
+
+/* Job-ready project progression: ending the last case is never a dead end. */
+.next-contact{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:44px;padding:8px 14px;border:1px solid #b8cdb9;border-radius:22px;background:rgba(255,255,251,.95);font:600 13px NGSans,'Noto Sans CJK SC',sans-serif;color:#245a45;white-space:nowrap;text-decoration:none}
+.next-contact:hover,.next-contact:focus-visible{background:#e7f3e8;border-color:#719a79;outline-offset:3px}
+@media(max-width:740px){footer{display:flex!important;flex-wrap:wrap;align-items:center;gap:5px 12px}.next-contact{width:100%;min-height:46px;font-size:13px;margin-top:6px}}
