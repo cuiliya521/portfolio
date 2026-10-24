@@ -1,0 +1,59 @@
+/* R0 opt-in only: genuine archived evidence, no generated product UI. */
+body[data-product-lab="active"] #pangu-scene { --lab-green:#224f3e; --lab-gold:#b49b58 }
+body[data-product-lab="active"] #pangu-scene #pangu-demand,
+body[data-product-lab="active"] #pangu-scene #pangu-evidence-nav,
+body[data-product-lab="active"] #pangu-scene #pangu-explore-start,
+body[data-product-lab="active"] #pangu-scene .pangu-shot-guide,
+body[data-product-lab="active"] #pangu-scene #pangu-contribution {display:none!important}
+body[data-product-lab="active"] #pangu-scene .pangu-r1-aside>h2 {top:16%;left:4%;font-size:clamp(24px,2.4vw,36px)}
+body[data-product-lab="active"] #pangu-scene .pangu-r1-aside>p:not(.pangu-shot-guide){top:23%;left:4%;max-width:20%;font-size:clamp(13px,1.25vw,17px);white-space:normal;line-height:1.75}
+body[data-product-lab="active"] #pangu-scene .pangu-r1-window {top:10%;left:25%;width:72%;max-height:calc(100dvh - 115px);transform:none!important;filter:none!important;opacity:1!important;pointer-events:auto!important;transition:left .58s cubic-bezier(.21,.7,.2,1),width .58s cubic-bezier(.21,.7,.2,1),top .58s}
+body[data-product-lab="active"] #pangu-scene[data-field-lab="focused"] .pangu-r1-window,
+body[data-product-lab="active"] #pangu-scene[data-field-lab="result"] .pangu-r1-window {left:16%;width:81%;top:9%}
+body[data-product-lab="active"] #pangu-scene .pangu-r1-window:focus-within{border-color:var(--lab-gold)}
+body[data-product-lab="active"] #pangu-scene #pangu-original-open {height:min(66vh,640px);aspect-ratio:auto}
+body[data-product-lab="active"] #pangu-scene .pangu-r1-window figcaption{font-size:11px}
+.field-lab-cue{position:absolute;left:4%;top:34%;width:19%;pointer-events:auto;color:var(--lab-green);z-index:4}
+.field-lab-cue .field-lab-eyebrow{font:700 11px/1.5 system-ui;letter-spacing:.14em;color:#887246}
+.field-lab-cue p{font:500 clamp(15px,1.22vw,19px)/1.75 system-ui;margin:8px 0 16px;white-space:normal}
+.field-lab-cue .field-lab-boundary{font:11px/1.65 system-ui;color:#687c6c}
+.field-lab-mobile{display:none}
+.field-lab-overlay{position:absolute;pointer-events:none;z-index:3;overflow:hidden}
+.field-lab-overlay svg{position:absolute;max-width:none;max-height:none;display:block;transition:opacity .24s ease}
+.field-lab-hotspot{position:absolute;z-index:5;border:2px solid rgba(157,129,67,.8);background:rgba(248,236,182,.07);border-radius:7px;cursor:pointer;box-shadow:0 0 0 5px rgba(238,219,168,.14),0 0 18px rgba(215,191,103,.18);transition:background .25s,border-color .25s,box-shadow .25s}
+.field-lab-hotspot:hover,.field-lab-hotspot:focus-visible{background:rgba(255,240,185,.28);box-shadow:0 0 0 7px #e5cb7a55;outline:none}
+.field-lab-hotspot:before{content:'探索画面风格';position:absolute;right:0;bottom:calc(100% + 6px);background:#f9f7e9;color:#345b48;border:1px solid #ccbd86;border-radius:30px;padding:6px 11px;white-space:nowrap;font:600 12px/1.4 system-ui}
+body[data-product-lab="active"] #pangu-scene[data-field-lab="focused"] .field-lab-hotspot{border-color:#b5a06c;background:#ebdb9855}
+body[data-product-lab="active"] #pangu-scene[data-field-lab="result"] .field-lab-hotspot{opacity:0;pointer-events:none}
+.field-lab-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:9px 2px 1px;min-height:50px;position:relative;z-index:4;flex-wrap:wrap}
+.field-lab-controls strong{font:600 13px/1.6 system-ui;color:#244b39}
+.field-lab-controls .field-lab-actions{display:flex;gap:9px;flex-wrap:wrap}
+.field-lab-controls button{font:600 12px/1.5 system-ui;color:#244b39;border:1px solid #b8c6b0;border-radius:23px;min-height:44px;padding:9px 13px;background:#fffef6;cursor:pointer}
+.field-lab-controls button.primary{background:#24523f;color:#fff;border-color:#24523f}
+.field-lab-controls button:focus-visible{outline:3px solid #a88944;outline-offset:2px}
+body[data-product-lab="active"] #pangu-scene[data-field-lab="focused"] .agent-wrap{opacity:.5}
+body[data-product-lab="active"] #pangu-scene[data-field-lab="focused"]~.agent-wrap{opacity:.5}
+@media(max-width:700px){
+ body[data-product-lab="active"] #pangu-scene.pangu-r1{padding:74px 16px 38px;overflow-y:auto}
+ body[data-product-lab="active"] #pangu-scene .pangu-r1-aside{position:relative;inset:auto;width:100%;height:auto;pointer-events:auto}
+ body[data-product-lab="active"] #pangu-scene .pangu-r1-aside>h2,
+ body[data-product-lab="active"] #pangu-scene .pangu-r1-aside>p:not(.pangu-shot-guide){position:relative;inset:auto;max-width:calc(100% - 72px);white-space:normal}
+ body[data-product-lab="active"] #pangu-scene .pangu-r1-aside>h2{font-size:25px;margin:0 0 8px}
+ body[data-product-lab="active"] #pangu-scene .pangu-r1-aside>p:not(.pangu-shot-guide){font-size:14px;margin:0 0 12px}
+ body[data-product-lab="active"] #pangu-scene .pangu-r1-window,
+ body[data-product-lab="active"] #pangu-scene[data-field-lab="focused"] .pangu-r1-window,
+ body[data-product-lab="active"] #pangu-scene[data-field-lab="result"] .pangu-r1-window{position:relative;inset:auto;width:100%;max-height:none;margin:15px 0 0;padding:6px;overflow:visible;transition:none}
+ body[data-product-lab="active"] #pangu-scene #pangu-original-open,
+ body[data-product-lab="active"] #pangu-scene #pangu-original-open[data-camera-stage="1"]{height:300px}
+ body[data-product-lab="active"] #pangu-scene #pangu-original-open[data-camera-stage="2"]{height:350px}
+ .field-lab-cue{position:relative;inset:auto;width:100%;padding:0 0 0 12px;border-left:2px solid #b49b58}
+ .field-lab-cue p{font-size:14px;margin:5px 0 3px}
+ .field-lab-cue .field-lab-boundary{font-size:10px}
+ .field-lab-mobile{display:block;width:100%;padding:13px 16px;margin:12px 0 0;min-height:50px;border-radius:14px;background:#eaf1e7;border:1px solid #9cac9c;text-align:left;color:#194a39;font:650 15px/1.4 system-ui}
+ .field-lab-hotspot,.field-lab-overlay{display:none!important}
+ .field-lab-controls{align-items:stretch}
+ .field-lab-controls strong{width:100%;font-size:12px}
+ .field-lab-controls .field-lab-actions{width:100%}
+ .field-lab-controls button{flex:1;font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){body[data-product-lab="active"] #pangu-scene .pangu-r1-window,.field-lab-hotspot{transition:none!important}}
