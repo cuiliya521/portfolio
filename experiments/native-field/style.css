@@ -33,7 +33,7 @@ body{position:relative}a{color:inherit;text-decoration:none}button{font:inherit;
 .evidence-top{margin-bottom:15px;font-size:9px}.evidence-top span{font-size:10px;font-weight:400;letter-spacing:0}
 .poster-shell{width:min(100%,305px);margin:0 auto;border:8px solid #fff;border-radius:17px;background:#fff;box-shadow:0 21px 42px #20573e26;transition:transform .6s cubic-bezier(.22,.73,.2,1),box-shadow .5s}
 .poster-crop{aspect-ratio:460/690;position:relative;overflow:hidden;border-radius:8px;background:#c2e9d8}
-.poster-crop img{position:absolute;max-width:none!important;width:333.913%!important;height:auto!important;left:-205.217%;top:-31.521%;pointer-events:none}
+.poster-crop img{position:absolute;max-width:none!important;width:333.913%!important;height:auto!important;left:-208.043%;top:-20.725%;pointer-events:none}
 .poster-title{display:flex;align-items:center;justify-content:space-between;gap:7px;margin-top:21px}.poster-title b{font-family:FieldSerif,'Songti SC',serif;font-size:16px}.poster-title small{font-size:9px;color:#728f79;border:1px solid #bad1b6;border-radius:12px;padding:3px 7px}
 .poster-note{color:#77917b;font-size:11px;line-height:1.65;margin:9px 0}.poster-note strong{color:#4c7259}
 .insight{margin-top:auto;border-left:3px solid #a6bc9e;padding:12px 0 10px 12px}.insight small{color:#7fa081;font-size:9px;font-weight:700;letter-spacing:.14em}.insight p{font-size:12px;line-height:1.75;color:#406a4f;margin:8px 0 0}
