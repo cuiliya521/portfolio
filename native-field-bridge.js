@@ -29,7 +29,13 @@
   const destination=new URL('experiments/native-field/',location.href);
   destination.searchParams.set('from','workspace');
   // Remember logical state: return link will land back in the Workspace.
-  try{sessionStorage.setItem('cui-native-field-entry','workspace')}catch{}
+  try{
+   const workspace=document.getElementById('cui-test-workspace');
+   const record={path:location.pathname,id:'',scrollTop:workspace?.scrollTop||0};
+   // The original Workspace already restores scroll and focuses the Pangu card on return.
+   sessionStorage.setItem('cui-workspace-return-v1',JSON.stringify(record));
+   history.replaceState({...history.state,cuiWorkspaceReturn:record},'',location.href);
+  }catch{}
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduced){location.assign(destination.toString());return;}
   const curtain=document.createElement('div');curtain.id='native-field-bridge';curtain.setAttribute('role','status');
