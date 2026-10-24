@@ -522,8 +522,9 @@ body.entering .agent-wrap{
 /* Mobile is intentionally only a safe fallback for now; dedicated mobile art direction comes later. */
 @media(max-width:980px){
   .topbar{height:68px;padding:0 20px}
-  .nav{gap:18px}
-  .nav a:nth-child(2),.nav a:nth-child(3){display:none}
+  .nav{gap:10px}
+  .nav a{font-size:10px;letter-spacing:.05em;white-space:nowrap}
+  .nav a:nth-child(3){display:none}
   .hero-main{
     min-height:calc(100svh - 68px);
     display:block;
