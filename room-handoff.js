@@ -28,7 +28,7 @@
   frame.addEventListener('load',()=>{ready=true;card.removeAttribute('aria-busy');clearTimeout(timeoutId);if(pending)startOpen()});
   function setOrigin(){
     const r=card.getBoundingClientRect();
-    sourceX=(r.left+r.width/2)+'px';sourceY=(r.top+r.height/2)+'px';
+    sourceX=Math.max(36,Math.min(innerWidth-36,r.left+r.width/2))+'px';sourceY=Math.max(36,Math.min(innerHeight-36,r.top+r.height/2))+'px';
     overlay.style.setProperty('--source-x',sourceX);overlay.style.setProperty('--source-y',sourceY);
   }
   function focusChild(){try{frame.focus();frame.contentWindow.postMessage({type:'cui:room-focus'},location.origin)}catch{}}
@@ -102,6 +102,9 @@
   },true);
   window.addEventListener('popstate',()=>{
     if(open&&!history.state?.cuiRoomHandoff){closeNow();closedByBack=true}
+    else if(!open&&history.state?.cuiRoomHandoff&&location.hash==='#cui-workspace'){
+      if(ready)startOpen();else pending=true;
+    }
   },true);
   window.addEventListener('pageshow',()=>{
     if(!open&&history.state?.cuiRoomHandoff){
