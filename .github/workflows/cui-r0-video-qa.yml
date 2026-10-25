@@ -1,0 +1,50 @@
+name: CUI R0 isolated video QA
+on:
+  push:
+    branches: [qa/cui-r0-video-20261025]
+permissions:
+  contents: read
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preserve QA runner
+        run: cp .qa/record-handoff.mjs /tmp/record-handoff.mjs
+      - uses: actions/checkout@v4
+        with:
+          ref: 46d53a0cf30817f8baf814b3a02338df181ee3e3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated browser
+        run: |
+          npm install --no-save --package-lock=false playwright@1.58.2
+          npx playwright install --with-deps chromium
+          cp /tmp/record-handoff.mjs experiments/room-handoff/record-handoff.mjs
+          mkdir -p qa-output
+          git rev-parse HEAD > qa-output/source-sha.txt
+          python3 -m http.server 8000 > qa-output/server.log 2>&1 &
+      - name: Original local test reduced motion
+        continue-on-error: true
+        run: node experiments/room-handoff/test-handoff.mjs > qa-output/original-local.log 2>&1
+      - name: Local normal motion recording
+        continue-on-error: true
+        env:
+          CUI_OUT: qa-output/local
+        run: node experiments/room-handoff/record-handoff.mjs > qa-output/local.log 2>&1
+      - name: Online normal motion recording
+        continue-on-error: true
+        env:
+          CUI_OUT: qa-output/online
+          CUI_TEST_URL: https://portfolio-pva15isuw-2597890005-5863s-projects.vercel.app/?handoff=1#cui-workspace
+        run: node experiments/room-handoff/record-handoff.mjs > qa-output/online.log 2>&1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cui-r0-browser-evidence
+          path: |
+            qa-output/
+            experiments/room-handoff/qa-evidence/
+          retention-days: 14
