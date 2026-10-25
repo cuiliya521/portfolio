@@ -1,0 +1,13 @@
+/* Isolated experimental reveal: the real iframe workbench is always full-size;
+   only its visibility is revealed, never a scaled source screenshot. */
+html{--cui-handoff-speed:660ms}
+body.cui-handoff-active{overflow:hidden!important}
+.cui-room-overlay{position:fixed;inset:0;z-index:99990;background:#f4f7f0;overflow:hidden;clip-path:circle(0 at var(--source-x,50%) var(--source-y,50%));transition:clip-path var(--cui-handoff-speed) cubic-bezier(.18,.69,.24,1);contain:paint;isolation:isolate}
+.cui-room-overlay[hidden]{display:none!important}
+.cui-room-overlay.is-open{clip-path:circle(150vmax at var(--source-x,50%) var(--source-y,50%))}
+.cui-room-overlay iframe{display:block;width:100%;height:100%;border:0;overflow:auto;background:#f5f7f2;opacity:1}
+.cui-room-overlay:before{content:'';position:absolute;inset:0;pointer-events:none;z-index:1;box-shadow:inset 0 0 95px #668e6a29;opacity:0;transition:opacity .35s}
+.cui-room-overlay.is-animating:before{opacity:1}
+.cui-handoff-notice{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:99991;padding:10px 16px;background:#214d3df2;color:white;border-radius:12px;font-size:12px;pointer-events:none;max-width:calc(100vw - 36px)}
+.cui-handoff-notice[hidden]{display:none!important}
+@media(prefers-reduced-motion:reduce){.cui-room-overlay,.cui-room-overlay:before{transition:none!important}.cui-room-overlay.is-open{clip-path:none}}
