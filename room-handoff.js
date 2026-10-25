@@ -19,13 +19,13 @@
   overlay.append(frame);
   const notice=document.createElement('div');notice.className='cui-handoff-notice';notice.hidden=true;notice.setAttribute('role','status');
   document.body.append(overlay,notice);
-  let ready=false,open=false,transitioning=false,pending=false,closedByBack=false,timeoutId=0;
+  let ready=false,open=false,transitioning=false,pending=false,unavailable=false,timeoutId=0;
   let sourceX='50%',sourceY='50%';
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
   let timer;
   function toast(s){notice.textContent=s;notice.hidden=false;clearTimeout(timer);timer=setTimeout(()=>notice.hidden=true,2400)}
   function resetChild(){try{frame.contentWindow.postMessage({type:'cui:room-reset'},location.origin)}catch{}}
-  frame.addEventListener('load',()=>{ready=true;card.removeAttribute('aria-busy');clearTimeout(timeoutId);if(pending)startOpen()});
+  frame.addEventListener('load',()=>{if(ready){card.removeAttribute('aria-busy');clearTimeout(timeoutId);if(pending)startOpen()}});
   function setOrigin(){
     const r=card.getBoundingClientRect();
     sourceX=Math.max(36,Math.min(innerWidth-36,r.left+r.width/2))+'px';sourceY=Math.max(36,Math.min(innerHeight-36,r.top+r.height/2))+'px';
@@ -61,7 +61,7 @@
     if(ready){startOpen();return}
     pending=true;card.setAttribute('aria-busy','true');
     clearTimeout(timeoutId);timeoutId=setTimeout(()=>{
-      if(pending&&!ready){pending=false;card.removeAttribute('aria-busy');toast('交互演示未能加载，请重新尝试。')}
+      if(pending&&!ready){pending=false;unavailable=true;card.removeAttribute('aria-busy');toast('交接演示未能加载；再点击可使用原版盘古入口。')}
     },3300);
   }
   function closeNow(){
@@ -87,7 +87,7 @@
   }
   document.addEventListener('click',e=>{
     const button=e.target.closest?.('#open-test-pangu');
-    if(!button||e.defaultPrevented||!document.body.contains(button))return;
+    if(!button||unavailable||e.defaultPrevented||!document.body.contains(button))return;
     if(e.altKey||e.ctrlKey||e.metaKey||e.shiftKey)return;
     e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
     requestOpen();
@@ -95,13 +95,13 @@
   window.addEventListener('message',e=>{
     if(e.origin!==location.origin||e.source!==frame.contentWindow)return;
     if(e.data?.type==='cui:room-exit')requestClose();
-    if(e.data?.type==='cui:room-ready')ready=true;
+    if(e.data?.type==='cui:room-ready'){ready=true;card.removeAttribute('aria-busy');clearTimeout(timeoutId);if(pending)startOpen()}
   });
   window.addEventListener('keydown',e=>{
     if(e.key==='Escape'&&open){e.preventDefault();e.stopImmediatePropagation();requestClose()}
   },true);
   window.addEventListener('popstate',()=>{
-    if(open&&!history.state?.cuiRoomHandoff){closeNow();closedByBack=true}
+    if(open&&!history.state?.cuiRoomHandoff){closeNow()}
     else if(!open&&history.state?.cuiRoomHandoff&&location.hash==='#cui-workspace'){
       if(ready)startOpen();else pending=true;
     }
