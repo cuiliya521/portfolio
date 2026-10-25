@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>盘古智绘 · 产品工作台｜CUI 隔离交接</title><link rel="stylesheet" href="room.css"><script defer src="room.js"></script></head>
+<body data-state="initial">
+<header class="room-top">
+ <div class="product-identity"><span class="identity-seed" aria-hidden="true">✦</span><strong>盘古智绘</strong><span class="identity-divider">/</span><small>产品工作现场</small></div>
+ <button type="button" id="exit-room" class="return-btn">↖ 返回 Workspace</button>
+</header>
+<main>
+ <div class="scene-heading">
+  <p class="eyebrow">CUI × PANGU / ACTUAL PRODUCT DECISION</p>
+  <h1>把写 Prompt，<span>变成选字段。</span></h1>
+  <p class="subheading">一句“清爽”，怎样变成产品里真正可操作的选择？</p>
+ </div>
+ <section class="workbench" aria-label="盘古完整六字段工作台">
+  <div class="workbench-title"><div><b>盘古智绘</b><span>素材生成</span></div><span class="archive-label">基于真实归档字段的可操作演示</span></div>
+  <div class="fields">
+   <div class="field"><span class="label">行业</span><span class="value">餐饮美食</span><span class="readonly">归档值</span></div>
+   <div class="field"><span class="label">营销场景</span><span class="value">夏季新品上市</span><span class="readonly">归档值</span></div>
+   <div class="field"><span class="label">产品／主题</span><span class="value">青提柠檬饮品</span><span class="readonly">归档值</span></div>
+   <div class="active-field" id="active-field">
+    <button class="field-trigger" id="trigger" type="button" aria-expanded="false" aria-controls="field-content"><span class="label">画面风格</span><span class="value" id="committed-value">待选择</span><span class="trigger-action" id="trigger-action">展开</span></button>
+    <div class="field-content" id="field-content" hidden>
+     <div class="cui-reaction"><img src="../../assets/pangu-r1/cui-pointing.png" class="cui" alt="原版 CUI 引导角色，指向画面风格"><div class="reaction-copy"><p class="need"><span>商户需求</span>想做得<mark>清爽</mark>一点。</p><p class="response" id="response" role="status" aria-live="polite">打开了「画面风格」。从真实选项中找到“清爽”。</p></div></div>
+     <div class="choice-line"><label class="choice" id="choice"><input id="choice-input" type="radio" name="style" value="清爽明亮"><span class="choice-title">清爽明亮</span><span class="choice-note">归档已核实</span></label><span class="draft-status" id="draft-status">请选择</span></div>
+     <div class="field-actions"><button type="button" class="undo" id="undo" disabled>撤销选择</button><button type="button" class="apply" id="apply" disabled>确认此选择</button></div>
+    </div>
+   </div>
+   <div class="field"><span class="label">构图建议</span><span class="value">主体突出／预留文案区</span><span class="readonly">归档值</span></div>
+   <div class="field"><span class="label">平台规格</span><span class="value">竖版海报（1080 × 1920）</span><span class="readonly">归档值</span></div>
+  </div>
+  <div class="workbench-bottom"><p id="global-status" role="status" aria-live="polite">打开「画面风格」，体验一次设计判断。</p><span class="completion-stamp" id="completion-stamp" hidden>✓ 已落实到字段</span></div>
+ </section>
+ <div class="footer"><p>真实字段和选项来自盘古归档界面。此处为作品集演示，不调用生图模型。</p><div class="footer-links"><button type="button" id="replay">↺ 重新体验</button><button type="button" id="exit-bottom">返回三个项目 →</button></div></div>
+</main>
+</body></html>
